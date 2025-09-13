@@ -612,6 +612,15 @@ const componentDocs = {
     ],
     component: showcasePreviewMap["spinner"]
   },
+  skeleton: {
+    name: "Skeleton",
+    description: "A placeholder skeleton component for loading states. Use to display a placeholder UI while content loads.",
+    example: `<Skeleton className="h-6 w-32" />`,
+    props: [
+      { name: "className", type: "string", description: "Custom class for size and style" }
+    ],
+    component: showcasePreviewMap["skeleton"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
