@@ -557,12 +557,22 @@ const componentDocs = {
   <CardContent>
     Card content goes here.
   </CardContent>
-</Card>`,
+  </Card>`,
     props: [
       { name: "variant", type: "string", default: "default", description: "Card style variant" },
       { name: "padding", type: "string", default: "md", description: "Card padding size" },
     ],
     component: null
+  },
+  avatar: {
+    name: "Avatar",
+    description: "Displays a user's profile image or initials, with customizable size and fallback.",
+    example: '<Avatar size="sm"><AvatarImage src="https://randomuser.me/api/portraits/men/32.jpg" alt="User"/><AvatarFallback>AB</AvatarFallback></Avatar>',
+    props: [
+      { name: "size", type: '"sm" | "md" | "lg"', default: "md", description: "Avatar size" },
+      { name: "children", type: "ReactNode", required: true, description: "Avatar image and fallback" }
+    ],
+    component: showcasePreviewMap["avatar"]
   },
   badge: {
     name: "Badge",
