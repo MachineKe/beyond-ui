@@ -303,9 +303,13 @@ const showcasePreviewMap: Record<string, React.FC> = {
       { id: "settings", label: "Settings", icon: <Settings className="h-5 w-5" /> },
       { id: "profile", label: "Profile", icon: <User className="h-5 w-5" /> }
     ];
+    // Override Sidebar's fixed class for preview
     return (
-      <div className="w-64 h-72 bg-white border rounded">
-        <Sidebar menuItems={menuItems} />
+      <div className="w-64 h-72 bg-white border rounded overflow-hidden flex items-stretch">
+        <Sidebar
+          menuItems={menuItems}
+          className="static relative w-full h-full border-none shadow-none"
+        />
       </div>
     );
   },
@@ -816,16 +820,16 @@ export const ComponentShowcase: React.FC<ComponentShowcaseProps> = ({ className 
     const filteredComponents = categoryData.components.filter(component =>
       component.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    
+
     if (filteredComponents.length > 0) {
-      acc[categoryName] = {
+      acc[categoryName as keyof typeof componentCategories] = {
         ...categoryData,
         components: filteredComponents
       };
     }
-    
+
     return acc;
-  }, {} as typeof componentCategories);
+  }, {} as Partial<typeof componentCategories>);
 
   const currentDoc = componentDocs[selectedComponent as keyof typeof componentDocs];
 
