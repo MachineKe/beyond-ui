@@ -26,6 +26,8 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { Textarea } from "../Textarea";
 import { Checkbox } from "../Checkbox";
+import { Sidebar } from "../Sidebar";
+import { DashboardGrid } from "../DashboardGrid";
 import { DashboardLayout } from "../DashboardLayout";
 import { User } from "lucide-react";
 
@@ -291,24 +293,25 @@ const showcasePreviewMap: Record<string, React.FC> = {
     );
   },
   sidebar: function ShowcaseSidebarDemo() {
+    const menuItems = [
+      { id: "dashboard", label: "Dashboard", icon: <BarChart3 className="h-5 w-5" /> },
+      { id: "settings", label: "Settings", icon: <Settings className="h-5 w-5" /> },
+      { id: "profile", label: "Profile", icon: <User className="h-5 w-5" /> }
+    ];
     return (
-      <div className="border w-64 h-72 bg-white flex flex-col">
-        <nav className="flex flex-col p-4 gap-2">
-          <a href="#" className="hover:underline">Dashboard</a>
-          <a href="#" className="hover:underline">Settings</a>
-          <a href="#" className="hover:underline">Profile</a>
-        </nav>
+      <div className="w-64 h-72 bg-white border rounded">
+        <Sidebar menuItems={menuItems} />
       </div>
     );
   },
   "dashboard-grid": function ShowcaseDashboardGridDemo() {
     return (
-      <div className="grid grid-cols-2 gap-3">
-        <div className="p-4 bg-gray-100 rounded">Widget 1</div>
-        <div className="p-4 bg-gray-100 rounded">Widget 2</div>
-        <div className="p-4 bg-gray-100 rounded">Widget 3</div>
-        <div className="p-4 bg-gray-100 rounded">Widget 4</div>
-      </div>
+      <DashboardGrid>
+        <div className="p-4 bg-white rounded shadow">Widget 1</div>
+        <div className="p-4 bg-white rounded shadow">Widget 2</div>
+        <div className="p-4 bg-white rounded shadow">Widget 3</div>
+        <div className="p-4 bg-white rounded shadow">Widget 4</div>
+      </DashboardGrid>
     );
   },
   "dashboard-header": function ShowcaseDashboardHeaderDemo() {
