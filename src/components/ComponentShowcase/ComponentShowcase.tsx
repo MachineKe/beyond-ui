@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { 
   Search, 
   Copy, 
@@ -128,33 +128,6 @@ function ShowcaseCheckboxDemo() {
       </label>
     </div>
   );
-function ShowcaseSwitchDemo() {
-  const [checked, setChecked] = React.useState(false);
-  return (
-    <div className="space-y-2">
-      <label className="flex items-center gap-2">
-        <Switch checked={checked} onCheckedChange={setChecked} />
-        <span>Default</span>
-      </label>
-      <label className="flex items-center gap-2">
-        <Switch checked />
-        <span>Checked</span>
-      </label>
-      <label className="flex items-center gap-2">
-        <Switch disabled />
-        <span>Disabled</span>
-      </label>
-      <label className="flex items-center gap-2">
-        <Switch size="sm" />
-        <span>Small</span>
-      </label>
-      <label className="flex items-center gap-2">
-        <Switch size="lg" />
-        <span>Large</span>
-      </label>
-    </div>
-  );
-}
 }
 
 function ShowcaseCardDemo() {

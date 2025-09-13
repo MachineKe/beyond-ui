@@ -29,7 +29,7 @@ const statsCardVariants = cva(
 type TrendDirection = "up" | "down" | "neutral";
 
 export interface StatsCardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "color">,
     VariantProps<typeof statsCardVariants> {
   title: string;
   value: string | number;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Search, Bell, Settings, User, Menu } from "lucide-react";
+import { Search, Bell, Settings, Menu } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { Input } from "../Input";
 import { Button } from "../Button";
