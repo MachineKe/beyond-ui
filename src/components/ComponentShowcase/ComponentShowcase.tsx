@@ -437,6 +437,18 @@ const componentDocs = {
     ],
     component: null
   },
+  checkbox: {
+    name: "Checkbox",
+    description: "A standard checkbox component for forms. Supports checked, unchecked, disabled, and size variants.",
+    example: `<Checkbox checked={true} onChange={() => {}} />`,
+    props: [
+      { name: "checked", type: "boolean", default: "false", description: "Whether the checkbox is checked" },
+      { name: "onChange", type: "(event) => void", description: "Callback when checkbox changes" },
+      { name: "disabled", type: "boolean", default: "false", description: "Disable the checkbox" },
+      { name: "size", type: `"sm" | "md" | "lg"`, default: "md", description: "Size of the checkbox" },
+    ],
+    component: showcasePreviewMap["checkbox"]
+  },
   textarea: {
     name: "Textarea",
     description: "A multi-line input control suitable for entering longer blocks of text. Supports success/error states and various sizes.",
