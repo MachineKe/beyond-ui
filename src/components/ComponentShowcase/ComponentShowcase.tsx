@@ -574,6 +574,16 @@ const componentDocs = {
     ],
     component: showcasePreviewMap["tabs"]
   },
+  toast: {
+    name: "Toast",
+    description: "A notification/toast component to display feedback messages over the UI.",
+    example: `<Button onClick={() => showToast.success("Saved successfully!")}>Show Toast</Button>
+<Toast />`,
+    props: [
+      { name: "children", type: "ReactNode", description: "Toast content (commonly used internally)" }
+    ],
+    component: showcasePreviewMap["toast"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
