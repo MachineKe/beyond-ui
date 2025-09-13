@@ -26,6 +26,7 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { Textarea } from "../Textarea";
 import { Checkbox } from "../Checkbox";
+import { Navbar } from "../Navbar";
 import { Sidebar } from "../Sidebar";
 import { DashboardGrid } from "../DashboardGrid";
 import { DashboardLayout } from "../DashboardLayout";
@@ -281,15 +282,19 @@ const showcasePreviewMap: Record<string, React.FC> = {
   },
   navbar: function ShowcaseNavbarDemo() {
     return (
-      <div className="border rounded">
-        <div className="flex items-center gap-4 px-4 py-2 border-b">
-          <span className="font-bold text-xl">My App</span>
-          <nav className="flex gap-2 ml-auto">
+      <Navbar>
+        <div className="flex w-full items-center justify-between px-4">
+          <span className="font-semibold text-lg">Beyond UI</span>
+          <nav className="flex gap-4 ml-auto">
             <a href="#" className="text-blue-500">Home</a>
-            <a href="#" className="text-blue-500">About</a>
+            <a href="#" className="text-blue-500">Features</a>
+            <a href="#" className="text-blue-500">Pricing</a>
           </nav>
+          <div className="ml-6">
+            <button className="rounded bg-primary-600 text-white px-3 py-1 text-sm">Profile</button>
+          </div>
         </div>
-      </div>
+      </Navbar>
     );
   },
   sidebar: function ShowcaseSidebarDemo() {
