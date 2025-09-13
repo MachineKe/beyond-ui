@@ -305,7 +305,7 @@ const showcasePreviewMap: Record<string, React.FC> = {
     ];
     // Override Sidebar's fixed class for preview
     return (
-      <div className="w-64 h-72 bg-white border rounded overflow-hidden flex items-stretch">
+      <div className="w-[260px] h-[480px] bg-white border rounded overflow-auto flex items-stretch">
         <Sidebar
           menuItems={menuItems}
           className="static relative w-full h-full border-none shadow-none"
