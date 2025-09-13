@@ -74,6 +74,34 @@ function ShowcaseTextareaDemo() {
   );
 }
 
+function ShowcaseSwitchDemo() {
+  const [checked, setChecked] = React.useState(false);
+  return (
+    <div className="space-y-2">
+      <label className="flex items-center gap-2">
+        <Switch checked={checked} onCheckedChange={setChecked} />
+        <span>Default</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch checked />
+        <span>Checked</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch disabled />
+        <span>Disabled</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch size="sm" />
+        <span>Small</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch size="lg" />
+        <span>Large</span>
+      </label>
+    </div>
+  );
+}
+
 function ShowcaseCheckboxDemo() {
   const [checked, setChecked] = React.useState(false);
   return (
@@ -95,6 +123,33 @@ function ShowcaseCheckboxDemo() {
       </label>
     </div>
   );
+function ShowcaseSwitchDemo() {
+  const [checked, setChecked] = React.useState(false);
+  return (
+    <div className="space-y-2">
+      <label className="flex items-center gap-2">
+        <Switch checked={checked} onCheckedChange={setChecked} />
+        <span>Default</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch checked />
+        <span>Checked</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch disabled />
+        <span>Disabled</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch size="sm" />
+        <span>Small</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Switch size="lg" />
+        <span>Large</span>
+      </label>
+    </div>
+  );
+}
 }
 
 function ShowcaseCardDemo() {
@@ -197,6 +252,7 @@ const showcasePreviewMap: Record<string, React.FC> = {
   input: ShowcaseInputDemo,
   textarea: ShowcaseTextareaDemo,
   checkbox: ShowcaseCheckboxDemo,
+  switch: ShowcaseSwitchDemo,
   card: ShowcaseCardDemo,
   badge: ShowcaseBadgeDemo,
   avatar: ShowcaseAvatarDemo,
@@ -448,6 +504,18 @@ const componentDocs = {
       { name: "size", type: `"sm" | "md" | "lg"`, default: "md", description: "Size of the checkbox" },
     ],
     component: showcasePreviewMap["checkbox"]
+  },
+  switch: {
+    name: "Switch",
+    description: "A toggle switch component for representing boolean states. Supports size variants and disabled state.",
+    example: `<Switch checked={true} onCheckedChange={() => {}} />`,
+    props: [
+      { name: "checked", type: "boolean", default: "false", description: "Whether the switch is on" },
+      { name: "onCheckedChange", type: "(checked: boolean) => void", description: "Callback when switch state changes" },
+      { name: "disabled", type: "boolean", default: "false", description: "Disable the switch" },
+      { name: "size", type: `"sm" | "md" | "lg"`, default: "md", description: "Size of the switch" },
+    ],
+    component: showcasePreviewMap["switch"]
   },
   textarea: {
     name: "Textarea",
