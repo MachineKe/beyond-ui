@@ -340,14 +340,21 @@ const showcasePreviewMap: Record<string, React.FC> = {
       { id: "users", label: "Users", icon: <User className="h-4 w-4" /> },
       { id: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> },
     ];
+    // Contain DashboardLayout for preview: override min-h-screen, sizing
     return (
-      <DashboardLayout sidebarMenuItems={sidebarMenuItems}>
-        <div className="p-6">
-          <h2 className="text-lg font-semibold mb-2">Welcome to DashboardLayout</h2>
-          <p className="mb-4 text-gray-600">Main content appears here. The sidebar and header are real reusable components.</p>
-          <Button variant="primary">Dashboard Action</Button>
-        </div>
-      </DashboardLayout>
+      <div className="w-[500px] h-[340px] bg-white border rounded overflow-hidden flex items-stretch">
+        <DashboardLayout
+          sidebarMenuItems={sidebarMenuItems}
+          className="relative w-full h-full min-h-0 !min-h-0"
+          sidebarClassName="static relative w-full h-full border-none shadow-none"
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold mb-2">Welcome to DashboardLayout</h2>
+            <p className="mb-4 text-gray-600">Main content appears here. The sidebar and header are real reusable components.</p>
+            <Button variant="primary">Dashboard Action</Button>
+          </div>
+        </DashboardLayout>
+      </div>
     );
   },
 };

@@ -13,6 +13,7 @@ interface DashboardLayoutProps {
   showSearch?: boolean;
   searchPlaceholder?: string;
   onSearchChange?: (value: string) => void;
+  sidebarClassName?: string;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
@@ -43,6 +44,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
           menuItems={sidebarMenuItems}
           activeItem={activeSidebarItem}
           onItemClick={onSidebarItemClick}
+          className={props.sidebarClassName}
         />
 
         {/* Main Content Area */}
