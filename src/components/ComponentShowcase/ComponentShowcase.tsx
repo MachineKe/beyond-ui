@@ -425,10 +425,10 @@ const componentDocs = {
   input: {
     name: "Input",
     description: "A flexible input component with validation states and different sizes.",
-    example: `<Input 
-  placeholder="Enter your email" 
-  variant="default" 
-  inputSize="md" 
+    example: `<Input
+  placeholder="Enter your email"
+  variant="default"
+  inputSize="md"
 />`,
     props: [
       { name: "variant", type: "string", default: "default", description: "Input validation state" },
@@ -436,6 +436,18 @@ const componentDocs = {
       { name: "placeholder", type: "string", default: "", description: "Placeholder text" },
     ],
     component: null
+  },
+  textarea: {
+    name: "Textarea",
+    description: "A multi-line input control suitable for entering longer blocks of text. Supports success/error states and various sizes.",
+    example: `<Textarea placeholder="Enter your message..." variant="default" />`,
+    props: [
+      { name: "variant", type: "string", default: "default", description: "Textarea validation state" },
+      { name: "rows", type: "number", default: "3", description: "Number of visible text lines" },
+      { name: "disabled", type: "boolean", default: "false", description: "Disabled state" },
+      { name: "placeholder", type: "string", default: "", description: "Placeholder text" },
+    ],
+    component: showcasePreviewMap["textarea"]
   },
   card: {
     name: "Card",
@@ -532,7 +544,57 @@ const componentDocs = {
         />
       </div>
     )
-  }
+  },
+  "dashboard-layout": {
+    name: "DashboardLayout",
+    description: "Layout component for admin dashboards and analytics panels.",
+    example: `<DashboardLayout>
+  <Sidebar />
+  <main>
+    Dashboard content here
+  </main>
+</DashboardLayout>`,
+    props: [
+      { name: "children", type: "ReactNode", required: true, description: "Dashboard page content" },
+    ],
+    component: showcasePreviewMap["dashboard-layout"]
+  },
+  "dashboard-grid": {
+    name: "DashboardGrid",
+    description: "Grid container for dashboard widgets.",
+    example: `<DashboardGrid>
+  <Widget />
+  <Widget />
+</DashboardGrid>`,
+    props: [
+      { name: "children", type: "ReactNode", required: true, description: "Widgets to show in the grid" },
+    ],
+    component: showcasePreviewMap["dashboard-grid"]
+  },
+  "sidebar": {
+    name: "Sidebar",
+    description: "Navigation sidebar for layouts. Supports menu items and responsive display.",
+    example: `<Sidebar menuItems={menuItems} />`,
+    props: [
+      { name: "menuItems", type: "Array", required: true, description: "Sidebar navigation items" },
+    ],
+    component: showcasePreviewMap["sidebar"]
+  },
+  "navbar": {
+    name: "Navbar",
+    description: "Navigation bar for app layout. Add links, branding, user actions etc.",
+    example: `<Navbar>
+  <NavbarBrand>My App</NavbarBrand>
+  <NavbarLinks>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </NavbarLinks>
+</Navbar>`,
+    props: [
+      { name: "children", type: "ReactNode", required: true, description: "Navbar content (branding, links, actions)" },
+    ],
+    component: showcasePreviewMap["navbar"]
+  },
 };
 
 interface ComponentShowcaseProps {
@@ -833,17 +895,17 @@ export const ComponentShowcase: React.FC<ComponentShowcaseProps> = ({ className 
                                   <code className="bg-gray-100 px-2 py-1 rounded text-sm">
                                     {prop.name}
                                   </code>
-                                  {prop.required && (
+                                  {("required" in prop && prop.required) && (
                                     <Badge variant="danger" className="ml-2 text-xs">Required</Badge>
                                   )}
                                 </td>
                                 <td className="p-3 text-gray-600">{prop.type}</td>
                                 <td className="p-3 text-gray-600">
-                                  {prop.default && (
+                                  {("default" in prop && prop.default) ? (
                                     <code className="bg-gray-100 px-2 py-1 rounded text-sm">
                                       {prop.default}
                                     </code>
-                                  )}
+                                  ) : null}
                                 </td>
                                 <td className="p-3 text-gray-600">{prop.description}</td>
                               </tr>
