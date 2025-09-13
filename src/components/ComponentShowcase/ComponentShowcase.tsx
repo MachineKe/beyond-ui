@@ -342,14 +342,14 @@ const showcasePreviewMap: Record<string, React.FC> = {
     ];
     // Contain DashboardLayout for preview: override min-h-screen, sizing
     return (
-      <div className="w-[500px] h-[340px] bg-white border rounded overflow-hidden flex items-stretch">
+      <div className="w-[600px] h-[480px] bg-white border rounded overflow-auto flex items-stretch">
         <DashboardLayout
           sidebarMenuItems={sidebarMenuItems}
-          className="relative w-full h-full min-h-0 !min-h-0"
+          className="relative w-full min-h-0 h-full"
           sidebarClassName="static relative w-full h-full border-none shadow-none"
           disableSidebarMargin={true}
         >
-          <div className="p-6">
+          <div className="p-6 h-full">
             <h2 className="text-lg font-semibold mb-2">Welcome to DashboardLayout</h2>
             <p className="mb-4 text-gray-600">Main content appears here. The sidebar and header are real reusable components.</p>
             <Button variant="primary">Dashboard Action</Button>
