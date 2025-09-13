@@ -546,6 +546,16 @@ const componentDocs = {
     ],
     component: null
   },
+  badge: {
+    name: "Badge",
+    description: "A small, customizable tag for displaying statuses or labels.",
+    example: `<Badge variant="default">Default</Badge>`,
+    props: [
+      { name: "variant", type: `"default" | "secondary" | "success" | "danger" | "warning" | "outline"`, default: "default", description: "Badge color or style variant" },
+      { name: "children", type: "ReactNode", required: true, description: "Badge label content" }
+    ],
+    component: showcasePreviewMap["badge"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
