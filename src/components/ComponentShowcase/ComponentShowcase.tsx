@@ -584,6 +584,23 @@ const componentDocs = {
     ],
     component: showcasePreviewMap["toast"]
   },
+  modal: {
+    name: "Modal",
+    description: "A dialog/modal overlay component for displaying actions, forms, or confirmation content.",
+    example: `<Modal open={open} onOpenChange={setOpen}>
+  <ModalHeader>Modal Title</ModalHeader>
+  <ModalContent>Modal body</ModalContent>
+  <ModalFooter>
+    <Button onClick={() => setOpen(false)}>Close</Button>
+  </ModalFooter>
+</Modal>`,
+    props: [
+      { name: "open", type: "boolean", required: true, description: "Whether the modal is open" },
+      { name: "onOpenChange", type: "(open: boolean) => void", required: true, description: "Called with new open state when modal is toggled" },
+      { name: "children", type: "ReactNode", required: true, description: "Content of the modal dialog" }
+    ],
+    component: showcasePreviewMap["modal"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
