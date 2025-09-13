@@ -26,6 +26,8 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { Textarea } from "../Textarea";
 import { Checkbox } from "../Checkbox";
+import { DashboardLayout } from "../DashboardLayout";
+import { User } from "lucide-react";
 
 // STORY INSPIRED DEMOS:
 function ShowcaseButtonDemo() {
@@ -321,11 +323,19 @@ const showcasePreviewMap: Record<string, React.FC> = {
     );
   },
   "dashboard-layout": function ShowcaseDashboardLayoutDemo() {
+    const sidebarMenuItems = [
+      { id: "dashboard", label: "Dashboard", icon: <BarChart3 className="h-4 w-4" /> },
+      { id: "users", label: "Users", icon: <User className="h-4 w-4" /> },
+      { id: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> },
+    ];
     return (
-      <div className="border rounded">
-        <div className="p-4 border-b">Sidebar area</div>
-        <div className="p-4">This is the dashboard content area.</div>
-      </div>
+      <DashboardLayout sidebarMenuItems={sidebarMenuItems}>
+        <div className="p-6">
+          <h2 className="text-lg font-semibold mb-2">Welcome to DashboardLayout</h2>
+          <p className="mb-4 text-gray-600">Main content appears here. The sidebar and header are real reusable components.</p>
+          <Button variant="primary">Dashboard Action</Button>
+        </div>
+      </DashboardLayout>
     );
   },
 };
@@ -702,7 +712,7 @@ const componentDocs = {
   },
   "dashboard-layout": {
     name: "DashboardLayout",
-    description: "Layout component for admin dashboards and analytics panels.",
+    description: "Layout component for admin dashboards and analytics panels. Useful for wrapping dashboard structure with sidebars and content.",
     example: `<DashboardLayout>
   <Sidebar />
   <main>
@@ -710,7 +720,7 @@ const componentDocs = {
   </main>
 </DashboardLayout>`,
     props: [
-      { name: "children", type: "ReactNode", required: true, description: "Dashboard page content" },
+      { name: "children", type: "ReactNode", required: true, description: "Dashboard page content" }
     ],
     component: showcasePreviewMap["dashboard-layout"]
   },
