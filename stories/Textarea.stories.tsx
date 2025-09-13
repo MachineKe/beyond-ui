@@ -1,10 +1,10 @@
 import * as React from "react";
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from '../src/components/Input';
+import { Textarea } from '../src/components/Textarea';
 
 const meta = {
-  title: 'Components/Input',
-  component: Input,
+  title: 'Components/Textarea',
+  component: Textarea,
   parameters: {
     layout: 'centered',
   },
@@ -14,22 +14,18 @@ const meta = {
       control: 'select',
       options: ['default', 'success', 'error'],
     },
-    inputSize: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-    },
     disabled: {
       control: 'boolean',
     },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Textarea>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    placeholder: 'Default input',
+    placeholder: 'Default textarea',
   },
 };
 
@@ -47,12 +43,9 @@ export const Error: Story = {
   },
 };
 
-export const Sizes: Story = {
-  render: () => (
-    <div className="space-y-2">
-      <Input placeholder="Small" inputSize="sm" />
-      <Input placeholder="Medium" inputSize="md" />
-      <Input placeholder="Large" inputSize="lg" />
-    </div>
-  ),
+export const Disabled: Story = {
+  args: {
+    placeholder: 'Disabled',
+    disabled: true,
+  },
 };

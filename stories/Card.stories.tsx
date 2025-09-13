@@ -1,6 +1,6 @@
+import * as React from "react";
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../src/components/Card';
-import { Button } from '../src/components/Button';
+import { Card, CardHeader, CardTitle, CardContent } from '../src/components/Card';
 
 const meta = {
   title: 'Components/Card',
@@ -9,6 +9,16 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'elevated'],
+    },
+    padding: {
+      control: 'select',
+      options: ['md'],
+    },
+  },
 } satisfies Meta<typeof Card>;
 
 export default meta;
@@ -16,40 +26,47 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Card className="w-96">
+    <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card description goes here</CardDescription>
+        <CardTitle>Default Card</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>This is the card content area where you can put any content.</p>
+        <p className="text-gray-600">This is a default card with standard styling.</p>
       </CardContent>
-      <CardFooter>
-        <Button>Action</Button>
-      </CardFooter>
     </Card>
   ),
 };
 
-export const Variants: Story = {
+export const Elevated: Story = {
   render: () => (
-    <div className="flex gap-4">
-      <Card variant="default" className="w-64">
+    <Card variant="elevated">
+      <CardHeader>
+        <CardTitle>Elevated Card</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-600">This card has elevated shadow styling.</p>
+      </CardContent>
+    </Card>
+  ),
+};
+
+export const Group: Story = {
+  render: () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Default Card</CardTitle>
+        </CardHeader>
         <CardContent>
-          <h3 className="font-semibold mb-2">Default Card</h3>
-          <p className="text-sm text-gray-600">Basic card style</p>
+          <p className="text-gray-600">This is a default card with standard styling.</p>
         </CardContent>
       </Card>
-      <Card variant="elevated" className="w-64">
+      <Card variant="elevated">
+        <CardHeader>
+          <CardTitle>Elevated Card</CardTitle>
+        </CardHeader>
         <CardContent>
-          <h3 className="font-semibold mb-2">Elevated Card</h3>
-          <p className="text-sm text-gray-600">Card with shadow</p>
-        </CardContent>
-      </Card>
-      <Card variant="outlined" className="w-64">
-        <CardContent>
-          <h3 className="font-semibold mb-2">Outlined Card</h3>
-          <p className="text-sm text-gray-600">Card with border</p>
+          <p className="text-gray-600">This card has elevated shadow styling.</p>
         </CardContent>
       </Card>
     </div>

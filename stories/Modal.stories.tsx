@@ -1,47 +1,40 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { Modal, ModalHeader, ModalTitle, ModalDescription, ModalContent, ModalFooter } from '../src/components/Modal';
-import { Button } from '../src/components/Button';
+import * as React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Modal, ModalHeader, ModalTitle, ModalContent, ModalFooter } from "../src/components/Modal";
+import { Button } from "../src/components/Button";
 
 const meta = {
-  title: 'Components/Modal',
+  title: "Components/Modal",
   component: Modal,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Modal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default: any = {
   render: () => {
-    const [open, setOpen] = useState(false);
-
+    const [open, setOpen] = React.useState(false);
     return (
-      <>
-        <Button onClick={() => setOpen(true)}>Open Modal</Button>
+      <div>
+        <Button onClick={() => setOpen(true)}>Show Modal</Button>
         <Modal open={open} onOpenChange={setOpen}>
           <ModalHeader>
-            <ModalTitle>Are you absolutely sure?</ModalTitle>
-            <ModalDescription>
-              This action cannot be undone. This will permanently delete your account and remove your data from our servers.
-            </ModalDescription>
+            <ModalTitle>Demo Modal</ModalTitle>
           </ModalHeader>
           <ModalContent>
-            <p>Additional content can go here...</p>
+            <p>This is a basic modal dialog.</p>
           </ModalContent>
           <ModalFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={() => setOpen(false)}>
-              Continue
+            <Button variant="primary" onClick={() => setOpen(false)}>
+              Close
             </Button>
           </ModalFooter>
         </Modal>
-      </>
+      </div>
     );
   },
 };

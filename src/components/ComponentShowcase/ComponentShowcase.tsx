@@ -24,6 +24,334 @@ import {
 import { cn } from "../../utils/cn";
 import { Button } from "../Button";
 import { Input } from "../Input";
+import { Textarea } from "../Textarea";
+import { Checkbox } from "../Checkbox";
+
+// STORY INSPIRED DEMOS:
+function ShowcaseButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="danger">Danger</Button>
+      <Button variant="success">Success</Button>
+      <Button variant="warning">Warning</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  );
+}
+
+function ShowcaseInputDemo() {
+  const [v, setV] = React.useState("");
+  return (
+    <div className="space-y-4 max-w-md">
+      <Input placeholder="Default input" value={v} onChange={e => setV(e.target.value)} />
+      <Input placeholder="Success state" variant="success" />
+      <Input placeholder="Error state" variant="error" />
+      <div className="space-y-2">
+        <Input placeholder="Small" inputSize="sm" />
+        <Input placeholder="Medium" inputSize="md" />
+        <Input placeholder="Large" inputSize="lg" />
+      </div>
+    </div>
+  );
+}
+
+function ShowcaseTextareaDemo() {
+  const [tv, setTv] = React.useState("");
+  return (
+    <div className="space-y-4 max-w-md">
+      <Textarea placeholder="Default textarea" value={tv} onChange={e => setTv(e.target.value)} />
+      <Textarea placeholder="Success state" variant="success" />
+      <Textarea placeholder="Error state" variant="error" />
+      <div className="space-y-2">
+        <Textarea placeholder="Small (default)" />
+        <Textarea placeholder="Disabled" disabled />
+      </div>
+    </div>
+  );
+}
+
+function ShowcaseCheckboxDemo() {
+  const [checked, setChecked] = React.useState(false);
+  return (
+    <div className="space-y-2">
+      <label className="flex items-center gap-2">
+        <Checkbox checked={checked} onChange={() => setChecked(!checked)} /> <span>Default</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Checkbox checked /> <span>Checked</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Checkbox disabled /> <span>Disabled</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Checkbox size="sm" /> <span>Small</span>
+      </label>
+      <label className="flex items-center gap-2">
+        <Checkbox size="lg" /> <span>Large</span>
+      </label>
+    </div>
+  );
+}
+
+function ShowcaseCardDemo() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Default Card</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-600">This is a default card with standard styling.</p>
+        </CardContent>
+      </Card>
+      <Card variant="elevated">
+        <CardHeader>
+          <CardTitle>Elevated Card</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-600">This card has elevated shadow styling.</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+function ShowcaseBadgeDemo() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="danger">Danger</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </div>
+  );
+}
+function ShowcaseAvatarDemo() {
+  return (
+    <div className="flex gap-4">
+      <Avatar>
+        <AvatarImage src="https://randomuser.me/api/portraits/men/32.jpg" />
+        <AvatarFallback>AB</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarImage src="" />
+        <AvatarFallback>CD</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" />
+        <AvatarFallback>EF</AvatarFallback>
+      </Avatar>
+    </div>
+  );
+}
+function ShowcaseModalDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div>
+      <Button onClick={() => setOpen(true)}>Show Modal</Button>
+      <Modal open={open} onOpenChange={setOpen}>
+        <ModalHeader>
+          <ModalTitle>Demo Modal</ModalTitle>
+        </ModalHeader>
+        <ModalContent>
+          <p>This is a basic modal dialog.</p>
+        </ModalContent>
+        <ModalFooter>
+          <Button variant="primary" onClick={() => setOpen(false)}>Close</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+}
+function ShowcaseToastDemo() {
+  return (
+    <>
+      <Button onClick={() => showToast.success("This is a toast notification!")}>
+        Show Toast
+      </Button>
+      <Toast />
+    </>
+  );
+}
+function ShowcaseSpinnerDemo() {
+  return (
+    <div className="space-y-4">
+      <Spinner />
+      <div className="flex gap-2 items-center">
+        <Spinner /> <span>Loading data...</span>
+      </div>
+      <Button variant="primary" disabled>
+        <Spinner className="mr-2 h-4 w-4" /> Processing
+      </Button>
+    </div>
+  );
+}
+
+const showcasePreviewMap: Record<string, React.FC> = {
+  button: ShowcaseButtonDemo,
+  input: ShowcaseInputDemo,
+  textarea: ShowcaseTextareaDemo,
+  checkbox: ShowcaseCheckboxDemo,
+  card: ShowcaseCardDemo,
+  badge: ShowcaseBadgeDemo,
+  avatar: ShowcaseAvatarDemo,
+  alert: ShowcaseAlertDemo,
+  statscard: ShowcaseStatsCardDemo,
+  tabs: ShowcaseTabsDemo,
+  modal: ShowcaseModalDemo,
+  toast: ShowcaseToastDemo,
+  spinner: ShowcaseSpinnerDemo,
+  skeleton: function ShowcaseSkeletonDemo() {
+    return (
+      <div className="space-y-4 max-w-md">
+        <Skeleton className="h-8 w-1/2" />
+        <Skeleton className="h-4 w-3/4" />
+        <div className="flex gap-2">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-8 w-32" />
+        </div>
+        <Skeleton className="h-24 w-full" />
+      </div>
+    );
+  },
+  navbar: function ShowcaseNavbarDemo() {
+    return (
+      <div className="border rounded">
+        <div className="flex items-center gap-4 px-4 py-2 border-b">
+          <span className="font-bold text-xl">My App</span>
+          <nav className="flex gap-2 ml-auto">
+            <a href="#" className="text-blue-500">Home</a>
+            <a href="#" className="text-blue-500">About</a>
+          </nav>
+        </div>
+      </div>
+    );
+  },
+  sidebar: function ShowcaseSidebarDemo() {
+    return (
+      <div className="border w-64 h-72 bg-white flex flex-col">
+        <nav className="flex flex-col p-4 gap-2">
+          <a href="#" className="hover:underline">Dashboard</a>
+          <a href="#" className="hover:underline">Settings</a>
+          <a href="#" className="hover:underline">Profile</a>
+        </nav>
+      </div>
+    );
+  },
+  "dashboard-grid": function ShowcaseDashboardGridDemo() {
+    return (
+      <div className="grid grid-cols-2 gap-3">
+        <div className="p-4 bg-gray-100 rounded">Widget 1</div>
+        <div className="p-4 bg-gray-100 rounded">Widget 2</div>
+        <div className="p-4 bg-gray-100 rounded">Widget 3</div>
+        <div className="p-4 bg-gray-100 rounded">Widget 4</div>
+      </div>
+    );
+  },
+  "dashboard-header": function ShowcaseDashboardHeaderDemo() {
+    return (
+      <div className="flex justify-between items-center py-4 border-b">
+        <div>
+          <h2 className="text-xl font-semibold">Dashboard</h2>
+          <span className="text-gray-500 text-sm">Insights & analytics</span>
+        </div>
+        <Button variant="outline">Settings</Button>
+      </div>
+    );
+  },
+  "dashboard-layout": function ShowcaseDashboardLayoutDemo() {
+    return (
+      <div className="border rounded">
+        <div className="p-4 border-b">Sidebar area</div>
+        <div className="p-4">This is the dashboard content area.</div>
+      </div>
+    );
+  },
+};
+function ShowcaseAlertDemo() {
+  return (
+    <div className="space-y-4">
+      <Alert variant="info">
+        <AlertTitle>Information</AlertTitle>
+        <AlertDescription>This is an informational alert message.</AlertDescription>
+      </Alert>
+      <Alert variant="success">
+        <AlertTitle>Success</AlertTitle>
+        <AlertDescription>Operation completed successfully!</AlertDescription>
+      </Alert>
+      <Alert variant="warning">
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>Please review your input before proceeding.</AlertDescription>
+      </Alert>
+      <Alert variant="danger">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Something went wrong. Please try again.</AlertDescription>
+      </Alert>
+    </div>
+  );
+}
+function ShowcaseStatsCardDemo() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <StatsCard
+        title="Total Users"
+        value="2,543"
+        trend={{
+          direction: "up",
+          value: "+12%",
+          label: "from last month"
+        }}
+        icon={<BarChart3 className="h-6 w-6 text-primary-600" />}
+      />
+      <StatsCard
+        variant="gradient"
+        color="success"
+        title="Revenue"
+        value="$45,231"
+        trend={{
+          direction: "up",
+          value: "+8.2%",
+          label: "from last month"
+        }}
+        icon={<BarChart3 className="h-6 w-6" />}
+      />
+    </div>
+  );
+}
+function ShowcaseTabsDemo() {
+  const [activeTab, setActiveTab] = React.useState("tab-1");
+  return (
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <TabsList>
+        <TabsTrigger value="tab-1">Tab One</TabsTrigger>
+        <TabsTrigger value="tab-2">Tab Two</TabsTrigger>
+        <TabsTrigger value="tab-3">Tab Three</TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab-1">
+        <span className="block p-4">Content for Tab One</span>
+      </TabsContent>
+      <TabsContent value="tab-2">
+        <span className="block p-4">Content for Tab Two</span>
+      </TabsContent>
+      <TabsContent value="tab-3">
+        <span className="block p-4">Content for Tab Three</span>
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+Object.assign(showcasePreviewMap, {
+  alert: ShowcaseAlertDemo,
+  statscard: ShowcaseStatsCardDemo,
+  tabs: ShowcaseTabsDemo,
+});
+
+// Helper component to render a Storybook story in JSX
 import { Card, CardHeader, CardTitle, CardContent } from "../Card";
 import { Badge } from "../Badge";
 import { Alert, AlertTitle, AlertDescription } from "../Alert";
@@ -33,8 +361,6 @@ import { Toast, showToast } from "../Toast";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../Tabs";
 import { StatsCard } from "../StatsCard";
 import { Switch } from "../Switch";
-import { Checkbox } from "../Checkbox";
-import { Textarea } from "../Textarea";
 import { Spinner } from "../Spinner";
 import { Skeleton } from "../Skeleton";
 
@@ -94,24 +420,7 @@ const componentDocs = {
       { name: "size", type: "string", default: "md", description: "Button size" },
       { name: "disabled", type: "boolean", default: "false", description: "Disable the button" },
     ],
-    component: (
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-2">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="danger">Danger</Button>
-          <Button variant="success">Success</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-        </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
-          <Button size="xl">Extra Large</Button>
-        </div>
-      </div>
-    )
+    component: null
   },
   input: {
     name: "Input",
@@ -126,18 +435,7 @@ const componentDocs = {
       { name: "inputSize", type: "string", default: "md", description: "Input size" },
       { name: "placeholder", type: "string", default: "", description: "Placeholder text" },
     ],
-    component: (
-      <div className="space-y-4 max-w-md">
-        <Input placeholder="Default input" />
-        <Input placeholder="Success state" variant="success" />
-        <Input placeholder="Error state" variant="error" />
-        <div className="space-y-2">
-          <Input placeholder="Small" inputSize="sm" />
-          <Input placeholder="Medium" inputSize="md" />
-          <Input placeholder="Large" inputSize="lg" />
-        </div>
-      </div>
-    )
+    component: null
   },
   card: {
     name: "Card",
@@ -154,26 +452,7 @@ const componentDocs = {
       { name: "variant", type: "string", default: "default", description: "Card style variant" },
       { name: "padding", type: "string", default: "md", description: "Card padding size" },
     ],
-    component: (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Default Card</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600">This is a default card with standard styling.</p>
-          </CardContent>
-        </Card>
-        <Card variant="elevated">
-          <CardHeader>
-            <CardTitle>Elevated Card</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600">This card has elevated shadow styling.</p>
-          </CardContent>
-        </Card>
-      </div>
-    )
+    component: null
   },
   alert: {
     name: "Alert",
@@ -497,7 +776,9 @@ export const ComponentShowcase: React.FC<ComponentShowcaseProps> = ({ className 
                     <CardContent className="p-8">
                       <div className={cn("mx-auto transition-all duration-300", getViewportClass())}>
                         <div className={cn(darkMode && "dark")}>
-                          {currentDoc.component}
+                          {showcasePreviewMap[selectedComponent]
+                            ? React.createElement(showcasePreviewMap[selectedComponent])
+                            : null}
                         </div>
                       </div>
                     </CardContent>
