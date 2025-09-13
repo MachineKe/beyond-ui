@@ -556,6 +556,24 @@ const componentDocs = {
     ],
     component: showcasePreviewMap["badge"]
   },
+  tabs: {
+    name: "Tabs",
+    description: "A flexible tabbed navigation component. Allows users to switch between views.",
+    example: `<Tabs value="tab-1" onValueChange={() => {}}>
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab-1">Content 1</TabsContent>
+  <TabsContent value="tab-2">Content 2</TabsContent>
+</Tabs>`,
+    props: [
+      { name: "value", type: "string", required: true, description: "The value of the currently selected tab" },
+      { name: "onValueChange", type: "(value: string) => void", description: "Called when a different tab is selected" },
+      { name: "children", type: "ReactNode", required: true, description: "Tab triggers and contents" }
+    ],
+    component: showcasePreviewMap["tabs"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
