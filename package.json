@@ -1,0 +1,81 @@
+{
+  "name": "@beyondcorp/beyond-ui",
+  "version": "1.0.0",
+  "description": "A comprehensive React UI component library built with TypeScript, TailwindCSS, and CVA",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:lib": "vite build --mode library",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "tailwindcss",
+    "typescript",
+    "design-system"
+  ],
+  "author": "Beyond Corp",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "tailwindcss": ">=3.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "@types/prismjs": "^1.26.5",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-react": "^0.344.0",
+    "prismjs": "^1.30.0",
+    "react-hot-toast": "^2.4.1",
+    "recharts": "^2.8.0",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@storybook/addon-actions": "^7.6.6",
+    "@storybook/addon-controls": "^7.6.6",
+    "@storybook/addon-docs": "^7.6.6",
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-vite": "^7.6.6",
+    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^9.9.1",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.35",
+    "storybook": "^7.6.6",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.3.0",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}
