@@ -601,6 +601,17 @@ const componentDocs = {
     ],
     component: showcasePreviewMap["modal"]
   },
+  spinner: {
+    name: "Spinner",
+    description: "A loading spinner to indicate ongoing processing or loading state.",
+    example: `<Spinner size="md" />`,
+    props: [
+      { name: "size", type: `"sm" | "md" | "lg"`, default: "md", description: "Spinner size" },
+      { name: "color", type: "string", default: "primary", description: "Spinner color (optional)" },
+      { name: "className", type: "string", description: "Custom CSS class for the spinner" }
+    ],
+    component: showcasePreviewMap["spinner"]
+  },
   alert: {
     name: "Alert",
     description: "Display important messages and notifications to users.",
