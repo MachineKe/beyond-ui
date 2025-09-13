@@ -14,6 +14,7 @@ interface DashboardLayoutProps {
   searchPlaceholder?: string;
   onSearchChange?: (value: string) => void;
   sidebarClassName?: string;
+  disableSidebarMargin?: boolean;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
@@ -63,7 +64,9 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
           <main 
             className={cn(
               "flex-1 transition-all duration-300 p-6",
-              sidebarCollapsed ? "ml-16" : "ml-72"
+              props.disableSidebarMargin
+                ? ""
+                : (sidebarCollapsed ? "ml-16" : "ml-72")
             )}
           >
             {children}

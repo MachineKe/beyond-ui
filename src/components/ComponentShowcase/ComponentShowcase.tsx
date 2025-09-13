@@ -347,6 +347,7 @@ const showcasePreviewMap: Record<string, React.FC> = {
           sidebarMenuItems={sidebarMenuItems}
           className="relative w-full h-full min-h-0 !min-h-0"
           sidebarClassName="static relative w-full h-full border-none shadow-none"
+          disableSidebarMargin={true}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold mb-2">Welcome to DashboardLayout</h2>
