@@ -545,48 +545,140 @@ export const DataTableShowcase: React.FC = () => {
       {/* DataTable */}
       <Card>
         <CardContent className="p-0">
-          <DataTable
-            columns={getCurrentColumns()}
-            dataSource={getCurrentData()}
-            rowKey="id"
-            pagination={{
-              current: 1,
-              pageSize: 10,
-              total: getCurrentData().length,
-              showSizeChanger: true,
-              pageSizeOptions: [5, 10, 20, 50],
-            }}
-            rowSelection={{
-              type: 'checkbox',
-              selectedRowKeys: selectedRows,
-              onChange: (keys) => {
-                setSelectedRows(keys);
-                showToast.info(`Selected ${keys.length} items`);
-              },
-            }}
-            size="middle"
-            bordered={false}
-            title={() => (
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)} Data
-                </h3>
-                <div className="flex items-center space-x-2">
-                  <Badge variant="outline">
-                    {getCurrentData().length} total
-                  </Badge>
-                  {selectedRows.length > 0 && (
-                    <Badge variant="primary">
-                      {selectedRows.length} selected
+          {selectedTab === "users" && (
+            <DataTable<User>
+              columns={userColumns}
+              dataSource={usersData}
+              rowKey="id"
+              pagination={{
+                current: 1,
+                pageSize: 10,
+                total: usersData.length,
+                showSizeChanger: true,
+                pageSizeOptions: [5, 10, 20, 50],
+              }}
+              rowSelection={{
+                type: 'checkbox',
+                selectedRowKeys: selectedRows,
+                onChange: (keys) => {
+                  setSelectedRows(keys);
+                  showToast.info(`Selected ${keys.length} items`);
+                },
+              }}
+              size="middle"
+              bordered={false}
+              title={() => (
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Users Data
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline">
+                      {usersData.length} total
                     </Badge>
-                  )}
+                    {selectedRows.length > 0 && (
+                      <Badge variant="secondary">
+                        {selectedRows.length} selected
+                      </Badge>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-            onChange={(pagination, filters, sorter) => {
-              console.log('Table changed:', { pagination, filters, sorter });
-            }}
-          />
+              )}
+              onChange={(pagination, filters, sorter) => {
+                console.log('Table changed:', { pagination, filters, sorter });
+              }}
+            />
+          )}
+
+          {selectedTab === "sales" && (
+            <DataTable<Sale>
+              columns={salesColumns}
+              dataSource={salesData}
+              rowKey="id"
+              pagination={{
+                current: 1,
+                pageSize: 10,
+                total: salesData.length,
+                showSizeChanger: true,
+                pageSizeOptions: [5, 10, 20, 50],
+              }}
+              rowSelection={{
+                type: 'checkbox',
+                selectedRowKeys: selectedRows,
+                onChange: (keys) => {
+                  setSelectedRows(keys);
+                  showToast.info(`Selected ${keys.length} items`);
+                },
+              }}
+              size="middle"
+              bordered={false}
+              title={() => (
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Sales Data
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline">
+                      {salesData.length} total
+                    </Badge>
+                    {selectedRows.length > 0 && (
+                      <Badge variant="secondary">
+                        {selectedRows.length} selected
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
+              onChange={(pagination, filters, sorter) => {
+                console.log('Table changed:', { pagination, filters, sorter });
+              }}
+            />
+          )}
+
+          {selectedTab === "tasks" && (
+            <DataTable<Task>
+              columns={taskColumns}
+              dataSource={tasksData}
+              rowKey="id"
+              pagination={{
+                current: 1,
+                pageSize: 10,
+                total: tasksData.length,
+                showSizeChanger: true,
+                pageSizeOptions: [5, 10, 20, 50],
+              }}
+              rowSelection={{
+                type: 'checkbox',
+                selectedRowKeys: selectedRows,
+                onChange: (keys) => {
+                  setSelectedRows(keys);
+                  showToast.info(`Selected ${keys.length} items`);
+                },
+              }}
+              size="middle"
+              bordered={false}
+              title={() => (
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Tasks Data
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline">
+                      {tasksData.length} total
+                    </Badge>
+                    {selectedRows.length > 0 && (
+                      <Badge variant="secondary">
+                        {selectedRows.length} selected
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
+              onChange={(pagination, filters, sorter) => {
+                console.log('Table changed:', { pagination, filters, sorter });
+              }}
+            />
+          )}
         </CardContent>
       </Card>
 

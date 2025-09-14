@@ -1,89 +1,194 @@
-# beyond-ui
-# beyond-ui
+# Beyond-UI
 
-## Tailwind CSS Setup Required
+**A full-fledged React + TailwindCSS component library. Theme-agnostic, reusable, type-safe, and built for productive UIs.**
 
-**beyond-ui** components are styled using Tailwind CSS utility classes. To see the styled components, your app must:
+---
 
-1. Install Tailwind CSS (https://tailwindcss.com/docs/installation).
-2. Configure your tailwind.config.js to include your source files and also:
-   ```js
-   content: [
-     "./node_modules/@beyondcorp/beyond-ui/dist/**/*.js",
-     "./src/**/*.{js,ts,jsx,tsx}",
-     // ...your other content paths
-   ]
-   ```
-3. Import Tailwind’s stylesheet in your main entry (usually `import './index.css'` or similar).
+## 🚀 Overview
 
-**Note:** No CSS is bundled with the library. The consumer project must build Tailwind to activate all required styles, as with all Tailwind component libraries.
+Beyond-UI is a comprehensive collection of ready-to-use, themeable React UI components and hooks, built with TypeScript, TailwindCSS, and Vite. Inspired by the best of modern design systems, it’s built to be both design-consistent (via semantic theming) and easily composable for dashboards, apps, platforms, and SaaS.
 
-### Do I really need Tailwind in my project for beyond-ui components to be styled?
+- **Built for teams:** Use everywhere React and TailwindCSS run—admin panels, SaaS, dashboards, internal tools, consumer apps.
+- **Theme-agnostic:** Every style resolves to semantic Tailwind tokens (e.g., `bg-primary`), not hardcoded colors.
+- **Reusable hooks:** Utilities like `useDarkMode`, `useDebounce`, and more included.
+- **Customizable:** Extend via className or swap out theme tokens, with Storybook-ready demos.
 
-**Yes, for full theme-ability and correct Tailwind utility style application.**
+---
 
-- beyond-ui follows [Tailwind library best practices](https://tailwindcss.com/docs/using-with-preprocessors#using-with-libraries) and emits Tailwind class names, NOT bundled CSS.
-- This gives maximum flexibility: consumers can use their own Tailwind theme, purge unused UI classes, and have zero style conflicts.
+## 📦 Features
 
-**Alternatives:**
-- If you do NOT want consumers to use Tailwind, you would need to ship a pre-built CSS file with all required styles, and users would have to `import 'beyond-ui/styles.css'`.  
-  - This breaks Tailwind composability and is discouraged by Tailwind and most major UI libraries.
+- **20+ reusable, composable components:** Button, Input, Card, Modal, Navbar, Sidebar, Tabs, Table, Alert, Spinner, Badge... (see below)
+- **Variants/Theme support with [class-variance-authority (CVA)](https://cva.style/)**
+- **Super-charged hooks:** `useDarkMode`, `useDebounce`, `useLocalStorage`, `useToggle`, `useBreakpoint`
+- **Utility functions:** `cn()` (merge class names safely), default semantic `theme/default.ts`
+- **Storybook documentation for every component**
+- **Typed end-to-end (TypeScript)**
+- **Testing with Jest & React Testing Library**
+- **Easy Tailwind integration & custom theming**
+- **Out-of-the-box default theme/fallback**
+- **First-class DX: Vite, modern structure, peer deps for React/Tailwind**
+- **NPM published, ready for mass reuse**
 
-**Summary:**  
-To get fully themed, tree-shakable, future-proof components, consumers should add Tailwind. Only in legacy/CSS-bundling approaches should you ship CSS, and that would require a major change to your build and user story.
+---
 
-### Troubleshooting: Styles not applied in consumer project
+## ⚡️ Getting Started (Import CSS, No Tailwind Config Required)
 
-If you have installed Tailwind CSS but your beyond-ui components are unstyled, check:
+Beyond-UI now bundles a ready-to-use CSS file for all styling.  
+Just add this line to your app's entry file (e.g. main.tsx or index.js):
 
-1. **Tailwind config content:**  
-   Open your `tailwind.config.js` in the consuming app. Make sure you have something like:
+```js
+import '@beyondcorp/beyond-ui/dist/styles.css';
+```
 
-   ```js
-   module.exports = {
-     content: [
-       "./src/**/*.{js,ts,jsx,tsx}",
-       "./node_modules/@beyondcorp/beyond-ui/dist/**/*.{js,jsx,ts,tsx}",
-     ],
-     theme: {
-       // your theme config
-     },
-     plugins: [],
-   }
-   ```
+- You do **not** need to configure Tailwind content scanning for the library.
+- This CSS is built with [Tailwind CSS](https://tailwindcss.com/) for all components and utilities included in the library.
+- If you want to customize theme tokens (e.g. primary, secondary), you can still extend Tailwind’s theme.
 
-2. **Import Tailwind CSS:**  
-   Make sure your app's entry point (`src/index.js`, `src/main.tsx`, etc.) has:
-   ```js
-   import './index.css'; // or wherever your Tailwind CSS is output
-   ```
+---
 
-3. **Check build output:**  
-   Look in your compiled site's HTML dev tools. Search for Tailwind utilities (e.g., `class="bg-primary-500"`, `p-4`, etc.) injected into the class attributes of beyond-ui components. If present but not styled, Tailwind CSS is not being loaded.
+## 🎨 Theming
 
-4. **Purge and rebuild:**  
-   Delete your build output and `.next`, `dist`, or similar folders and restart the dev server. Sometimes Tailwind's JIT watcher misses node_modules changes the first time.
+Beyond-UI is **completely theme-agnostic**:
 
-5. **No duplicate Tailwind instances:**  
-   Make sure only one Tailwind is present in node_modules (check for accidental hoisting or duplicates).
+- Uses tokens like `bg-primary` not `bg-blue-500`.
+- Pulls colors from the consumer project’s `tailwind.config.js` if you optionally add it and rebuild the CSS.
+- Ships with a fallback default theme (`theme/default.ts`) for instant use.
 
-If after these steps styles are still missing, provide your exact consumer project tailwind.config.js and css imports for further support.
+To customize theme colors, do this before running `npm run build:lib` in your fork:
 
-### If Tailwind works but beyond-ui components are unstyled
+```js
+theme: {
+  extend: {
+    colors: {
+      primary: { ... },
+      secondary: { ... },
+      danger: { ... },
+      // ...refer to theme/default.ts for full palette
+    }
+  }
+}
+```
 
-- Double-check your tailwind.config.js:
+---
 
-  - The `content` **must** include the path to the built JS/CJS files in node_modules:
-    ```js
-    content: [
-      "./src/**/*.{js,ts,jsx,tsx}",
-      "./node_modules/@beyondcorp/beyond-ui/dist/**/*.{js,jsx,cjs,mjs,ts,tsx}"
-    ]
-    ```
-  - Restart your dev server after every tailwind.config.js/content change, so Tailwind JIT detects new files.
-- Make sure you have no `.npmignore`, `.gitignore`, or other config that would prevent node_modules/** imports or CSS output.
-- If you are using frameworks (Next.js, Vite), confirm your tailwind.config.js is at the project root and not shadowed by a monorepo/hoist.
-- Open the page and inspect beyond-ui elements in dev tools. If their classes look correct but they are not styled, it means Tailwind’s CSS did not include those utility classes (purged).
-- Try temporarily adding a utility like `bg-accent-700` in your consumer src/App.tsx and in a beyond-ui component. If it works in src/ but not in beyond-ui, the content config is misconfigured.
+## 🧩 Components
 
-If these checks don’t resolve the styling, please paste your consumer project’s tailwind.config.js content and your import statements for additional troubleshooting.
+| Name          | Features / Variants             |
+|---------------|---------------------------------|
+| Button        | Variants (primary, secondary, danger, ghost), Sizes (sm, md, lg), Full type safety |
+| Input         | Variants (default, error, success), Sizes, Icon support        |
+| Textarea      | Auto-resize, char counter       |
+| Select        | Dropdown, search, async         |
+| Checkbox      | Label, indeterminate            |
+| Radio         | Group support                   |
+| Switch        | Animation, boolean toggle       |
+| Card          | Header, body, footer slots      |
+| Modal         | Overlay, keyboard dismiss       |
+| Badge         | Variants (info, warning, error) |
+| Tabs          | Horizontal/vertical, variants   |
+| Table         | Sortable, customized cells      |
+| Alert         | Info/success/warning/danger     |
+| Toast         | Notifications, timeouts         |
+| Skeleton      | Loading states                  |
+| Spinner       | Loader, multiple sizes          |
+| Navbar, Sidebar | Layout primitives           |
+| StatsCard     | Dashboard blocks                |
+| ChartWrapper  | Recharts integration            |
+| ...           | More (see Storybook)            |
+
+---
+
+## 🧵 Hooks & Utilities
+
+| Hook                | Purpose                          |
+|---------------------|----------------------------------|
+| useDarkMode         | Toggle and persist theme         |
+| useDebounce         | Debounce values/input            |
+| useLocalStorage     | Persistent state                 |
+| useToggle           | Boolean flip and set             |
+| useBreakpoint       | Responsive breakpoint API        |
+
+| Utility | Description  |
+|---------|--------------|
+| cn()    | Merges class names with tailwind-merge |
+| defaultTheme | Fallback theme definitions |
+
+---
+
+## 🧑‍💻 Usage Example
+
+```tsx
+import { Button, Card, useBreakpoint } from '@beyondcorp/beyond-ui';
+import '@beyondcorp/beyond-ui/dist/styles.css';
+
+export default function Demo() {
+  const { isAbove } = useBreakpoint();
+  return (
+    <Card>
+      <Button variant="primary" size={isAbove('md') ? "lg" : "sm"}>
+        Click me
+      </Button>
+    </Card>
+  );
+}
+```
+
+---
+
+## 📖 Documentation & Storybook
+
+Every component and hook has a demo, props table, variant showcase, and usage guide—launch Storybook locally, or check the online docs (URL).
+
+- `npm run storybook` (from the repo)
+- Getting Started, Theming, and API docs included
+
+---
+
+## 🛠 Project Structure
+
+```
+beyond-ui/
+├─ src/
+│   ├─ components/
+│   ├─ hooks/
+│   ├─ utils/
+│   ├─ theme/
+│   └─ index.ts
+├─ .storybook/
+├─ tests/
+├─ tailwind.config.js
+├─ tsconfig.json
+├─ vite.config.ts
+├─ package.json
+└─ README.md
+```
+
+---
+
+## 🛤 Roadmap & Milestones
+
+- M1: Project setup, theme, utilities
+- M2: Core components (Button, Input, Card, Modal, Badge, ... )
+- M3: All reusable hooks
+- M4: Storybook & docs
+- M5: Complete Jest test coverage & accessibility
+- M6: npm package v1 stable release
+- M7: Dashboard, charts, advanced table, improved theming
+- See roadmap.md for complete breakdown.
+
+---
+
+## 🤝 Contributing
+
+- Contributions, PRs, and issues welcome!
+- Please see `/CONTRIBUTING.md` for details, coding standards, and branch workflow.
+
+---
+
+## 📝 License
+
+MIT © Beyond Corp, Soi Technology Solutions 2025
+
+---
+
+# Beyond-UI: Build clean, scalable UIs faster, with every detail documented and ready to use.
