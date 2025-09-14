@@ -55,3 +55,34 @@ export const Danger: Story = {
     </Alert>
   ),
 };
+
+export const FormErrorsUseCase: Story = {
+  render: () => (
+    <form className="w-80 flex flex-col gap-2 p-4 bg-gray-50 rounded-lg">
+      <Alert variant="danger">
+        <AlertTitle>Form Error</AlertTitle>
+        <AlertDescription>
+          Your password must be at least 8 characters. Please try again.
+        </AlertDescription>
+      </Alert>
+      <input
+        className="border-b border-gray-300 bg-transparent p-2 rounded focus:border-primary-600"
+        placeholder="Username"
+      />
+      <input
+        className="border-b border-gray-300 bg-transparent p-2 rounded focus:border-primary-600"
+        placeholder="Password"
+        type="password"
+      />
+    </form>
+  ),
+  name: "Form Error (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates Alert component used to display form errors above form fields, typical in UI form validation.",
+      },
+    },
+  },
+};

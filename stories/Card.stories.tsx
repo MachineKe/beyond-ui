@@ -72,3 +72,47 @@ export const Group: Story = {
     </div>
   ),
 };
+
+export const DashboardCardsUseCase: Story = {
+  render: () => (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Card variant="elevated">
+        <CardHeader>
+          <CardTitle>Revenue</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <span className="text-2xl font-bold">$18,500</span>
+          <p className="text-success-600 mt-2">+2.1% vs last week</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Notifications</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <span className="text-xl">5 New Alerts</span>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>User Profile</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div>
+            <span className="font-semibold">Jane Doe</span>
+            <p className="text-gray-500">jane@company.com</p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  ),
+  name: "Dashboard Cards (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Simulates a dashboard with different types of cards for stats, notifications, and user profile.",
+      },
+    },
+  },
+};

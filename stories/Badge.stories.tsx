@@ -38,3 +38,35 @@ export const Variants: Story = {
     </div>
   ),
 };
+
+export const NotificationBadgesUseCase: Story = {
+  render: () => (
+    <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-lg">
+      <div className="flex items-center gap-1">
+        <span>Inbox</span>
+        <Badge variant="danger">5</Badge>
+      </div>
+      <div className="flex items-center gap-1">
+        <span>Status</span>
+        <Badge variant="success">Online</Badge>
+      </div>
+      <div className="flex items-center gap-1">
+        <span>Warning</span>
+        <Badge variant="warning">Expiring</Badge>
+      </div>
+      <div className="flex items-center gap-1">
+        <span>Info</span>
+        <Badge variant="secondary">New</Badge>
+      </div>
+    </div>
+  ),
+  name: "Notification/Status Badges (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Showcases badges as notification counts, statuses, warnings, and info labels — modeling realistic UI scenarios.",
+      },
+    },
+  },
+};

@@ -54,3 +54,35 @@ export const All: Story = {
     </div>
   ),
 };
+
+export const SettingsPanelUseCase: Story = {
+  render: () => {
+    const [notif, setNotif] = React.useState(true);
+    const [dark, setDark] = React.useState(false);
+    return (
+      <div className="bg-gray-50 p-4 w-72 rounded-lg flex flex-col gap-5">
+        <div className="font-semibold mb-1">Settings</div>
+        <label className="flex items-center gap-2 justify-between">
+          <span>Enable Notifications</span>
+          <Switch checked={notif} onCheckedChange={setNotif} />
+        </label>
+        <label className="flex items-center gap-2 justify-between">
+          <span>Dark Mode</span>
+          <Switch checked={dark} onCheckedChange={setDark} />
+        </label>
+        <span className="mt-2 text-xs text-gray-500">
+          Notifications: {notif ? "On" : "Off"} | Theme: {dark ? "Dark" : "Light"}
+        </span>
+      </div>
+    );
+  },
+  name: "Settings Panel (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "A settings panel with two tracked switches: notifications and dark mode, showing real value state.",
+      },
+    },
+  },
+};

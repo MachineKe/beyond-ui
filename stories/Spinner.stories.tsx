@@ -34,3 +34,37 @@ export const InButton: Story = {
     </Button>
   ),
 };
+
+export const LoadingOverlayUseCase: Story = {
+  render: () => {
+    const [loading, setLoading] = React.useState(false);
+    const fetchData = () => {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 2000);
+    };
+    return (
+      <div className="relative w-96 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
+        {loading && (
+          <div className="absolute inset-0 bg-gray-200 bg-opacity-60 flex items-center justify-center z-10">
+            <Spinner className="h-8 w-8" />
+          </div>
+        )}
+        <div className="z-0 flex flex-col gap-2 items-center">
+          <span>Page Content Here</span>
+          <Button onClick={fetchData} disabled={loading}>
+            {loading ? "Loading..." : "Fetch new data"}
+          </Button>
+        </div>
+      </div>
+    );
+  },
+  name: "Loading Overlay (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Spinner displays over content while asynchronous fetch is in progress, as in typical loading overlays.",
+      },
+    },
+  },
+};

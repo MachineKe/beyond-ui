@@ -47,3 +47,44 @@ export const Sizes: Story = {
     </div>
   ),
 };
+
+export const FilterPanelUseCase: Story = {
+  render: () => {
+    const [selected, setSelected] = React.useState<string[]>(["inbox"]);
+    const filters = [
+      { id: "inbox", label: "Inbox" },
+      { id: "starred", label: "Starred" },
+      { id: "archived", label: "Archived" },
+    ];
+    const toggle = (id: string) => {
+      setSelected(sel =>
+        sel.includes(id) ? sel.filter(x => x !== id) : [...sel, id]
+      );
+    };
+
+    return (
+      <div className="bg-gray-50 p-4 w-60 rounded-lg flex flex-col gap-2">
+        <div className="font-semibold mb-1">Filters</div>
+        {filters.map(opt => (
+          <label key={opt.id} className="flex items-center gap-2 cursor-pointer">
+            <Checkbox
+              checked={selected.includes(opt.id)}
+              onCheckedChange={() => toggle(opt.id)}
+              size="md"
+            />
+            <span>{opt.label}</span>
+          </label>
+        ))}
+      </div>
+    );
+  },
+  name: "Filter Panel (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Real-world example using checkboxes to drive a UI filtering panel.",
+      },
+    },
+  },
+};

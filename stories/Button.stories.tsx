@@ -76,3 +76,23 @@ export const Variants: Story = {
     </div>
   ),
 };
+
+export const ToolbarUseCase: Story = {
+  render: () => (
+    <div className="flex items-center gap-2 bg-gray-50 p-4 rounded-lg shadow">
+      <Button variant="primary" size="md">Save</Button>
+      <Button variant="secondary" size="md">Cancel</Button>
+      <Button variant="danger" size="md">Delete</Button>
+      <Button variant="ghost" size="md">More</Button>
+    </div>
+  ),
+  name: "Toolbar (Real Use Case)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates a real toolbar with primary, secondary, danger, and ghost action buttons.",
+      },
+    },
+  },
+};
