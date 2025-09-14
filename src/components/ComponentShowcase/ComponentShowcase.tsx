@@ -465,7 +465,6 @@ const componentCategories = {
       { name: "DashboardGrid", id: "dashboard-grid" },
       { name: "Sidebar", id: "sidebar" },
       { name: "Navbar", id: "navbar" },
-      { name: "DataTable", id: "datatable" },
     ]
   }
 };
