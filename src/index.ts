@@ -19,6 +19,7 @@ export * from './components/Sidebar';
 export * from './components/DashboardHeader';
 export * from './components/DashboardLayout';
 export * from './components/DashboardGrid';
+export * from './components/DataTable';
 export * from './components/ComponentShowcase';
 
 // Hooks

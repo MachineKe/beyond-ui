@@ -422,6 +422,7 @@ import { StatsCard } from "../StatsCard";
 import { Switch } from "../Switch";
 import { Spinner } from "../Spinner";
 import { Skeleton } from "../Skeleton";
+import { DataTableShowcase } from "../DataTable/DataTableShowcase";
 
 // Component categories and their items
 const componentCategories = {
@@ -453,6 +454,7 @@ const componentCategories = {
       { name: "Modal", id: "modal" },
       { name: "Spinner", id: "spinner" },
       { name: "Skeleton", id: "skeleton" },
+      { name: "DataTable", id: "datatable" },
     ]
   },
   "Layout": {
@@ -462,6 +464,7 @@ const componentCategories = {
       { name: "DashboardGrid", id: "dashboard-grid" },
       { name: "Sidebar", id: "sidebar" },
       { name: "Navbar", id: "navbar" },
+      { name: "DataTable", id: "datatable" },
     ]
   }
 };
@@ -726,6 +729,35 @@ const componentDocs = {
       { name: "children", type: "ReactNode", required: true, description: "Dashboard page content" }
     ],
     component: showcasePreviewMap["dashboard-layout"]
+  },
+  datatable: {
+    name: "DataTable",
+    description: "A comprehensive table component with filtering, sorting, pagination, and row selection capabilities.",
+    example: `<DataTable
+  columns={columns}
+  dataSource={data}
+  rowKey="id"
+  pagination={{
+    current: 1,
+    pageSize: 10,
+    total: data.length,
+  }}
+  rowSelection={{
+    type: 'checkbox',
+    onChange: (keys, rows) => console.log('Selected:', keys, rows),
+  }}
+/>`,
+    props: [
+      { name: "columns", type: "Column[]", required: true, description: "Table column configuration" },
+      { name: "dataSource", type: "T[]", required: true, description: "Data to display in the table" },
+      { name: "rowKey", type: "string | function", default: "id", description: "Unique key for each row" },
+      { name: "pagination", type: "PaginationConfig | false", description: "Pagination configuration" },
+      { name: "rowSelection", type: "RowSelection", description: "Row selection configuration" },
+      { name: "loading", type: "boolean", default: "false", description: "Loading state" },
+      { name: "size", type: `"small" | "middle" | "large"`, default: "middle", description: "Table size" },
+      { name: "bordered", type: "boolean", default: "false", description: "Show borders" },
+    ],
+    component: <DataTableShowcase />
   },
   "dashboard-grid": {
     name: "DashboardGrid",
