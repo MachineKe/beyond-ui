@@ -331,6 +331,7 @@ const showcasePreviewMap: Record<string, React.FC> = {
       </div>
     );
   },
+  datatable: DataTableShowcase,
 };
 function ShowcaseAlertDemo() {
   return (
@@ -444,6 +445,7 @@ const componentCategories = {
       { name: "Avatar", id: "avatar" },
       { name: "StatsCard", id: "statscard" },
       { name: "Tabs", id: "tabs" },
+      { name: "DataTable", id: "datatable" },
     ]
   },
   "Feedback": {
@@ -454,7 +456,6 @@ const componentCategories = {
       { name: "Modal", id: "modal" },
       { name: "Spinner", id: "spinner" },
       { name: "Skeleton", id: "skeleton" },
-      { name: "DataTable", id: "datatable" },
     ]
   },
   "Layout": {
