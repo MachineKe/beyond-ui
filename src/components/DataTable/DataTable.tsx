@@ -79,11 +79,15 @@ const cellVariants = cva(
 );
 
 // Filter component for individual columns
-const ColumnFilter: React.FC<{
-  column: Column;
+const ColumnFilter = <T extends Record<string, any>>({
+  column,
+  value,
+  onChange,
+}: {
+  column: Column<T>;
   value: any;
   onChange: (value: any) => void;
-}> = ({ column, value, onChange }) => {
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tempValue, setTempValue] = useState(value || '');
 
@@ -300,14 +304,17 @@ export const DataTable = <T extends Record<string, any>>({
 
   // Handle sorting
   const handleSort = useCallback((columnKey: string) => {
-    const newDirection = 
-      sortConfig.key === columnKey && sortConfig.direction === 'asc' 
-        ? 'desc' 
-        : sortConfig.key === columnKey && sortConfig.direction === 'desc'
-        ? null
-        : 'asc';
-    
-    const newSortConfig = { key: columnKey, direction: newDirection };
+    let newDirection: 'asc' | 'desc' | null;
+    if (sortConfig.key !== columnKey) {
+      newDirection = 'asc';
+    } else if (sortConfig.direction === 'asc') {
+      newDirection = 'desc';
+    } else if (sortConfig.direction === 'desc') {
+      newDirection = null;
+    } else {
+      newDirection = 'asc';
+    }
+    const newSortConfig: SortConfig = { key: columnKey, direction: newDirection };
     setSortConfig(newSortConfig);
     onSort?.(newSortConfig);
     onChange?.(pagination as PaginationConfig, filters, newSortConfig);
@@ -536,7 +543,7 @@ export const DataTable = <T extends Record<string, any>>({
                         "hover:bg-gray-50 transition-colors",
                         isSelected && "bg-primary-50"
                       )}
-                      {...props.onRow?.(record, index)}
+                      {...(props.onRow?.(record, index) ?? {})}
                     >
                       {rowSelection && (
                         <td className={cn(cellVariants({ size }))}>
