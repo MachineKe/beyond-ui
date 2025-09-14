@@ -46,28 +46,135 @@ import '@beyondcorp/beyond-ui/dist/styles.css';
 
 ---
 
-## 🎨 Theming
+## 🎨 Theming Sidebar & DashboardLayout
 
 Beyond-UI is **completely theme-agnostic**:
+- All UI is styled with semantic tokens (e.g., `bg-primary-50`, `text-primary-700`, `border-primary-600`) rather than direct color values.
+- Defaults to Tailwind's built-in palette (e.g., gray/white) but is overrideable using Tailwind config.
+- Ships with a fallback theme ([`theme/default.ts`](src/theme/default.ts)) for instant appearance.
 
-- Uses tokens like `bg-primary` not `bg-blue-500`.
-- Pulls colors from the consumer project’s `tailwind.config.js` if you optionally add it and rebuild the CSS.
-- Ships with a fallback default theme (`theme/default.ts`) for instant use.
+### Adding Sidebar Items in DashboardLayout
 
-To customize theme colors, do this before running `npm run build:lib` in your fork:
+To have a configurable sidebar within your dashboard layout:
+
+1. **Define menu items** as an array of `MenuItem` objects (each with `id`, `label`, `icon`, `href`, `badge`, and optional `children` for nested menus).
+2. **Pass them to `DashboardLayout`** using the `sidebarMenuItems` prop. 
+3. **Control the highlighted menu** by managing the `activeSidebarItem` prop.
+4. **Handle user interaction** with `onSidebarItemClick`.
+
+**Example:**
+```tsx
+import { DashboardLayout } from "@beyondcorp/beyond-ui";
+import { Home, BarChart3, Users } from "lucide-react";
+import '@beyondcorp/beyond-ui/dist/styles.css';
+
+const menuItems = [
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    icon: <Home className="h-5 w-5" />,
+    href: "/dashboard",
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    icon: <BarChart3 className="h-5 w-5" />,
+    href: "/analytics",
+    badge: "New",
+  },
+  {
+    id: "users",
+    label: "Users",
+    icon: <Users className="h-5 w-5" />,
+    children: [
+      {
+        id: "all-users",
+        label: "All Users",
+        icon: <Users className="h-4 w-4" />,
+      },
+    ],
+  },
+];
+export default function DemoDashboard() {
+  const [active, setActive] = React.useState("dashboard");
+  return (
+    <DashboardLayout
+      sidebarMenuItems={menuItems}
+      activeSidebarItem={active}
+      onSidebarItemClick={setActive}
+    >
+      <main>
+        {/* Main dashboard content goes here */}
+      </main>
+    </DashboardLayout>
+  );
+}
+```
+You can build any sidebar structure—single-level, nested, badges—using this pattern and pass it to the layout.
+
+### Customizing Sidebar/DashboardLayout Colors
+
+To override the sidebar background, accent, and dashboard colors, extend your `tailwind.config.js` with your color palette:
 
 ```js
 theme: {
   extend: {
     colors: {
-      primary: { ... },
-      secondary: { ... },
-      danger: { ... },
-      // ...refer to theme/default.ts for full palette
+      primary: {
+        50: '#f2f8ff',     // sidebar background
+        100: '#dbeafe',
+        600: '#2563eb',    // sidebar brand area (logo bg, borders)
+        700: '#1d4ed8',
+      },
+      secondary: {
+        50: '#f4f6fa',
+        700: '#3b82f6',
+      },
+      danger: {
+        50: '#fef2f2',
+        600: '#dc2626',
+      },
+      // You can add other tokens
+      // See theme/default.ts for all required keys
     }
   }
 }
 ```
+
+Sidebar, DashboardLayout, and badge/notification UI use these tokens for their background, text, borders, and hover states.
+
+**Example: Custom Sidebar**
+```tsx
+import { Sidebar } from "@beyondcorp/beyond-ui";
+import '@beyondcorp/beyond-ui/dist/styles.css';
+
+// Nested menu, custom badges
+const menuItems = [
+  {
+    id: "main",
+    label: "Main",
+    icon: <span>M</span>,
+    badge: "Hot",
+    children: [
+      {
+        id: "nested1",
+        label: "Nested Item",
+        icon: <span>N</span>,
+        badge: "New",
+      },
+    ]
+  },
+];
+
+<Sidebar
+  menuItems={menuItems}
+  className="shadow-xl"
+/>
+```
+
+### Fallback Theme
+
+If your Tailwind config doesn't specify semantic tokens, Beyond-UI defaults to the palette in [`theme/default.ts`](src/theme/default.ts), ensuring that all layouts/components always render.
 
 ---
 
@@ -192,3 +299,4 @@ MIT © Beyond Corp, Soi Technology Solutions 2025
 ---
 
 # Beyond-UI: Build clean, scalable UIs faster, with every detail documented and ready to use.
+
