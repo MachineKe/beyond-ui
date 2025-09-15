@@ -25,12 +25,10 @@ import { DashboardHeaderExample } from '../DashboardHeader/DashboardHeader.examp
 import { DashboardGridExample } from '../DashboardGrid/DashboardGrid.example';
 import { DataTableShowcase } from '../DataTable/DataTableShowcase';
 import { AuthShowcase } from '../Auth/AuthShowcase';
-
 import { LoginFormExample } from "../Auth/LoginForm.example";
 import { SignupFormExample } from "../Auth/SignupForm.example";
 import { ProtectedRouteExample } from "../Auth/ProtectedRoute.example";
-
-// Additional showcase modules can be added here.
+import { PasswordResetFormExample } from "../Auth/PasswordResetForm.example";
 
 export const showcaseRegistry: Record<string, React.FC> = {
   button: ButtonExample,
@@ -57,6 +55,7 @@ export const showcaseRegistry: Record<string, React.FC> = {
   auth: AuthShowcase,
   login: LoginFormExample,
   signup: SignupFormExample,
+  "password-reset": PasswordResetFormExample,
   shield: ProtectedRouteExample
   // Extend with other demos as needed
 };

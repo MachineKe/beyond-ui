@@ -70,6 +70,7 @@ const componentCategories = {
       { name: "Auth System", id: "auth" },
       { name: "Login Page", id: "login" },
       { name: "Signup Page", id: "signup" },
+      { name: "Password Reset", id: "password-reset" },
       { name: "!isAuthenticated Shield", id: "shield" },
     ]
   },

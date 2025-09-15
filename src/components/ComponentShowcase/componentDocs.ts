@@ -187,5 +187,16 @@ export const componentDocs = {
     description: "Demo of authentication UI and flows.",
     example: `<AuthShowcase />`,
     props: []
-  }
+  },
+  "password-reset": {
+    name: "Password Reset",
+    description: "Showcases the reusable PasswordResetForm component, allowing users to request a password reset via email.",
+    example: `<PasswordResetForm onReset={email => { ... }} />`,
+    props: [
+      { name: "onReset", type: "(email: string) => Promise<void> | void", description: "Submit reset request callback" },
+      { name: "isLoading", type: "boolean", description: "Loading indicator" },
+      { name: "successMessage", type: "string", description: "Message displayed on success" },
+      { name: "errorMessage", type: "string", description: "Error feedback message" }
+    ],
+  },
 };
