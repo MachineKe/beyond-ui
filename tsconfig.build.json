@@ -14,6 +14,8 @@
     "declarationDir": "./dist",
     "strict": true,
     "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "rootDir": "src"
   },
