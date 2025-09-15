@@ -163,6 +163,25 @@ export const componentDocs = {
     example: `<DataTable columns={[]} dataSource={[]} />`,
     props: []
   },
+  // --- AUTHENTICATION DEMOS ---
+  login: {
+    name: "Login Page",
+    description: "Showcases the reusable LoginForm component as a full login page example.",
+    example: `<LoginForm />`,
+    props: []
+  },
+  signup: {
+    name: "Signup Page",
+    description: "Showcases the reusable SignupForm component as a full signup page example.",
+    example: `<SignupForm />`,
+    props: []
+  },
+  shield: {
+    name: "!isAuthenticated Shield",
+    description: "ProtectedRoute gate which only renders content when authenticated; otherwise shows fallback.",
+    example: `<ProtectedRoute>Protected Content</ProtectedRoute>`,
+    props: []
+  },
   auth: {
     name: "Auth System",
     description: "Demo of authentication UI and flows.",

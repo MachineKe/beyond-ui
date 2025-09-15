@@ -23,9 +23,12 @@ import { NavbarExample } from '../Navbar/Navbar.example';
 import { DashboardLayoutExample } from '../DashboardLayout/DashboardLayout.example';
 import { DashboardHeaderExample } from '../DashboardHeader/DashboardHeader.example';
 import { DashboardGridExample } from '../DashboardGrid/DashboardGrid.example';
-
 import { DataTableShowcase } from '../DataTable/DataTableShowcase';
 import { AuthShowcase } from '../Auth/AuthShowcase';
+
+import { LoginFormExample } from "../Auth/LoginForm.example";
+import { SignupFormExample } from "../Auth/SignupForm.example";
+import { ProtectedRouteExample } from "../Auth/ProtectedRoute.example";
 
 // Additional showcase modules can be added here.
 
@@ -51,6 +54,9 @@ export const showcaseRegistry: Record<string, React.FC> = {
   "dashboard-header": DashboardHeaderExample,
   "dashboard-grid": DashboardGridExample,
   datatable: DataTableShowcase,
-  auth: AuthShowcase
+  auth: AuthShowcase,
+  login: LoginFormExample,
+  signup: SignupFormExample,
+  shield: ProtectedRouteExample
   // Extend with other demos as needed
 };
