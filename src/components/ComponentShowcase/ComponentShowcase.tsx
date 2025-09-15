@@ -19,7 +19,7 @@ import {
   MousePointer,
   AlertCircle,
   BarChart3,
-  Settings
+  Settings, Shield
 } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { Button } from "../Button";
@@ -332,6 +332,7 @@ const showcasePreviewMap: Record<string, React.FC> = {
     );
   },
   datatable: DataTableShowcase,
+  auth: AuthShowcase,
 };
 function ShowcaseAlertDemo() {
   return (
@@ -424,6 +425,7 @@ import { Switch } from "../Switch";
 import { Spinner } from "../Spinner";
 import { Skeleton } from "../Skeleton";
 import { DataTableShowcase } from "../DataTable/DataTableShowcase";
+import { AuthShowcase } from "../Auth/AuthShowcase";
 
 // Component categories and their items
 const componentCategories = {
@@ -456,6 +458,12 @@ const componentCategories = {
       { name: "Modal", id: "modal" },
       { name: "Spinner", id: "spinner" },
       { name: "Skeleton", id: "skeleton" },
+    ]
+  },
+  "Authentication": {
+    icon: <Shield className="h-4 w-4" />,
+    components: [
+      { name: "Auth System", id: "auth" },
     ]
   },
   "Layout": {

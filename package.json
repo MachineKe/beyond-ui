@@ -1,6 +1,6 @@
 {
   "name": "@beyondcorp/beyond-ui",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "A comprehensive React UI component library built with TypeScript, TailwindCSS, and CVA",
   "type": "module",
   "main": "dist/index.js",
@@ -45,15 +45,19 @@
     "tailwindcss": ">=3.0.0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/prismjs": "^1.26.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.344.0",
     "prismjs": "^1.30.0",
+    "react-hook-form": "^7.62.0",
     "react-hot-toast": "^2.4.1",
     "recharts": "^2.8.0",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
@@ -70,6 +74,7 @@
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
