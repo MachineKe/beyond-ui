@@ -33,7 +33,16 @@ const barrelInputs = [
   "src/hooks/useToggle.ts",
   "src/utils/cn.ts",
   "src/theme/default.ts",
-  "src/index.ts"
+  // Add all auth and context modules as explicit inputs:
+  "src/contexts/AuthContext.tsx",
+  "src/components/Auth/AuthShowcase.tsx",
+  "src/components/Auth/LoginForm.tsx",
+  "src/components/Auth/SignupForm.tsx",
+  "src/components/Auth/PasswordResetForm.tsx",
+  "src/components/Auth/ProtectedRoute.tsx",
+  "src/index.ts",
+  "src/services/authService.ts"
+
 ];
 
 const externals = [
@@ -46,10 +55,16 @@ const externals = [
   "class-variance-authority",
   "@radix-ui/react-slot",
   "lucide-react",
-  "react-hot-toast"
+  "react-hot-toast",
+  "react-hook-form",
+  "@hookform/resolvers/zod",
+  "zod",
+  "react-router-dom",
+  "js-cookie",
+  "recharts",
+  "prismjs"
 ];
 
-// Helper: treat all subpath imports as external too
 const externalFunc = (id) =>
   externals.some((pkg) => id === pkg || id.startsWith(pkg + "/"));
 
