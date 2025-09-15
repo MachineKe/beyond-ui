@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run build:css && tsc && vite build",
     "build:css": "tailwindcss -i ./src/styles/lib.css -o ./dist/styles.css --content \"./dist/components/**/*.{js,jsx}\" --minify",
     "build:lib": "rollup -c && tsc --project tsconfig.build.json --emitDeclarationOnly && npm run build:css",
     "lint": "eslint .",
