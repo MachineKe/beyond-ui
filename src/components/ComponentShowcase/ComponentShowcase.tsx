@@ -67,10 +67,10 @@ const componentCategories = {
   Authentication: {
     icon: <Shield className="h-4 w-4" />,
     components: [
+      { name: "Auth System", id: "auth" },
       { name: "Login Page", id: "login" },
       { name: "Signup Page", id: "signup" },
       { name: "!isAuthenticated Shield", id: "shield" },
-      { name: "Auth System", id: "auth" }
     ]
   },
   Layout: {
