@@ -33,16 +33,10 @@ const barrelInputs = [
   "src/hooks/useToggle.ts",
   "src/utils/cn.ts",
   "src/theme/default.ts",
-  // Add all auth and context modules as explicit inputs:
-  "src/contexts/AuthContext.tsx",
-  "src/components/Auth/AuthShowcase.tsx",
-  "src/components/Auth/LoginForm.tsx",
-  "src/components/Auth/SignupForm.tsx",
-  "src/components/Auth/PasswordResetForm.tsx",
-  "src/components/Auth/ProtectedRoute.tsx",
+  "src/contexts/index.ts",
+  "src/components/Auth/index.ts",
   "src/index.ts",
-  "src/services/authService.ts"
-
+  "src/services/index.ts"
 ];
 
 const externals = [
