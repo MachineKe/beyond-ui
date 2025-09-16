@@ -338,7 +338,7 @@ export const BlogPostExample: React.FC = () => (
         <article className="prose prose-lg max-w-none">
           <header className="mb-8">
             <div className="flex items-center space-x-2 mb-4">
-              <Badge variant="primary">Technology</Badge>
+              <Badge variant="default">Technology</Badge>
               <Badge variant="outline">React</Badge>
             </div>
             
