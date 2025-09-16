@@ -163,6 +163,43 @@ export const componentDocs = {
     example: `<DataTable columns={[]} dataSource={[]} />`,
     props: []
   },
+  "page-layout": {
+    name: "Page Layout",
+    description: "Flexible, semantic layout system for landing pages, products, blogs, and more. Compose with PageHeader, PageHero, PageContent, PageSidebar, and PageFooter for complete responsive UIs.",
+    example: `import { PageLayout, PageHeader, PageContent, PageFooter } from "@/components/PageLayout";
+
+function Example() {
+  return (
+    <PageLayout variant="default" maxWidth="xl">
+      <PageHeader>
+        <nav>
+          <span>My App</span>
+        </nav>
+      </PageHeader>
+      <PageContent maxWidth="lg">
+        <h1>Welcome!</h1>
+        <p>Your content here...</p>
+      </PageContent>
+      <PageFooter variant="simple">
+        <p>&copy; 2024 My App. All rights reserved.</p>
+      </PageFooter>
+    </PageLayout>
+  );
+}`,
+    props: [
+      { name: "variant", type: "\"default\"|\"centered\"|\"sidebar\"|\"landing\"|\"product\"|\"blog\"", default: "\"default\"", description: "Sets page color and layout preset" },
+      { name: "maxWidth", type: "\"none\"|\"sm\"|\"md\"|\"lg\"|\"xl\"|\"2xl\"|\"full\"", default: "\"xl\"", description: "Limits overall page width for content" },
+      { name: "contentLayout", type: "\"default\"|\"centered\"|\"sidebar\"|\"fullWidth\"", default: "\"default\"", description: "Layout mode for PageLayoutContent" },
+      { name: "contentSpacing", type: "\"none\"|\"sm\"|\"md\"|\"lg\"|\"xl\"", default: "\"md\"", description: "Vertical padding spacing" },
+      { name: "children", type: "ReactNode", description: "Page structure (usually header, content, sidebar, footer)" },
+      // Optionally highlight subcomponent props
+      { name: "PageHeader", type: "Sticky/Transparent, children", description: "Header settings for navigation bar" },
+      { name: "PageHero", type: "fullHeight, backgroundImage, overlay, children", description: "Hero section for landing visuals" },
+      { name: "PageContent", type: "maxWidth, children", description: "Content area for main body text/components" },
+      { name: "PageSidebar", type: "position, width, children", description: "Sidebar area (e.g. for menu or extra info)" },
+      { name: "PageFooter", type: "variant, children", description: "Footer configuration" }
+    ]
+  },
   // --- AUTHENTICATION DEMOS ---
   login: {
     name: "Login Page",

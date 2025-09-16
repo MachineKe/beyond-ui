@@ -78,6 +78,7 @@ const componentCategories = {
     icon: <Layout className="h-4 w-4" />,
     components: [
       { name: "DashboardLayout", id: "dashboard-layout" },
+      { name: "Page Layout", id: "page-layout" },
       { name: "DashboardGrid", id: "dashboard-grid" },
       { name: "Sidebar", id: "sidebar" },
       { name: "Navbar", id: "navbar" }

@@ -29,6 +29,8 @@ import { LoginFormExample } from "../Auth/LoginForm.example";
 import { SignupFormExample } from "../Auth/SignupForm.example";
 import { ProtectedRouteExample } from "../Auth/ProtectedRoute.example";
 import { PasswordResetFormExample } from "../Auth/PasswordResetForm.example";
+import { PageLayoutShowcase } from '../PageLayout/PageLayoutShowcase';
+
 
 
 export const showcaseRegistry: Record<string, React.FC> = {
@@ -57,6 +59,7 @@ export const showcaseRegistry: Record<string, React.FC> = {
   login: LoginFormExample,
   signup: SignupFormExample,
   "password-reset": PasswordResetFormExample,
-  shield: ProtectedRouteExample
+  shield: ProtectedRouteExample,
+  "page-layout": PageLayoutShowcase
   // Extend with other demos as needed
 };
