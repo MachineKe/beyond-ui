@@ -30,6 +30,7 @@ import { SignupFormExample } from "../Auth/SignupForm.example";
 import { ProtectedRouteExample } from "../Auth/ProtectedRoute.example";
 import { PasswordResetFormExample } from "../Auth/PasswordResetForm.example";
 
+
 export const showcaseRegistry: Record<string, React.FC> = {
   button: ButtonExample,
   input: InputExample,

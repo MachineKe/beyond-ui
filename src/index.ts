@@ -22,6 +22,7 @@ export * from './components/DashboardGrid';
 export * from './components/DataTable';
 export * from './components/ComponentShowcase';
 export * from './components/Auth';
+export * from './components/PageLayout';
 
 // Hooks
 export * from './hooks/useDarkMode';
