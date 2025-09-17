@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  ArrowRight, 
-  Zap, 
-  Palette, 
-  Code, 
-  Shield, 
+import {
+  ArrowRight,
+  Zap,
+  Palette,
+  Code,
+  Shield,
   Star,
   CheckCircle,
   Github,
@@ -17,13 +17,13 @@ import {
   TrendingUp,
   Heart
 } from 'lucide-react';
-import { 
-  PageLayout, 
-  PageHeader, 
-  PageHero, 
-  PageContent, 
+import {
+  PageLayout,
+  PageHeader,
+  PageHero,
+  PageContent,
   PageFooter,
-  PageLayoutContent 
+  PageLayoutContent
 } from '../PageLayout';
 import { Button } from '../Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../Card';
@@ -31,11 +31,27 @@ import { Badge } from '../Badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../Avatar';
 import { StatsCard } from '../StatsCard';
 import { ComponentShowcase } from '../ComponentShowcase';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Professional Landing Page for Beyond UI Component Library
  * Demonstrates the library's capabilities while driving user engagement
  */
+const ShowcaseNavButton: React.FC = () => {
+  const navigate = useNavigate();
+  return (
+    <Button
+      variant="primary"
+      size="xl"
+      onClick={() => navigate('/showcase')}
+      type="button"
+    >
+      <Code className="mr-2 h-5 w-5" />
+      View Full Showcase
+      <ArrowRight className="ml-2 h-5 w-5" />
+    </Button>
+  );
+};
 export const LandingPage: React.FC = () => {
   return (
     <PageLayout variant="landing" maxWidth="full">
@@ -337,15 +353,7 @@ export const LandingPage: React.FC = () => {
               Explore our comprehensive component library with live examples, 
               code snippets, and interactive documentation.
             </p>
-            <Button 
-              variant="primary" 
-              size="lg" 
-              className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Code className="mr-2 h-5 w-5" />
-              View Full Showcase
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <ShowcaseNavButton />
           </div>
 
           {/* Embedded Component Showcase Preview */}
