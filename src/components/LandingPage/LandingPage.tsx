@@ -32,6 +32,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '../Avatar';
 import { StatsCard } from '../StatsCard';
 import { ComponentShowcase } from '../ComponentShowcase';
 import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../DashboardLayout';
+import { DashboardLayoutExample } from '../DashboardLayout/DashboardLayout.example';
+import { AuthShowcase } from '../Auth';
 
 /**
  * Professional Landing Page for Beyond UI Component Library
@@ -357,49 +360,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Embedded Component Showcase Preview */}
-          <Card className="overflow-hidden shadow-2xl border-0">
-            <div className="bg-gradient-to-r from-primary-500 to-purple-600 p-6">
-              <div className="flex items-center justify-between text-white">
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                </div>
-                <div className="text-sm font-medium">Beyond UI Component Showcase</div>
-                <div className="flex items-center space-x-2">
-                  <Monitor className="h-4 w-4" />
-                  <Smartphone className="h-4 w-4 opacity-60" />
-                </div>
-              </div>
-            </div>
-            <div className="h-96 bg-white overflow-hidden">
-              {/* Simplified preview of the ComponentShowcase */}
-              <div className="h-full flex">
-                <div className="w-64 bg-gray-50 border-r border-gray-200 p-4">
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-20"></div>
-                    <div className="h-3 bg-gray-300 rounded w-16 ml-4"></div>
-                    <div className="h-3 bg-primary-200 rounded w-14 ml-4"></div>
-                    <div className="h-3 bg-gray-300 rounded w-18 ml-4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-24 mt-4"></div>
-                    <div className="h-3 bg-gray-300 rounded w-12 ml-4"></div>
-                    <div className="h-3 bg-gray-300 rounded w-16 ml-4"></div>
-                  </div>
-                </div>
-                <div className="flex-1 p-6">
-                  <div className="space-y-4">
-                    <div className="h-6 bg-gray-200 rounded w-32"></div>
-                    <div className="h-4 bg-gray-300 rounded w-64"></div>
-                    <div className="flex space-x-2 mt-6">
-                      <div className="h-10 bg-primary-500 rounded w-20"></div>
-                      <div className="h-10 bg-gray-200 rounded w-20"></div>
-                      <div className="h-10 bg-success-500 rounded w-20"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
+          <AuthShowcase/>
         </div>
       </section>
 
