@@ -30,27 +30,22 @@ import { Card, CardHeader, CardTitle, CardContent } from '../Card';
 import { Badge } from '../Badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../Avatar';
 import { StatsCard } from '../StatsCard';
-import { ComponentShowcase } from '../ComponentShowcase';
-import { useNavigate } from 'react-router-dom';
-import { DashboardLayout } from '../DashboardLayout';
-import { DashboardLayoutExample } from '../DashboardLayout/DashboardLayout.example';
-import { AuthShowcase } from '../Auth';
+import { Link } from 'react-router-dom';
+import { AuthShowcase } from '../Auth/AuthShowcase';
 
 /**
  * Professional Landing Page for Beyond UI Component Library
  * Demonstrates the library's capabilities while driving user engagement
  */
 const ShowcaseNavButton: React.FC = () => {
-  const navigate = useNavigate();
   return (
     <Button
       variant="primary"
       size="xl"
-      onClick={() => navigate('/showcase')}
       type="button"
     >
       <Code className="mr-2 h-5 w-5" />
-      View Full Showcase
+      <Link to="/showcase">View Full Showcase</Link>
       <ArrowRight className="ml-2 h-5 w-5" />
     </Button>
   );
@@ -132,7 +127,7 @@ export const LandingPage: React.FC = () => {
                 className="px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <Code className="mr-3 h-6 w-6" />
-                Explore Components
+                <Link to="/showcase">Explore Components</Link>
                 <ArrowRight className="ml-3 h-6 w-6" />
               </Button>
               <Button 
@@ -141,7 +136,7 @@ export const LandingPage: React.FC = () => {
                 className="px-8 py-4 text-lg font-semibold bg-white/80 backdrop-blur-sm hover:bg-white transition-all duration-300"
               >
                 <Github className="mr-3 h-6 w-6" />
-                View on GitHub
+                <Link to="https://github.com/MachineKe/beyond-ui">View on GitHub</Link>
               </Button>
             </div>
 

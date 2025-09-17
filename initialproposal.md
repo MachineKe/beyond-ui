@@ -1,4 +1,4 @@
-📝 Prompt: Build Beyond-UI (Full-Fledged End-to-End UI Library)
+📝 Build Beyond-UI (Full-Fledged End-to-End UI Library)
 Goal:
  Build a complete UI component library called Beyond-UI, based on React + Vite + TailwindCSS + TypeScript, published to npm, with reusable components, hooks, and full documentation.
 
@@ -240,8 +240,6 @@ npm publishing scripts
 
 
 
-📌 Instruction for AI:
- Use the above requirements to generate the full codebase for Beyond-UI. Implement every step (setup, components, hooks, utils, storybook, tests, build, publish). The output should be a ready-to-run monorepo that can be cloned, installed, built, and published directly.
 
 
 
