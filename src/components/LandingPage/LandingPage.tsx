@@ -66,7 +66,7 @@ export const LandingPage: React.FC = () => {
                 Showcase
               </a>
               <Button variant="primary" className="shadow-lg hover:shadow-xl transition-shadow">
-                Get Started
+                Get Started 
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </nav>
@@ -512,8 +512,19 @@ export const LandingPage: React.FC = () => {
           <div className="border-t border-gray-700 pt-8 pb-4">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <p className="text-gray-300 text-sm">
-                &copy; 2024 Beyond UI. All rights reserved.
+                &copy; 2025 Beyond UI. All rights reserved.
               </p>
+              <p className="text-gray-400 text-sm mt-2 md:mt-0">
+            Made with ❤️ by{' '}
+            <a 
+              href="https://samaritansystem.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-amber-400 hover:text-amber-300 transition-colors"
+            >
+              Samaritan
+            </a>
+          </p>
               <div className="flex items-center space-x-6 mt-4 md:mt-0">
                 <a href="#" className="text-gray-300 hover:text-white text-sm transition-colors">
                   Privacy Policy

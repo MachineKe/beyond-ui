@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { ComponentShowcase } from './components/ComponentShowcase';
+import { LandingPage } from './components/LandingPage';
 
 function App() {
   return (
-    <ComponentShowcase />
+    <LandingPage />
   );
 }
 
