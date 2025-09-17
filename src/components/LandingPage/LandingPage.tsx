@@ -15,7 +15,9 @@ import {
   Monitor,
   Users,
   TrendingUp,
-  Heart
+  Heart,
+  Linkedin,
+  Package
 } from 'lucide-react';
 import {
   PageLayout,
@@ -136,7 +138,7 @@ export const LandingPage: React.FC = () => {
                 className="px-8 py-4 text-lg font-semibold bg-white/80 backdrop-blur-sm hover:bg-white transition-all duration-300"
               >
                 <Github className="mr-3 h-6 w-6" />
-                <Link to="https://github.com/MachineKe/beyond-ui">View on GitHub</Link>
+                <Link to="https://github.com/MachineKe/beyond-ui" target="_blank">View on GitHub</Link>
               </Button>
             </div>
 
@@ -385,7 +387,7 @@ export const LandingPage: React.FC = () => {
                   className="px-10 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <Code className="mr-3 h-6 w-6" />
-                  Start Building Now
+                  <Link to="https://www.npmjs.com/package/@beyondcorp/beyond-ui" target="_blank">Start Building Now</Link>
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
                 <Button 
@@ -394,7 +396,7 @@ export const LandingPage: React.FC = () => {
                   className="px-10 py-4 text-lg font-semibold bg-white hover:bg-gray-50 transition-all duration-300"
                 >
                   <Github className="mr-3 h-6 w-6" />
-                  Star on GitHub
+                  <Link to="https://github.com/MachineKe/beyond-ui" target="_blank">Star on GitHub</Link>
                 </Button>
               </div>
 
@@ -439,12 +441,19 @@ export const LandingPage: React.FC = () => {
               <div className="flex space-x-4">
                 <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10">
                   <Github className="h-5 w-5" />
+                  <Link to="https://github.com/MachineKe/beyond-ui" target="_blank">Github</Link>
                 </Button>
                 <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10">
-                  <Twitter className="h-5 w-5" />
+                  <Package className="h-5 w-5" />
+                  <Link to="https://www.npmjs.com/package/@beyondcorp/beyond-ui" target="_blank">NPM</Link>
                 </Button>
                 <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10">
-                  <Mail className="h-5 w-5" />
+                  <Linkedin className="h-5 w-5" />
+                  <Link to="https://www.linkedin.com/company/soi-technology-solutions" target="_blank">Linkedin</Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10">
+                  <Mail className="h-5 w-5" ></Mail>
+                  <Link to="mailto:ui@beyondsoftwares.com" target="_blank">Email</Link>
                 </Button>
               </div>
             </div>
