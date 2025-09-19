@@ -25,7 +25,8 @@ import {
   PageHero,
   PageContent,
   PageFooter,
-  PageLayoutContent
+  PageLayoutContent,
+  PageLayoutShowcase
 } from '../PageLayout';
 import { Button } from '../Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../Card';
@@ -81,8 +82,11 @@ export const LandingPage: React.FC = () => {
               <a href="#showcase" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">
                 Showcase
               </a>
+              <a href="#templates" className="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+                Templates
+              </a>
               <Button variant="primary" className="shadow-lg hover:shadow-xl transition-shadow">
-                Get Started 
+                <Link to="https://www.npmjs.com/package/@beyondcorp/beyond-ui" target="_blank">Get Started </Link>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </nav>
@@ -361,6 +365,13 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Templates Section */}
+      <section id="templates" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <PageLayoutShowcase/>  
+        </div>
+      </section>
+
       {/* Call to Action Section */}
       <PageLayoutContent layout="centered" spacing="xl">
         <section className="py-20">
@@ -462,10 +473,10 @@ export const LandingPage: React.FC = () => {
             <div>
               <h4 className="font-semibold text-white mb-4">Product</h4>
               <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors">Components</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Examples</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Templates</a></li>
+                <li><Link to="/showcase" className="hover:text-white transition-colors">Components</Link></li>
+                <li><Link to="http://storybook.ui.beyondsoftwares.com/" target="_blank" className="hover:text-white transition-colors">Documentation</Link></li>
+                <li><Link to="#showcase" className="hover:text-white transition-colors">Examples</Link></li>
+                <li><Link to="#templates" className="hover:text-white transition-colors">Templates</Link></li>
               </ul>
             </div>
 
