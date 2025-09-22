@@ -3,6 +3,14 @@ import { cn } from "../../utils/cn";
 import { Sidebar, type MenuItem } from "../Sidebar";
 import { DashboardHeader, type BreadcrumbItem } from "../DashboardHeader";
 
+/**
+ * DashboardLayoutProps
+ * - sidebarTitle: Title text for Sidebar header (default: "Beyond")
+ * - sidebarTitleLetter: Letter/initial for Sidebar header (default: "B")
+ * - sidebarHeaderClassName: Optional className for SidebarHeader
+ *
+ * These props are forwarded to Sidebar for dynamic header branding.
+ */
 interface DashboardLayoutProps {
   children: React.ReactNode;
   className?: string;
@@ -15,10 +23,16 @@ interface DashboardLayoutProps {
   onSearchChange?: (value: string) => void;
   sidebarClassName?: string;
   disableSidebarMargin?: boolean;
+  /** Sidebar header title (default: "Beyond") */
+  sidebarTitle?: string;
+  /** Sidebar header letter (default: "B") */
+  sidebarTitleLetter?: string;
+  /** Optional className for SidebarHeader */
+  sidebarHeaderClassName?: string;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
-  ({ 
+  ({
     children,
     className,
     sidebarMenuItems,
@@ -28,7 +42,10 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
     showSearch,
     searchPlaceholder,
     onSearchChange,
-    ...props 
+    sidebarTitle,
+    sidebarTitleLetter,
+    sidebarHeaderClassName,
+    ...props
   }, ref) => {
     const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
 
@@ -46,6 +63,9 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
           activeItem={activeSidebarItem}
           onItemClick={onSidebarItemClick}
           className={props.sidebarClassName}
+          title={sidebarTitle}
+          titleLetter={sidebarTitleLetter}
+          headerClassName={sidebarHeaderClassName}
         />
 
         {/* Main Content Area */}
