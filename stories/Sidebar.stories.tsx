@@ -72,10 +72,39 @@ const demoMenu = [
   },
 ];
 
+/**
+ * Default Sidebar story (uses default header: "Beyond", "B")
+ */
 export const Default: Story = {
   render: () => <Sidebar menuItems={demoMenu} />,
 };
 
+/**
+ * Sidebar story with custom header props
+ */
+export const CustomHeader: Story = {
+  render: () => (
+    <Sidebar
+      menuItems={demoMenu}
+      title="Admin Panel"
+      titleLetter="A"
+      headerClassName="text-primary-700"
+    />
+  ),
+  name: "Custom Header (Dynamic Title & Letter)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Sidebar with a dynamic header. The title and letter are supplied by the consumer via props. This demonstrates reusability and theme-agnostic design.",
+      },
+    },
+  },
+};
+
+/**
+ * Dashboard Sidebar story (real use case)
+ */
 export const DashboardUseCase: Story = {
   render: () => {
     const [active, setActive] = React.useState("dashboard");

@@ -63,12 +63,29 @@ interface MenuItem {
   children?: MenuItem[];
 }
 
+import { SidebarHeader } from "./SidebarHeader";
+
+/**
+ * SidebarProps
+ * - title: The main title text in the sidebar header (default: "Beyond").
+ * - titleLetter: The single letter/initial in the colored box (default: "B").
+ * - headerClassName: Optional className for SidebarHeader for further customization.
+ *
+ * These props allow consumers to fully customize the Sidebar header section.
+ * If not provided, the default branding is preserved for backward compatibility.
+ */
 interface SidebarProps extends VariantProps<typeof sidebarVariants> {
   className?: string;
   onToggle?: () => void;
   menuItems?: MenuItem[];
   activeItem?: string;
   onItemClick?: (itemId: string) => void;
+  /** Sidebar header title (default: "Beyond") */
+  title?: string;
+  /** Sidebar header letter (default: "B") */
+  titleLetter?: string;
+  /** Optional className for SidebarHeader */
+  headerClassName?: string;
 }
 
 const defaultMenuItems: MenuItem[] = [
@@ -128,14 +145,17 @@ const defaultMenuItems: MenuItem[] = [
 ];
 
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
-  ({ 
-    className, 
-    collapsed = false, 
-    onToggle, 
+  ({
+    className,
+    collapsed = false,
+    onToggle,
     menuItems = defaultMenuItems,
     activeItem = "dashboard",
     onItemClick,
-    ...props 
+    title = "Beyond",
+    titleLetter = "B",
+    headerClassName,
+    ...props
   }, ref) => {
     const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
 
@@ -210,15 +230,19 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         className={cn(sidebarVariants({ collapsed }), className)}
         {...props}
       >
-        {/* Header */}
+        {/*
+          Sidebar Header
+          - Uses SidebarHeader for dynamic branding.
+          - Props: title, titleLetter, headerClassName.
+          - If not provided, defaults to "Beyond" and "B" for backward compatibility.
+        */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           {!collapsed && (
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">B</span>
-              </div>
-              <span className="font-bold text-xl text-gray-900">Beyond</span>
-            </div>
+            <SidebarHeader
+              title={title}
+              letter={titleLetter}
+              className={headerClassName}
+            />
           )}
           <button
             onClick={onToggle}
