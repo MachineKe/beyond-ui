@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Navbar } from "../src/components/Navbar";
+import { Navbar, NavItem } from "../src/components/Navbar";
 import { Avatar, AvatarImage, AvatarFallback } from "../src/components/Avatar";
 
 const meta = {
@@ -21,8 +21,8 @@ export const Default: Story = {
       <div className="flex items-center gap-4 px-4">
         <span className="font-bold text-xl">My App</span>
         <nav className="flex gap-2 ml-auto">
-          <a href="#" className="text-blue-500">Home</a>
-          <a href="#" className="text-blue-500">About</a>
+          <NavItem href="#">Home</NavItem>
+          <NavItem href="#">About</NavItem>
         </nav>
       </div>
     </Navbar>
@@ -35,12 +35,12 @@ export const AppBarUseCase: Story = {
       <div className="flex items-center w-full px-4 py-2">
         <span className="font-bold text-2xl text-primary-700">TeamSuite</span>
         <nav className="flex gap-3 ml-10">
-          <a href="#" className="text-gray-700 hover:text-primary-700">Dashboard</a>
-          <a href="#" className="text-gray-700 hover:text-primary-700">Projects</a>
-          <a href="#" className="text-gray-700 hover:text-primary-700">Settings</a>
+          <NavItem href="#">Dashboard</NavItem>
+          <NavItem href="#">Projects</NavItem>
+          <NavItem href="#">Settings</NavItem>
         </nav>
         <div className="ml-auto flex items-center gap-4">
-          <button className="text-sm text-gray-600 hover:text-primary-700">Support</button>
+          <NavItem href="#">Support</NavItem>
           <Avatar size="sm">
             <AvatarImage src="https://randomuser.me/api/portraits/men/44.jpg" />
             <AvatarFallback>JS</AvatarFallback>
