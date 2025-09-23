@@ -18,7 +18,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils/cn";
 import { Avatar, AvatarImage, AvatarFallback } from "../Avatar";
 import { Badge } from "../Badge";
-import { useBreakpoint } from "../../hooks/useBreakpoint";
 
 const sidebarVariants = cva(
   "fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out",
@@ -159,7 +158,6 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     ...props
   }, ref) => {
     const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
-    const { isBelow } = useBreakpoint();
 
     const toggleExpanded = (itemId: string) => {
       setExpandedItems(prev => 
@@ -226,25 +224,14 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
       );
     };
 
-    // Responsive: drawer on mobile, fixed on desktop
     return (
       <div
         ref={ref}
         className={cn(
-          "flex flex-col h-screen transition-all duration-300",
+          "flex flex-col h-screen",
           sidebarVariants({ collapsed }),
-          className,
-          isBelow("md")
-            ? [
-                "fixed z-50 top-0 left-0 h-full w-64 bg-white shadow-lg border-r border-gray-200",
-                collapsed && "hidden"
-              ]
-            : "relative"
+          className
         )}
-        aria-label="Sidebar"
-        aria-modal={isBelow("md") ? true : undefined}
-        role={isBelow("md") ? "dialog" : "navigation"}
-        tabIndex={isBelow("md") ? -1 : undefined}
         {...props}
       >
         {/*
