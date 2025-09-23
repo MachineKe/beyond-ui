@@ -86,6 +86,7 @@ interface SidebarProps extends VariantProps<typeof sidebarVariants> {
   titleLetter?: string;
   /** Optional className for SidebarHeader */
   headerClassName?: string;
+  style?: React.CSSProperties;
 }
 
 const defaultMenuItems: MenuItem[] = [
@@ -232,6 +233,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
           sidebarVariants({ collapsed }),
           className
         )}
+        style={props.style}
         {...props}
       >
         {/*

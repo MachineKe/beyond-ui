@@ -54,8 +54,8 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
     };
 
     return (
-      <div ref={ref} className={cn("min-h-screen bg-gray-50", className)} {...props}>
-        {/* Sidebar */}
+      <div ref={ref} className={cn("bg-gray-50 w-full h-screen overflow-hidden", className)} {...props}>
+        {/* Fixed Sidebar */}
         <Sidebar
           collapsed={sidebarCollapsed}
           onToggle={toggleSidebar}
@@ -66,37 +66,59 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
           title={sidebarTitle}
           titleLetter={sidebarTitleLetter}
           headerClassName={sidebarHeaderClassName}
+          style={{
+            zIndex: 50,
+            position: "fixed",
+            left: 0,
+            top: 0,
+            height: "100vh",
+            width: sidebarCollapsed ? "4rem" : "18rem", // Tailwind: w-16 or w-72
+            transition: "width 0.3s",
+          }}
         />
 
-        {/* Main Content Area */}
-        <div className="flex flex-col min-h-screen">
-          {/* Header */}
-          <DashboardHeader
-            sidebarCollapsed={sidebarCollapsed}
-            onMenuToggle={toggleSidebar}
-            breadcrumbs={breadcrumbs}
-            showSearch={showSearch}
-            searchPlaceholder={searchPlaceholder}
-            onSearchChange={onSearchChange}
-          />
+        {/* Fixed Header */}
+        <DashboardHeader
+          sidebarCollapsed={sidebarCollapsed}
+          onMenuToggle={toggleSidebar}
+          breadcrumbs={breadcrumbs}
+          showSearch={showSearch}
+          searchPlaceholder={searchPlaceholder}
+          onSearchChange={onSearchChange}
+          style={{
+            zIndex: 30,
+            position: "fixed",
+            top: 0,
+            left: sidebarCollapsed ? "4rem" : "18rem",
+            right: 0,
+            width: `calc(100% - ${sidebarCollapsed ? "4rem" : "18rem"})`,
+            transition: "left 0.3s, width 0.3s",
+          }}
+        />
 
-          {/* Main Content */}
-          <main 
-            className={cn(
-              "flex-1 transition-all duration-300 p-6",
-              props.disableSidebarMargin
-                ? ""
-                : (sidebarCollapsed ? "ml-16" : "ml-72")
-            )}
-          >
+        {/* Main Content Area (scrollable) */}
+        <div
+          className={cn(
+            "relative w-full h-full",
+            props.disableSidebarMargin ? "" : ""
+          )}
+          style={{
+            marginLeft: sidebarCollapsed ? "4rem" : "18rem",
+            marginTop: "4.5rem", // Header height (py-4 + border)
+            height: "calc(100vh - 4.5rem)",
+            overflowY: "auto",
+            transition: "margin-left 0.3s",
+          }}
+        >
+          <main className="p-6">
             {children}
           </main>
         </div>
 
         {/* Mobile Overlay */}
         {!sidebarCollapsed && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
             onClick={toggleSidebar}
           />
         )}

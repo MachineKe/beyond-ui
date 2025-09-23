@@ -19,6 +19,7 @@ interface DashboardHeaderProps {
   showSearch?: boolean;
   searchPlaceholder?: string;
   onSearchChange?: (value: string) => void;
+  style?: React.CSSProperties;
 }
 
 const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
@@ -44,10 +45,10 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          "sticky top-0 z-30 bg-white border-b border-gray-200 transition-all duration-300",
-          sidebarCollapsed ? "ml-16" : "ml-72",
+          "z-30 bg-white border-b border-gray-200 transition-all duration-300",
           className
         )}
+        style={props.style}
         {...props}
       >
         <div className="flex items-center justify-between px-6 py-4">
