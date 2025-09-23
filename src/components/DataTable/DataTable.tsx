@@ -21,13 +21,15 @@ import { Checkbox } from "../Checkbox";
 import { Badge } from "../Badge";
 import { Spinner } from "../Spinner";
 import { Skeleton } from "../Skeleton";
-import type { 
-  DataTableProps, 
-  Column, 
-  FilterValue, 
-  SortConfig, 
+import { Card, CardContent } from "../Card";
+import { useBreakpoint } from "../../hooks/useBreakpoint";
+import type {
+  DataTableProps,
+  Column,
+  FilterValue,
+  SortConfig,
   PaginationConfig,
-  RowSelection 
+  RowSelection
 } from "./DataTable.types";
 
 const tableVariants = cva(
@@ -444,150 +446,208 @@ export const DataTable = <T extends Record<string, any>>({
     );
   }
 
+  // Mobile-first responsive: useBreakpoint to switch between table and card layouts
+  const { isBelow } = useBreakpoint();
+
   return (
     <div className={cn("w-full", className)}>
       {title && <div className="mb-4">{title()}</div>}
-      
+
       <div className="border border-gray-200 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className={cn(tableVariants({ size, bordered }))}>
-            {showHeader && (
-              <thead>
-                <tr>
-                  {rowSelection && (
-                    <th className={cn(cellVariants({ size, type: "header" }), "w-12")}>
-                      {rowSelection.type !== 'radio' && (
-                        <Checkbox
-                          checked={isAllSelected}
-                          onChange={(e) => handleSelectAll(e.target.checked)}
-                          className={cn(isIndeterminate && "indeterminate")}
-                        />
-                      )}
-                    </th>
-                  )}
-                  
-                  {columns.map((column) => (
-                    <th
-                      key={column.key}
-                      className={cn(
-                        cellVariants({ 
-                          size, 
-                          align: column.align, 
-                          type: "header" 
-                        }),
-                        column.width && `w-[${column.width}]`
-                      )}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <span>{column.title}</span>
-                          {column.sortable && (
-                            <button
-                              onClick={() => handleSort(column.key)}
-                              className="flex flex-col items-center hover:text-primary-600"
-                            >
-                              <ChevronUp 
-                                className={cn(
-                                  "h-3 w-3",
-                                  sortConfig.key === column.key && sortConfig.direction === 'asc'
-                                    ? "text-primary-600" 
-                                    : "text-gray-400"
-                                )}
-                              />
-                              <ChevronDown 
-                                className={cn(
-                                  "h-3 w-3 -mt-1",
-                                  sortConfig.key === column.key && sortConfig.direction === 'desc'
-                                    ? "text-primary-600" 
-                                    : "text-gray-400"
-                                )}
-                              />
-                            </button>
-                          )}
-                        </div>
-                        
-                        <ColumnFilter
-                          column={column}
-                          value={filters[column.key]}
-                          onChange={(value) => handleFilter(column.key, value)}
-                        />
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-            )}
-            
-            <tbody>
-              {paginatedData.length === 0 ? (
-                <tr>
-                  <td 
-                    colSpan={columns.length + (rowSelection ? 1 : 0)}
-                    className={cn(cellVariants({ size, align: "center" }), "py-8")}
+        {isBelow('md') ? (
+          // Card layout for mobile
+          <div className="space-y-4 p-2">
+            {paginatedData.length === 0 ? (
+              <div className="text-gray-500 text-center py-8">
+                <div className="text-4xl mb-2">📋</div>
+                <div>No data available</div>
+              </div>
+            ) : (
+              paginatedData.map((record, index) => {
+                const key = getRowKey(record, index);
+                const isSelected = selectedRowKeys.includes(key);
+
+                return (
+                  <Card
+                    key={key}
+                    variant={isSelected ? "elevated" : "default"}
+                    padding="sm"
+                    className={cn(
+                      "transition-shadow",
+                      isSelected && "border-primary-600 shadow-lg"
+                    )}
                   >
-                    <div className="text-gray-500">
-                      <div className="text-4xl mb-2">📋</div>
-                      <div>No data available</div>
-                    </div>
-                  </td>
-                </tr>
-              ) : (
-                paginatedData.map((record, index) => {
-                  const key = getRowKey(record, index);
-                  const isSelected = selectedRowKeys.includes(key);
-                  
-                  return (
-                    <tr
-                      key={key}
-                      className={cn(
-                        "hover:bg-gray-50 transition-colors",
-                        isSelected && "bg-primary-50"
-                      )}
-                      {...(props.onRow?.(record, index) ?? {})}
-                    >
+                    <CardContent className="space-y-2">
                       {rowSelection && (
-                        <td className={cn(cellVariants({ size }))}>
+                        <div className="flex items-center mb-2">
                           <Checkbox
                             checked={isSelected}
                             onChange={(e) => handleRowSelect(record, e.target.checked)}
                             {...rowSelection.getCheckboxProps?.(record)}
                           />
-                        </td>
+                          <span className="ml-2 text-xs text-gray-500">Select</span>
+                        </div>
                       )}
-                      
                       {columns.map((column) => (
-                        <td
-                          key={column.key}
-                          className={cn(cellVariants({ 
-                            size, 
-                            align: column.align 
-                          }))}
-                        >
-                          {column.render 
-                            ? column.render(record[column.dataIndex], record, index)
-                            : String(record[column.dataIndex] || '')
-                          }
-                        </td>
+                        <div key={column.key} className="flex justify-between items-center py-1 border-b last:border-b-0">
+                          <span className="font-medium text-gray-700">{column.title}</span>
+                          <span className="text-gray-900">
+                            {column.render
+                              ? column.render(record[column.dataIndex], record, index)
+                              : String(record[column.dataIndex] || '')
+                            }
+                          </span>
+                        </div>
                       ))}
-                    </tr>
-                  );
-                })
+                    </CardContent>
+                  </Card>
+                );
+              })
+            )}
+            {currentPagination && (
+              <div className="pt-2">
+                <TablePagination
+                  pagination={currentPagination}
+                  onChange={(page, pageSize) => {
+                    const newPagination = { ...currentPagination, current: page, pageSize };
+                    onChange?.(newPagination, filters, sortConfig);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          // Table layout for desktop/tablet
+          <div className="overflow-x-auto">
+            <table className={cn(tableVariants({ size, bordered }))}>
+              {showHeader && (
+                <thead>
+                  <tr>
+                    {rowSelection && (
+                      <th className={cn(cellVariants({ size, type: "header" }), "w-12")}>
+                        {rowSelection.type !== 'radio' && (
+                          <Checkbox
+                            checked={isAllSelected}
+                            onChange={(e) => handleSelectAll(e.target.checked)}
+                            className={cn(isIndeterminate && "indeterminate")}
+                          />
+                        )}
+                      </th>
+                    )}
+                    
+                    {columns.map((column) => (
+                      <th
+                        key={column.key}
+                        className={cn(
+                          cellVariants({
+                            size,
+                            align: column.align,
+                            type: "header"
+                          }),
+                          column.width && `w-[${column.width}]`
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <span>{column.title}</span>
+                            {column.sortable && (
+                              <button
+                                onClick={() => handleSort(column.key)}
+                                className="flex flex-col items-center hover:text-primary-600"
+                              >
+                                <ChevronUp
+                                  className={cn(
+                                    "h-3 w-3",
+                                    sortConfig.key === column.key && sortConfig.direction === 'asc'
+                                      ? "text-primary-600"
+                                      : "text-gray-400"
+                                  )}
+                                />
+                                <ChevronDown
+                                  className={cn(
+                                    "h-3 w-3 -mt-1",
+                                    sortConfig.key === column.key && sortConfig.direction === 'desc'
+                                      ? "text-primary-600"
+                                      : "text-gray-400"
+                                  )}
+                                />
+                              </button>
+                            )}
+                          </div>
+                          
+                          <ColumnFilter
+                            column={column}
+                            value={filters[column.key]}
+                            onChange={(value) => handleFilter(column.key, value)}
+                          />
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
               )}
-            </tbody>
-          </table>
-        </div>
-        
-        {currentPagination && (
-          <TablePagination
-            pagination={currentPagination}
-            onChange={(page, pageSize) => {
-              const newPagination = { ...currentPagination, current: page, pageSize };
-              onChange?.(newPagination, filters, sortConfig);
-            }}
-          />
+              
+              <tbody>
+                {paginatedData.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={columns.length + (rowSelection ? 1 : 0)}
+                      className={cn(cellVariants({ size, align: "center" }), "py-8")}
+                    >
+                      <div className="text-gray-500">
+                        <div className="text-4xl mb-2">📋</div>
+                        <div>No data available</div>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  paginatedData.map((record, index) => {
+                    const key = getRowKey(record, index);
+                    const isSelected = selectedRowKeys.includes(key);
+                    
+                    return (
+                      <tr
+                        key={key}
+                        className={cn(
+                          "hover:bg-gray-50 transition-colors",
+                          isSelected && "bg-primary-50"
+                        )}
+                        {...(props.onRow?.(record, index) ?? {})}
+                      >
+                        {rowSelection && (
+                          <td className={cn(cellVariants({ size }))}>
+                            <Checkbox
+                              checked={isSelected}
+                              onChange={(e) => handleRowSelect(record, e.target.checked)}
+                              {...rowSelection.getCheckboxProps?.(record)}
+                            />
+                          </td>
+                        )}
+                        
+                        {columns.map((column) => (
+                          <td
+                            key={column.key}
+                            className={cn(cellVariants({
+                              size,
+                              align: column.align
+                            }))}
+                          >
+                            {column.render
+                              ? column.render(record[column.dataIndex], record, index)
+                              : String(record[column.dataIndex] || '')
+                            }
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
-      
+
       {footer && <div className="mt-4">{footer()}</div>}
     </div>
   );
