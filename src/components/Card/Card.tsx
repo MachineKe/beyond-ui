@@ -3,7 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils/cn";
 
 const cardVariants = cva(
-  "rounded-lg border bg-white text-gray-950 shadow-sm",
+  // Mobile-first responsive, content-fitting, vertical stacking
+  "w-full max-w-full flex flex-col rounded-lg border bg-white text-gray-950 shadow-sm",
   {
     variants: {
       variant: {
@@ -13,9 +14,9 @@ const cardVariants = cva(
       },
       padding: {
         none: "p-0",
-        sm: "p-4",
-        md: "p-6",
-        lg: "p-8",
+        sm: "p-2 sm:p-4",
+        md: "p-3 sm:p-6",
+        lg: "p-4 sm:p-8",
       },
     },
     defaultVariants: {
@@ -46,7 +47,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("flex flex-col space-y-1.5 p-2 sm:p-4 md:p-6", className)}
     {...props}
   />
 ));
@@ -83,7 +84,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn("p-2 sm:p-4 md:p-6 pt-0", className)} {...props} />
 ));
 CardContent.displayName = "CardContent";
 
@@ -93,7 +94,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn("flex items-center p-2 sm:p-4 md:p-6 pt-0", className)}
     {...props}
   />
 ));
