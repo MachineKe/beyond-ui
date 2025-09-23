@@ -227,7 +227,11 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     return (
       <div
         ref={ref}
-        className={cn(sidebarVariants({ collapsed }), className)}
+        className={cn(
+          "flex flex-col h-screen",
+          sidebarVariants({ collapsed }),
+          className
+        )}
         {...props}
       >
         {/*
