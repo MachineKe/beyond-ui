@@ -4,6 +4,7 @@ import { Badge } from '../src/components/Badge';
 import { Button } from '../src/components/Button';
 import { Avatar, AvatarImage, AvatarFallback } from '../src/components/Avatar';
 import { Eye, Edit, Trash2 } from 'lucide-react';
+import React from 'react';
 
 const meta = {
   title: 'Components/DataTable',
@@ -20,7 +21,7 @@ const meta = {
 } satisfies Meta<typeof DataTable>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof DataTable<User>>;
 
 // Sample data
 interface User {
@@ -194,7 +195,7 @@ export const WithRowSelection: Story = {
     },
     rowSelection: {
       type: 'checkbox',
-      onChange: (selectedRowKeys, selectedRows) => {
+      onChange: (selectedRowKeys: React.Key[], selectedRows: User[]) => {
         console.log('Selected:', selectedRowKeys, selectedRows);
       },
     },
@@ -272,5 +273,28 @@ export const WithTitle: Story = {
         <Button variant="primary" size="sm">Add User</Button>
       </div>
     ),
+  },
+};
+// Mobile Card Layout story for DataTable
+export const MobileCardLayout: Story = {
+  args: {
+    columns: userColumns,
+    dataSource: sampleUsers,
+    rowKey: 'id',
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      total: sampleUsers.length,
+    },
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
+    docs: {
+      description: {
+        story: 'Demonstrates the DataTable vertical card layout for mobile screens (below md breakpoint).',
+      },
+    },
   },
 };
