@@ -110,7 +110,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
             transition: "margin-left 0.3s",
           }}
         >
-          <main className="p-6">
+          <main className="p-10 w-[90vw]">
             {children}
           </main>
         </div>
