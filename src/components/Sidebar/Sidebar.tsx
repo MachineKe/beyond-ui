@@ -74,6 +74,7 @@ export interface SidebarProfileSectionProps {
   avatarFallback?: string;
   collapsedAvatarSize?: "sm" | "md" | "lg";
   expandedAvatarSize?: "sm" | "md" | "lg";
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 interface SidebarProps extends VariantProps<typeof sidebarVariants> {
@@ -243,7 +244,8 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
       email = "john@company.com",
       avatarFallback = "JD",
       collapsedAvatarSize = "sm",
-      expandedAvatarSize = "sm"
+      expandedAvatarSize = "sm",
+      onClick
     } = profileSectionProps || {};
 
     return (
@@ -294,7 +296,17 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
+              <div
+                className={cn(
+                  "flex items-center space-x-3 rounded-lg transition-colors",
+                  onClick && "cursor-pointer hover:bg-primary-50 focus:bg-primary-100 outline-none ring-2 ring-transparent focus:ring-primary-300"
+                )}
+                tabIndex={onClick ? 0 : undefined}
+                role={onClick ? "button" : undefined}
+                aria-label={onClick ? "View profile" : undefined}
+                onClick={onClick}
+                onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") onClick(e as any); } : undefined}
+              >
                 <Avatar size={expandedAvatarSize}>
                   <AvatarImage src={avatarUrl} />
                   <AvatarFallback>{avatarFallback}</AvatarFallback>
