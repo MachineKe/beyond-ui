@@ -67,15 +67,15 @@ interface MenuItem {
 
 import { SidebarHeader } from "./SidebarHeader";
 
-/**
- * SidebarProps
- * - title: The main title text in the sidebar header (default: "Beyond").
- * - titleLetter: The single letter/initial in the colored box (default: "B").
- * - headerClassName: Optional className for SidebarHeader for further customization.
- *
- * These props allow consumers to fully customize the Sidebar header section.
- * If not provided, the default branding is preserved for backward compatibility.
- */
+export interface SidebarProfileSectionProps {
+  avatarUrl?: string;
+  name?: string;
+  email?: string;
+  avatarFallback?: string;
+  collapsedAvatarSize?: "sm" | "md" | "lg";
+  expandedAvatarSize?: "sm" | "md" | "lg";
+}
+
 interface SidebarProps extends VariantProps<typeof sidebarVariants> {
   className?: string;
   onToggle?: () => void;
@@ -93,6 +93,8 @@ interface SidebarProps extends VariantProps<typeof sidebarVariants> {
   profileButtonProps?: import("./ProfileButton").ProfileButtonProps;
   /** Props for LogoutButton (stateless usage) */
   logoutButtonProps?: import("./LogoutButton").LogoutButtonProps;
+  /** Dynamic profile section props */
+  profileSectionProps?: SidebarProfileSectionProps;
 }
 
 const defaultMenuItems: MenuItem[] = [
@@ -164,6 +166,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     headerClassName,
     profileButtonProps,
     logoutButtonProps,
+    profileSectionProps,
     ...props
   }, ref) => {
     const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
@@ -233,6 +236,16 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
       );
     };
 
+    // Profile section props with fallbacks
+    const {
+      avatarUrl = "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=64",
+      name = "John Doe",
+      email = "john@company.com",
+      avatarFallback = "JD",
+      collapsedAvatarSize = "sm",
+      expandedAvatarSize = "sm"
+    } = profileSectionProps || {};
+
     return (
       <div
         ref={ref}
@@ -244,12 +257,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         style={props.style}
         {...props}
       >
-        {/*
-          Sidebar Header
-          - Uses SidebarHeader for dynamic branding.
-          - Props: title, titleLetter, headerClassName.
-          - If not provided, defaults to "Beyond" and "B" for backward compatibility.
-        */}
+        {/* Sidebar Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           {!collapsed && (
             <SidebarHeader
@@ -279,24 +287,24 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         <div className="border-t border-gray-200 p-4">
           {collapsed ? (
             <div className="flex justify-center">
-              <Avatar size="sm">
-                <AvatarImage src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=64" />
-                <AvatarFallback>JD</AvatarFallback>
+              <Avatar size={collapsedAvatarSize}>
+                <AvatarImage src={avatarUrl} />
+                <AvatarFallback>{avatarFallback}</AvatarFallback>
               </Avatar>
             </div>
           ) : (
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Avatar size="sm">
-                  <AvatarImage src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=64" />
-                  <AvatarFallback>JD</AvatarFallback>
+                <Avatar size={expandedAvatarSize}>
+                  <AvatarImage src={avatarUrl} />
+                  <AvatarFallback>{avatarFallback}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
-                    John Doe
+                    {name}
                   </p>
                   <p className="text-xs text-gray-500 truncate">
-                    john@company.com
+                    {email}
                   </p>
                 </div>
               </div>

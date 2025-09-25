@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "../../utils/cn";
-import { Sidebar, type MenuItem } from "../Sidebar";
+import { Sidebar, type MenuItem, type SidebarProfileSectionProps } from "../Sidebar";
 import { DashboardHeader, type BreadcrumbItem } from "../DashboardHeader";
 
 /**
@@ -33,6 +33,8 @@ interface DashboardLayoutProps {
   profileButtonProps?: import("../Sidebar/ProfileButton").ProfileButtonProps;
   /** Props for LogoutButton in Sidebar */
   logoutButtonProps?: import("../Sidebar/LogoutButton").LogoutButtonProps;
+  /** Props for Sidebar profile section (avatar, name, email, etc.) */
+  profileSectionProps?: SidebarProfileSectionProps;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
@@ -51,6 +53,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
     sidebarHeaderClassName,
     profileButtonProps,
     logoutButtonProps,
+    profileSectionProps,
     ...props
   }, ref) => {
     const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
@@ -83,6 +86,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
           }}
           profileButtonProps={profileButtonProps}
           logoutButtonProps={logoutButtonProps}
+          profileSectionProps={profileSectionProps}
         />
 
         {/* Fixed Header */}
