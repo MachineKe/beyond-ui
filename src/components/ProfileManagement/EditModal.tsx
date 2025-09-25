@@ -59,7 +59,7 @@ export const EditModal: React.FC<EditModalProps> = ({
   closeLabel = "Close",
   className,
 }) => (
-  <Modal open={open}>
+  <Modal open={open} onOpenChange={() => onClose()}>
     <div className={cn("max-w-2xl rounded-2xl p-0 p-8 mx-auto bg-white", className)}>
       {title && <h2 className="text-2xl font-bold mb-1 text-gray-900">{title}</h2>}
       {description && <p className="text-gray-500 mb-6">{description}</p>}
