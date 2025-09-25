@@ -289,10 +289,22 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         <div className="border-t border-gray-200 p-4">
           {collapsed ? (
             <div className="flex justify-center">
-              <Avatar size={collapsedAvatarSize}>
-                <AvatarImage src={avatarUrl} />
-                <AvatarFallback>{avatarFallback}</AvatarFallback>
-              </Avatar>
+              <div
+                className={cn(
+                  "rounded-lg transition-colors",
+                  onClick && "cursor-pointer hover:bg-primary-50 focus:bg-primary-100 outline-none ring-2 ring-transparent focus:ring-primary-300"
+                )}
+                tabIndex={onClick ? 0 : undefined}
+                role={onClick ? "button" : undefined}
+                aria-label={onClick ? "View profile" : undefined}
+                onClick={onClick}
+                onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") onClick(e as any); } : undefined}
+              >
+                <Avatar size={collapsedAvatarSize}>
+                  <AvatarImage src={avatarUrl} />
+                  <AvatarFallback>{avatarFallback}</AvatarFallback>
+                </Avatar>
+              </div>
             </div>
           ) : (
             <div className="space-y-3">
