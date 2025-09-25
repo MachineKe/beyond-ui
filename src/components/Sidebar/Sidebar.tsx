@@ -18,6 +18,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils/cn";
 import { Avatar, AvatarImage, AvatarFallback } from "../Avatar";
 import { Badge } from "../Badge";
+import { ProfileButton } from "./ProfileButton";
+import { LogoutButton } from "./LogoutButton";
 
 const sidebarVariants = cva(
   "fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out",
@@ -87,6 +89,10 @@ interface SidebarProps extends VariantProps<typeof sidebarVariants> {
   /** Optional className for SidebarHeader */
   headerClassName?: string;
   style?: React.CSSProperties;
+  /** Props for ProfileButton (stateless usage) */
+  profileButtonProps?: import("./ProfileButton").ProfileButtonProps;
+  /** Props for LogoutButton (stateless usage) */
+  logoutButtonProps?: import("./LogoutButton").LogoutButtonProps;
 }
 
 const defaultMenuItems: MenuItem[] = [
@@ -156,6 +162,8 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     title = "Beyond",
     titleLetter = "B",
     headerClassName,
+    profileButtonProps,
+    logoutButtonProps,
     ...props
   }, ref) => {
     const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
@@ -293,14 +301,9 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
                 </div>
               </div>
               <div className="flex space-x-2">
-                <button className="flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <User className="h-3 w-3 mr-1" />
-                  Profile
-                </button>
-                <button className="flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <LogOut className="h-3 w-3 mr-1" />
-                  Logout
-                </button>
+                {/* Reusable, theme-agnostic profile/logout buttons */}
+                <ProfileButton className="flex-1" {...profileButtonProps} />
+                <LogoutButton className="flex-1" {...logoutButtonProps} />
               </div>
             </div>
           )}

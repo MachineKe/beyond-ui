@@ -29,6 +29,10 @@ interface DashboardLayoutProps {
   sidebarTitleLetter?: string;
   /** Optional className for SidebarHeader */
   sidebarHeaderClassName?: string;
+  /** Props for ProfileButton in Sidebar */
+  profileButtonProps?: import("../Sidebar/ProfileButton").ProfileButtonProps;
+  /** Props for LogoutButton in Sidebar */
+  logoutButtonProps?: import("../Sidebar/LogoutButton").LogoutButtonProps;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
@@ -45,6 +49,8 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
     sidebarTitle,
     sidebarTitleLetter,
     sidebarHeaderClassName,
+    profileButtonProps,
+    logoutButtonProps,
     ...props
   }, ref) => {
     const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
@@ -75,6 +81,8 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
             width: sidebarCollapsed ? "4rem" : "18rem", // Tailwind: w-16 or w-72
             transition: "width 0.3s",
           }}
+          profileButtonProps={profileButtonProps}
+          logoutButtonProps={logoutButtonProps}
         />
 
         {/* Fixed Header */}
