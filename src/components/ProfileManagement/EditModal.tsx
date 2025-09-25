@@ -75,33 +75,43 @@ export const EditModal: React.FC<EditModalProps> = ({
             if (field.type === "custom") {
               return <div key={field.name}>{field.render()}</div>;
             }
+            // Title above every input/textarea
+            const title = (
+              <div key={field.name + "-title"} className="mb-1 font-medium text-gray-700">
+                {field.label}
+              </div>
+            );
             if (field.type === "textarea") {
               return (
-                <Textarea
-                  key={field.name}
-                  name={field.name}
-                  value={field.value}
-                  placeholder={field.placeholder || field.label}
-                  rows={field.rows || 3}
-                  required={field.required}
-                  onChange={e => field.onChange ? field.onChange(e) : onChange(field.name, e.target.value)}
-                  className="w-full"
-                />
+                <React.Fragment key={field.name}>
+                  {title}
+                  <Textarea
+                    name={field.name}
+                    value={field.value}
+                    placeholder={field.placeholder}
+                    rows={field.rows || 3}
+                    required={field.required}
+                    onChange={e => field.onChange ? field.onChange(e) : onChange(field.name, e.target.value)}
+                    className="w-full"
+                  />
+                </React.Fragment>
               );
             }
             // Default: Input
             return (
-              <Input
-                key={field.name}
-                type={field.type}
-                name={field.name}
-                value={field.value}
-                placeholder={field.placeholder || field.label}
-                required={field.required}
-                autoFocus={field.autoFocus}
-                onChange={e => field.onChange ? field.onChange(e) : onChange(field.name, e.target.value)}
-                className="w-full"
-              />
+              <React.Fragment key={field.name}>
+                {title}
+                <Input
+                  type={field.type}
+                  name={field.name}
+                  value={field.value}
+                  placeholder={field.placeholder}
+                  required={field.required}
+                  autoFocus={field.autoFocus}
+                  onChange={e => field.onChange ? field.onChange(e) : onChange(field.name, e.target.value)}
+                  className="w-full"
+                />
+              </React.Fragment>
             );
           })}
         </div>
