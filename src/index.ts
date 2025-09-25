@@ -23,6 +23,7 @@ export * from './components/DataTable';
 export * from './components/ComponentShowcase';
 export * from './components/Auth';
 export * from './components/PageLayout';
+export * from './components/ProfileManagement/ProfileManagementPage';
 
 // Hooks
 export * from './hooks/useDarkMode';
