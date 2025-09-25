@@ -24,6 +24,7 @@ export * from './components/ComponentShowcase';
 export * from './components/Auth';
 export * from './components/PageLayout';
 export * from './components/ProfileManagement/ProfileCard';
+export * from './components/ProfileManagement/EditModal';
 
 // Hooks
 export * from './hooks/useDarkMode';
