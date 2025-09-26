@@ -90,9 +90,9 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
         style={props.style}
         {...props}
       >
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="flex w-full items-center justify-between px-6 py-4">
           {/* Left Section */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 flex-shrink-0 flex-grow-0 min-w-0">
             {/* Custom left slot */}
             {leftSlot}
 
@@ -141,10 +141,12 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
 
           {/* Center Section - Search or custom center slot */}
           {centerSlot ? (
-            <div className="flex-1 flex justify-center">{centerSlot}</div>
+            <div className="flex-1 min-w-0 flex justify-center">
+              {centerSlot}
+            </div>
           ) : (
             isSectionVisible(showSearch, isMobile ? "mobile" : "desktop") && (
-              <div className="flex-1 max-w-md mx-8">
+              <div className="flex-1 min-w-0 mx-2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
@@ -152,7 +154,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
                     placeholder={searchPlaceholder}
                     value={searchValue}
                     onChange={handleSearchChange}
-                    className="pl-10 bg-gray-50 border-gray-200 focus:bg-white"
+                    className="pl-10 bg-gray-50 border-gray-200 focus:bg-white w-full"
                   />
                 </div>
               </div>
@@ -160,7 +162,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
           )}
 
           {/* Right Section */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 flex-shrink-0 flex-grow-0 min-w-0">
             {/* Custom right slot */}
             {rightSlot}
 
