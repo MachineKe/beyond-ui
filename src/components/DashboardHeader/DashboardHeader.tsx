@@ -109,8 +109,13 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             )}
 
             {/* Breadcrumbs */}
-            {isSectionVisible(showBreadcrumbs, isDesktop ? "desktop" : "mobile") && isDesktop && (
-              <nav className="flex items-center space-x-2 text-sm">
+            {isSectionVisible(showBreadcrumbs, isMobile ? "mobile" : "desktop") && (
+              <nav
+                className={cn(
+                  "flex items-center space-x-2 text-sm",
+                  isMobile ? "w-full overflow-x-auto whitespace-nowrap py-1" : ""
+                )}
+              >
                 {breadcrumbs.map((item, index) => (
                   <React.Fragment key={index}>
                     {index > 0 && (
