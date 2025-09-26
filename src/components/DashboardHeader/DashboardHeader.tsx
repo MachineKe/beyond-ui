@@ -13,6 +13,13 @@ interface BreadcrumbItem {
 
 type ResponsiveShow = boolean | { mobile?: boolean; desktop?: boolean };
 
+type DashboardHeaderSlotItem = {
+  element: React.ReactNode;
+  onClick?: () => void;
+  id?: string;
+};
+type DashboardHeaderSlot = React.ReactNode | DashboardHeaderSlotItem[];
+
 interface DashboardHeaderProps {
   className?: string;
   breadcrumbs?: BreadcrumbItem[];
@@ -30,9 +37,17 @@ interface DashboardHeaderProps {
   showProfile?: ResponsiveShow; // default true
   showMenuButton?: ResponsiveShow; // default true
 
-  leftSlot?: React.ReactNode;
-  centerSlot?: React.ReactNode;
-  rightSlot?: React.ReactNode;
+  // OnClick handlers for standard components
+  onMenuButtonClick?: () => void;
+  onNotificationClick?: () => void;
+  onSettingsClick?: () => void;
+  onProfileClick?: () => void;
+  onBreadcrumbClick?: (item: BreadcrumbItem, index: number) => void;
+
+  // Custom slots
+  leftSlot?: DashboardHeaderSlot;
+  centerSlot?: DashboardHeaderSlot;
+  rightSlot?: DashboardHeaderSlot;
 }
 
 import { useBreakpoint } from "../../hooks/useBreakpoint";
@@ -54,6 +69,11 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
     leftSlot,
     centerSlot,
     rightSlot,
+    onMenuButtonClick,
+    onNotificationClick,
+    onSettingsClick,
+    onProfileClick,
+    onBreadcrumbClick,
     ...props
   }, ref) => {
     const [searchValue, setSearchValue] = React.useState("");
@@ -94,14 +114,27 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
           {/* Left Section */}
           <div className="flex items-center space-x-4 flex-shrink-0 flex-grow-0 min-w-0">
             {/* Custom left slot */}
-            {leftSlot}
+            {Array.isArray(leftSlot)
+              ? leftSlot.map((item, idx) => (
+                  <span
+                    key={item.id || idx}
+                    onClick={item.onClick}
+                    className={item.onClick ? "cursor-pointer" : undefined}
+                  >
+                    {item.element}
+                  </span>
+                ))
+              : leftSlot}
 
             {/* Mobile Menu Button */}
             {(isSectionVisible(showMenuButton, isMobile ? "mobile" : "desktop")) && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={onMenuToggle}
+                onClick={e => {
+                  onMenuButtonClick?.();
+                  onMenuToggle?.();
+                }}
                 className="md:hidden"
               >
                 <Menu className="h-5 w-5" />
@@ -125,11 +158,20 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
                       <a
                         href={item.href}
                         className="text-gray-600 hover:text-gray-900 transition-colors"
+                        onClick={e => {
+                          onBreadcrumbClick?.(item, index);
+                        }}
                       >
                         {item.label}
                       </a>
                     ) : (
-                      <span className="text-gray-900 font-medium">
+                      <span
+                        className="text-gray-900 font-medium"
+                        onClick={e => {
+                          onBreadcrumbClick?.(item, index);
+                        }}
+                        style={onBreadcrumbClick ? { cursor: "pointer" } : undefined}
+                      >
                         {item.label}
                       </span>
                     )}
@@ -142,7 +184,17 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
           {/* Center Section - Search or custom center slot */}
           {centerSlot ? (
             <div className="flex-1 min-w-0 flex justify-center">
-              {centerSlot}
+              {Array.isArray(centerSlot)
+                ? centerSlot.map((item, idx) => (
+                    <span
+                      key={item.id || idx}
+                      onClick={item.onClick}
+                      className={item.onClick ? "cursor-pointer" : undefined}
+                    >
+                      {item.element}
+                    </span>
+                  ))
+                : centerSlot}
             </div>
           ) : (
             isSectionVisible(showSearch, isMobile ? "mobile" : "desktop") && (
@@ -164,12 +216,27 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
           {/* Right Section */}
           <div className="flex items-center space-x-3 flex-shrink-0 flex-grow-0 min-w-0">
             {/* Custom right slot */}
-            {rightSlot}
+            {Array.isArray(rightSlot)
+              ? rightSlot.map((item, idx) => (
+                  <span
+                    key={item.id || idx}
+                    onClick={item.onClick}
+                    className={item.onClick ? "cursor-pointer" : undefined}
+                  >
+                    {item.element}
+                  </span>
+                ))
+              : rightSlot}
 
             {/* Notifications */}
             {isSectionVisible(showNotifications, isMobile ? "mobile" : "desktop") && (
               <div className="relative">
-                <Button variant="ghost" size="sm" className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative"
+                  onClick={onNotificationClick}
+                >
                   <Bell className="h-5 w-5" />
                   <Badge
                     variant="danger"
@@ -183,14 +250,33 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
 
             {/* Settings */}
             {isSectionVisible(showSettings, isMobile ? "mobile" : "desktop") && (
-              <Button variant="ghost" size="sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onSettingsClick}
+              >
                 <Settings className="h-5 w-5" />
               </Button>
             )}
 
             {/* User Profile */}
             {isSectionVisible(showProfile, isMobile ? "mobile" : "desktop") && (
-              <div className="flex items-center space-x-3 pl-3 border-l border-gray-200">
+              <div
+                className={cn(
+                  "flex items-center space-x-3 pl-3 border-l border-gray-200",
+                  onProfileClick ? "cursor-pointer hover:bg-gray-100 transition" : ""
+                )}
+                onClick={onProfileClick}
+                tabIndex={onProfileClick ? 0 : undefined}
+                role={onProfileClick ? "button" : undefined}
+                onKeyDown={onProfileClick ? (e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onProfileClick();
+                  }
+                } : undefined}
+                aria-label={onProfileClick ? "Profile section" : undefined}
+              >
                 <div className="hidden sm:block text-right">
                   <p className="text-sm font-medium text-gray-900">John Doe</p>
                   <p className="text-xs text-gray-500">Administrator</p>
