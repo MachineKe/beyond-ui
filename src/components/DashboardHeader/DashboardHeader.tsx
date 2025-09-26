@@ -11,22 +11,24 @@ interface BreadcrumbItem {
   href?: string;
 }
 
+type ResponsiveShow = boolean | { mobile?: boolean; desktop?: boolean };
+
 interface DashboardHeaderProps {
   className?: string;
   breadcrumbs?: BreadcrumbItem[];
   onMenuToggle?: () => void;
   sidebarCollapsed?: boolean;
-  showSearch?: boolean;
+  showSearch?: ResponsiveShow;
   searchPlaceholder?: string;
   onSearchChange?: (value: string) => void;
   style?: React.CSSProperties;
 
   // New flexible API
-  showBreadcrumbs?: boolean; // default true
-  showNotifications?: boolean; // default true
-  showSettings?: boolean; // default true
-  showProfile?: boolean; // default true
-  showMenuButton?: boolean; // default true
+  showBreadcrumbs?: ResponsiveShow; // default true
+  showNotifications?: ResponsiveShow; // default true
+  showSettings?: ResponsiveShow; // default true
+  showProfile?: ResponsiveShow; // default true
+  showMenuButton?: ResponsiveShow; // default true
 
   leftSlot?: React.ReactNode;
   centerSlot?: React.ReactNode;
@@ -55,7 +57,22 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
     ...props
   }, ref) => {
     const [searchValue, setSearchValue] = React.useState("");
-    const { isAbove } = useBreakpoint();
+    const { currentBreakpoint } = useBreakpoint();
+
+    // Helper to resolve ResponsiveShow prop
+    const isSectionVisible = (
+      prop: ResponsiveShow | undefined,
+      view: "mobile" | "desktop"
+    ): boolean => {
+      if (typeof prop === "boolean") return prop;
+      if (!prop) return true;
+      if (view === "mobile") return prop.mobile ?? false;
+      if (view === "desktop") return prop.desktop ?? false;
+      return true;
+    };
+
+    const isMobile = currentBreakpoint === "sm" || currentBreakpoint === "md";
+    const isDesktop = currentBreakpoint === "lg" || currentBreakpoint === "xl" || currentBreakpoint === "2xl";
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -80,7 +97,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             {leftSlot}
 
             {/* Mobile Menu Button */}
-            {showMenuButton && (
+            {(isSectionVisible(showMenuButton, isMobile ? "mobile" : "desktop")) && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -92,7 +109,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             )}
 
             {/* Breadcrumbs */}
-            {showBreadcrumbs && isAbove('md') && (
+            {isSectionVisible(showBreadcrumbs, isDesktop ? "desktop" : "mobile") && isDesktop && (
               <nav className="flex items-center space-x-2 text-sm">
                 {breadcrumbs.map((item, index) => (
                   <React.Fragment key={index}>
@@ -121,7 +138,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
           {centerSlot ? (
             <div className="flex-1 flex justify-center">{centerSlot}</div>
           ) : (
-            showSearch && (
+            isSectionVisible(showSearch, isMobile ? "mobile" : "desktop") && (
               <div className="flex-1 max-w-md mx-8">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -143,7 +160,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             {rightSlot}
 
             {/* Notifications */}
-            {showNotifications && (
+            {isSectionVisible(showNotifications, isMobile ? "mobile" : "desktop") && (
               <div className="relative">
                 <Button variant="ghost" size="sm" className="relative">
                   <Bell className="h-5 w-5" />
@@ -158,14 +175,14 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             )}
 
             {/* Settings */}
-            {showSettings && (
+            {isSectionVisible(showSettings, isMobile ? "mobile" : "desktop") && (
               <Button variant="ghost" size="sm">
                 <Settings className="h-5 w-5" />
               </Button>
             )}
 
             {/* User Profile */}
-            {showProfile && (
+            {isSectionVisible(showProfile, isMobile ? "mobile" : "desktop") && (
               <div className="flex items-center space-x-3 pl-3 border-l border-gray-200">
                 <div className="hidden sm:block text-right">
                   <p className="text-sm font-medium text-gray-900">John Doe</p>
