@@ -26,6 +26,7 @@ interface DashboardHeaderProps {
   showNotifications?: boolean; // default true
   showSettings?: boolean; // default true
   showProfile?: boolean; // default true
+  showMenuButton?: boolean; // default true
 
   leftSlot?: React.ReactNode;
   centerSlot?: React.ReactNode;
@@ -47,6 +48,7 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
     showNotifications = true,
     showSettings = true,
     showProfile = true,
+    showMenuButton = true,
     leftSlot,
     centerSlot,
     rightSlot,
@@ -78,14 +80,16 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             {leftSlot}
 
             {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onMenuToggle}
-              className="md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
+            {showMenuButton && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onMenuToggle}
+                className="md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            )}
 
             {/* Breadcrumbs */}
             {showBreadcrumbs && isAbove('md') && (
