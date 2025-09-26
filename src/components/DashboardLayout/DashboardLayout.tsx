@@ -11,6 +11,8 @@ import { DashboardHeader, type BreadcrumbItem } from "../DashboardHeader";
  *
  * These props are forwarded to Sidebar for dynamic header branding.
  */
+import type { DashboardHeaderProps } from "../DashboardHeader";
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
   className?: string;
@@ -35,6 +37,9 @@ interface DashboardLayoutProps {
   logoutButtonProps?: import("../Sidebar/LogoutButton").LogoutButtonProps;
   /** Props for Sidebar profile section (avatar, name, email, etc.) */
   profileSectionProps?: SidebarProfileSectionProps;
+
+  /** Props to customize DashboardHeader */
+  dashboardHeaderProps?: DashboardHeaderProps;
 }
 
 const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
@@ -54,6 +59,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
     profileButtonProps,
     logoutButtonProps,
     profileSectionProps,
+    dashboardHeaderProps,
     ...props
   }, ref) => {
     const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
@@ -106,6 +112,7 @@ const DashboardLayout = React.forwardRef<HTMLDivElement, DashboardLayoutProps>(
             width: `calc(100% - ${sidebarCollapsed ? "4rem" : "18rem"})`,
             transition: "left 0.3s, width 0.3s",
           }}
+          {...dashboardHeaderProps}
         />
 
         {/* Main Content Area (scrollable) */}
