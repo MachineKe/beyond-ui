@@ -22,8 +22,10 @@ interface DashboardHeaderProps {
   style?: React.CSSProperties;
 }
 
+import { useBreakpoint } from "../../hooks/useBreakpoint";
+
 const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
-  ({ 
+  ({
     className,
     breadcrumbs = [{ label: "Dashboard" }],
     onMenuToggle,
@@ -31,9 +33,10 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
     showSearch = true,
     searchPlaceholder = "Search...",
     onSearchChange,
-    ...props 
+    ...props
   }, ref) => {
     const [searchValue, setSearchValue] = React.useState("");
+    const { isAbove } = useBreakpoint();
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -65,27 +68,29 @@ const DashboardHeader = React.forwardRef<HTMLDivElement, DashboardHeaderProps>(
             </Button>
 
             {/* Breadcrumbs */}
-            <nav className="flex items-center space-x-2 text-sm">
-              {breadcrumbs.map((item, index) => (
-                <React.Fragment key={index}>
-                  {index > 0 && (
-                    <span className="text-gray-400">/</span>
-                  )}
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <span className="text-gray-900 font-medium">
-                      {item.label}
-                    </span>
-                  )}
-                </React.Fragment>
-              ))}
-            </nav>
+            {isAbove('md') && (
+              <nav className="flex items-center space-x-2 text-sm">
+                {breadcrumbs.map((item, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && (
+                      <span className="text-gray-400">/</span>
+                    )}
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <span className="text-gray-900 font-medium">
+                        {item.label}
+                      </span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </nav>
+            )}
           </div>
 
           {/* Center Section - Search */}
