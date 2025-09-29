@@ -205,6 +205,68 @@ If your Tailwind config doesn't specify semantic tokens, Beyond-UI defaults to t
 
 ---
 
+## 🌙 NightModeSwitch Component
+
+A reusable, theme-agnostic dark/light mode toggle with sun/moon icons.
+
+### Usage
+
+```tsx
+import { NightModeSwitch } from "src/components/NightModeSwitch";
+
+<NightModeSwitch
+  variant="ghost"
+  size="md"
+  iconStyle="filled"
+  ariaLabel="Toggle dark mode"
+  className="ml-2"
+/>
+```
+
+### Props
+
+- `variant`: "primary" | "secondary" | "ghost" (default: "ghost")
+- `size`: "sm" | "md" | "lg" (default: "md")
+- `iconStyle`: "filled" | "outline" (default: "filled")
+- `ariaLabel`: string (default: "Toggle dark mode")
+- `className`: string (optional)
+
+### Theming
+
+- Uses semantic Tailwind tokens (`bg-primary`, `text-primary`, etc.).
+- Respects default theme in [`src/theme/default.ts`](src/theme/default.ts:1).
+- No hardcoded colors; fully theme-agnostic.
+
+### Integration Example
+
+Add to Navbar:
+
+```tsx
+import { Navbar } from "src/components/Navbar";
+import { NightModeSwitch } from "src/components/NightModeSwitch";
+
+<Navbar>
+  <div className="flex items-center gap-4 px-4 w-full">
+    <span className="font-bold text-xl">My App</span>
+    <nav className="flex gap-2 ml-auto">
+      <a href="/" className="text-blue-500">Home</a>
+      <a href="/about" className="text-blue-500">About</a>
+    </nav>
+    <NightModeSwitch className="ml-4" variant="ghost" size="md" ariaLabel="Toggle dark mode" />
+  </div>
+</Navbar>
+```
+
+### Accessibility
+
+- Keyboard and screen reader accessible.
+- Uses `aria-label` and `aria-pressed`.
+
+### Storybook
+
+See `stories/NightModeSwitch.stories.tsx` for live examples and customization.
+---
+
 ## 🧵 Hooks & Utilities
 
 | Hook                | Purpose                          |
