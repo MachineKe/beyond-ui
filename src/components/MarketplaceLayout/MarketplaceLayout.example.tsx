@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MarketplaceLayout } from './MarketplaceLayout';
+import { SingleProductView } from '../SingleProductView/SingleProductView';
 import type { ProductData } from '../SingleProductView/SingleProductView';
 import type { CartItem } from '../Checkout/types';
 
@@ -49,12 +50,16 @@ const demoCart: CartItem[] = [
 
 export const MarketplaceLayoutExample: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>(demoCart);
+  const [selectedProduct, setSelectedProduct] = useState<ProductData | null>(null);
 
   return (
     <MarketplaceLayout
       products={demoProducts}
       cartItems={cart}
-      onProductClick={id => alert(`View product ${id}`)}
+      onProductClick={id => {
+        const product = demoProducts.find(p => p.id === id);
+        if (product) setSelectedProduct(product);
+      }}
       onAddToCart={id => {
         const product = demoProducts.find(p => p.id === id);
         if (!product) return;
@@ -78,6 +83,35 @@ export const MarketplaceLayoutExample: React.FC = () => {
       }}
       onRemoveFromCart={id => setCart(c => c.filter(item => item.id !== id))}
       onProceedToCheckout={() => alert('Proceeding to checkout')}
-    />
+    >
+      {selectedProduct ? (
+        <SingleProductView
+          product={selectedProduct}
+          onAddToCart={id => {
+            setCart(c =>
+              c.some(item => item.id === id)
+                ? c.map(item =>
+                    item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+                  )
+                : [
+                    ...c,
+                    {
+                      id: selectedProduct.id,
+                      name: selectedProduct.name,
+                      image: selectedProduct.images[0],
+                      price: selectedProduct.price,
+                      quantity: 1,
+                      discount: selectedProduct.discount,
+                    },
+                  ]
+            );
+          }}
+          onWishlist={id => alert(`Wishlisted ${id}`)}
+          onShare={id => alert(`Shared ${id}`)}
+          showReviews
+          showColorOptions
+        />
+      ) : null}
+    </MarketplaceLayout>
   );
 };
