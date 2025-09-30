@@ -72,11 +72,14 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
-              <ShoppingCart className="h-6 w-6 text-primary-600" />
-              <span className="font-bold text-xl">Store</span>
+              {/* <ShoppingCart className="h-6 w-6 text-primary-600" />
+              <span className="font-bold text-xl">Store</span> */}
             </div>
             <div className="flex items-center space-x-4">
-              <Input placeholder="Search products..." className="w-64" />
+              <Input
+                placeholder="Search products..."
+                className="w-full sm:w-64"
+              />
               <Button variant="outline">Cart</Button>
             </div>
           </div>
@@ -85,18 +88,18 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
 
       {/* Product Content */}
       <PageLayoutContent layout="centered" spacing="lg">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Product Images */}
           <div>
             <div
-              className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer"
+              className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto"
               onClick={toggleImageModal}
             >
               {selectedImage ? (
                 <img
                   src={selectedImage}
                   alt={product.name}
-                  className="object-contain h-64 w-64 mx-auto"
+                  className="object-contain w-full h-full max-h-64 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
                 />
               ) : (
                 <div className="text-center text-gray-500">
@@ -105,7 +108,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 </div>
               )}
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               {product.images.map((img, i) => (
                 <div
                   key={img}
@@ -128,14 +131,14 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 <img
                   src={selectedImage}
                   alt={product.name}
-                  className="object-contain h-96 w-96"
+                  className="object-contain w-full h-full max-h-96 max-w-lg"
                 />
               </div>
             </Modal>
           </div>
 
           {/* Product Details */}
-          <div>
+          <div className="px-2 sm:px-0">
             <div className="flex items-center space-x-2 mb-2">
               <Badge variant={product.inStock ? 'success' : 'danger'}>
                 {product.inStock ? 'In Stock' : 'Out of Stock'}
@@ -192,7 +195,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Color
                   </label>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-wrap gap-2">
                     {product.colors.map((color) => (
                       <button
                         key={color}
@@ -211,7 +214,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
               </div>
             )}
 
-            <div className="flex space-x-4 mb-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-6">
               <Button
                 variant="primary"
                 size="lg"
@@ -253,7 +256,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
         </div>
 
         {/* Tabs for Details/Reviews */}
-        <div className="mt-12">
+        <div className="mt-8 sm:mt-12">
           {(() => {
             const [tabValue, setTabValue] = useState('details');
             return (
@@ -280,7 +283,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                         <div className="space-y-6">
                           {product.reviews.map((review, idx) => (
                             <Card key={idx} className="p-4">
-                              <div className="flex items-center space-x-3 mb-2">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 gap-2">
                                 <Avatar size="sm">
                                   {review.avatar ? (
                                     <AvatarImage src={review.avatar} />

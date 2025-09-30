@@ -56,6 +56,7 @@ export const MarketplaceLayoutExample: React.FC = () => {
     <MarketplaceLayout
       products={demoProducts}
       cartItems={cart}
+      selectedProduct={selectedProduct}
       onProductClick={id => {
         const product = demoProducts.find(p => p.id === id);
         if (product) setSelectedProduct(product);

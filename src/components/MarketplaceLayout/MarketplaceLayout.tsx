@@ -21,6 +21,7 @@ export interface MarketplaceLayoutProps {
   onAddToCart?: (id: string) => void;
   onRemoveFromCart?: (id: string) => void;
   onProceedToCheckout?: () => void;
+  selectedProduct?: ProductData | null;
   children?: React.ReactNode;
   className?: string;
 }
@@ -34,14 +35,10 @@ export const MarketplaceLayout: React.FC<MarketplaceLayoutProps> = ({
   onAddToCart,
   onRemoveFromCart,
   onProceedToCheckout,
+  selectedProduct,
   children,
   className,
 }) => {
-  // Sidebar: CommerceSidebar (product list)
-  // Main: AllProductsView (product grid/list)
-  // Checkout: CheckoutSidebar (cart/checkout)
-  // Footer: default
-
   return (
     <PageLayout variant="centered" maxWidth="xl" className={cn(className)}>
       <PageHeader>
@@ -50,13 +47,15 @@ export const MarketplaceLayout: React.FC<MarketplaceLayoutProps> = ({
         </div>
       </PageHeader>
       <PageLayoutContent layout="sidebar" spacing="lg">
-        <PageSidebar position="left" width="md">
-          <CommerceSidebar
-            products={products}
-            onProductClick={onProductClick}
-            onAddToCart={onAddToCart}
-          />
-        </PageSidebar>
+        {!selectedProduct && (
+          <PageSidebar position="left" width="md">
+            <CommerceSidebar
+              products={products}
+              onProductClick={onProductClick}
+              onAddToCart={onAddToCart}
+            />
+          </PageSidebar>
+        )}
         <main className="flex-1">
           {children ? (
             children

@@ -23,9 +23,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onShare,
   className,
 }) => (
-  <Card className={cn('p-4 flex flex-col h-full', className)}>
+  <Card
+    className={cn(
+      'p-4 flex flex-col h-full w-full min-w-0 transition-all',
+      // Remove max-w-* to allow grid to control width, and add shadow/rounded for separation
+      'shadow-md rounded-lg',
+      className
+    )}
+  >
     <div
-      className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer"
+      className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer w-full"
       onClick={onClick}
       title={product.name}
     >
@@ -33,7 +40,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <img
           src={product.images[0]}
           alt={product.name}
-          className="object-contain h-32 w-32 mx-auto"
+          className="object-contain w-full h-full max-h-32 max-w-full"
         />
       ) : (
         <ShoppingCart className="h-12 w-12 text-gray-400" />
@@ -47,8 +54,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Badge variant="danger">{product.discount}</Badge>
       )}
     </div>
-    <h2 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h2>
-    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
+    <h2 className="text-lg font-bold text-gray-900 mb-1 truncate">{product.name}</h2>
+    <p className="text-gray-600 text-sm mb-2 line-clamp-2 break-words">{product.description}</p>
     <div className="flex items-center space-x-2 mb-4">
       <span className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
       {product.oldPrice && (
@@ -57,7 +64,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </span>
       )}
     </div>
-    <div className="mt-auto flex space-x-2">
+    <div className="mt-auto flex flex-col sm:flex-row gap-2">
       <Button
         variant="primary"
         size="sm"

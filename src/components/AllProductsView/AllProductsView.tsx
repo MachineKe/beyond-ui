@@ -7,6 +7,7 @@ import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { cn } from '../../utils/cn';
 import { ProductData } from '../SingleProductView/SingleProductView';
 import { ProductCard } from './ProductCard';
+import { DashboardGrid } from '../DashboardGrid/DashboardGrid';
 
 export interface AllProductsViewProps {
   products: ProductData[];
@@ -111,12 +112,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
       </PageHeader>
 
       <PageLayoutContent layout="centered" spacing="lg">
-        <div
-          className={cn(
-            'grid gap-8',
-            isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-          )}
-        >
+        <DashboardGrid columns={3}>
           {filteredProducts.length === 0 ? (
             <div className="col-span-full text-center text-gray-500 py-12">
               No products found.
@@ -133,7 +129,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
               />
             ))
           )}
-        </div>
+        </DashboardGrid>
       </PageLayoutContent>
     </PageLayout>
   );
