@@ -3,7 +3,6 @@ import {
   PageLayout,
   PageHeader,
   PageLayoutContent,
-  PageFooter,
 } from '../PageLayout';
 import { Badge } from '../Badge';
 import { Button } from '../Button';
@@ -326,13 +325,6 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           })()}
         </div>
       </PageLayoutContent>
-
-      {/* Footer */}
-      <PageFooter variant="simple">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600">&copy; 2024 Store. All rights reserved.</p>
-        </div>
-      </PageFooter>
     </PageLayout>
   );
 };

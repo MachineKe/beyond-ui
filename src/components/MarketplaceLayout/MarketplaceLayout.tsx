@@ -4,7 +4,6 @@ import {
   PageHeader,
   PageLayoutContent,
   PageSidebar,
-  PageFooter,
 } from '../PageLayout';
 import { CommerceSidebar } from '../CommerceSidebar/CommerceSidebar';
 import { AllProductsView } from '../AllProductsView/AllProductsView';
@@ -79,11 +78,6 @@ export const MarketplaceLayout: React.FC<MarketplaceLayoutProps> = ({
           />
         </PageSidebar>
       </PageLayoutContent>
-      <PageFooter variant="simple">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600">&copy; 2024 Marketplace. All rights reserved.</p>
-        </div>
-      </PageFooter>
     </PageLayout>
   );
 };

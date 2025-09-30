@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { PageLayout, PageHeader, PageLayoutContent, PageFooter } from '../PageLayout';
+import { PageLayout, PageHeader, PageLayoutContent } from '../PageLayout';
 import { Input } from '../Input';
 import { Select } from '../Select';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -135,12 +135,6 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
           )}
         </div>
       </PageLayoutContent>
-
-      <PageFooter variant="simple">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600">&copy; 2024 Marketplace. All rights reserved.</p>
-        </div>
-      </PageFooter>
     </PageLayout>
   );
 };
