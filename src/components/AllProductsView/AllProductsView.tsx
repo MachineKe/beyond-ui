@@ -71,15 +71,15 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
     <PageLayout variant="centered" maxWidth="xl" className={cn(className)}>
       <PageHeader>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4 h-auto md:h-16">
             {/* <span className="font-bold text-xl">Marketplace</span> */}
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full md:w-auto">
               {enableSearch && (
                 <Input
                   placeholder="Search products..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-64"
+                  className="w-full sm:w-64"
                 />
               )}
               {enableFilter && (
@@ -90,7 +90,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                     { value: 'all', label: 'All Colors' },
                     ...allColors.map((c) => ({ value: c, label: c })),
                   ]}
-                  className="w-32"
+                  className="w-full sm:w-32"
                 />
               )}
               {enableSort && (
@@ -102,7 +102,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                     { value: 'price-asc', label: 'Price: Low to High' },
                     { value: 'price-desc', label: 'Price: High to Low' },
                   ]}
-                  className="w-40"
+                  className="w-full sm:w-40"
                 />
               )}
             </div>
