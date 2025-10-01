@@ -11,6 +11,8 @@ import { useCart } from './hooks/useCart';
 import { useProductNavigation } from './hooks/useProductNavigation';
 import { useSearch } from './hooks/useSearch';
 import type { Product, CartItem, FilterOptions } from './types';
+import { sanitizeProduct } from "./utils/sanitizeProduct";
+
 
 export interface MarketplaceComponentProps {
   userRole?: 'buyer' | 'seller' | 'admin';
@@ -63,7 +65,11 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
   } = useMarketplaceState();
 
   // Use props if provided, otherwise fallback to internal state/sample data
-  const productsData = products ?? require('./data/sampleData').sampleProducts;
+  
+  const rawProductsData: Product[] = products ?? sampleProducts;
+  const productsData: Product[] = Array.isArray(rawProductsData)
+    ? rawProductsData.map(sanitizeProduct)
+    : [];
   const cartItems = cartItemsProp ?? cartItemsState;
   const filters = filtersProp ?? filtersState;
 
@@ -172,7 +178,20 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
           
           {currentView === 'product' && selectedProduct && (
             <SingleProductView
-              product={productsData.find((p: Product) => p.id === selectedProduct.id)}
+              product={
+                (() => {
+                  const found = productsData.find((p: Product) => String(p.id).trim() === String(selectedProduct.id).trim());
+                  if (!found) {
+                    console.error(
+                      "MarketplaceComponent: No product found for selectedProduct.id:",
+                      selectedProduct.id,
+                      "Available ids:",
+                      productsData.map((p: Product) => p.id)
+                    );
+                  }
+                  return found;
+                })()
+              }
               onAddToCart={onAddToCart ?? addToCart}
               onBuyNow={handleBuyNow}
             />

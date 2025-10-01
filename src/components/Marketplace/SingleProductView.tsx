@@ -40,13 +40,28 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
   onAddToCart,
   onBuyNow,
 }) => {
-  const productsData = require('./data/sampleData').sampleProducts;
-  const reviewsData = require('./data/sampleData').sampleReviews;
+  const productsData = sampleProducts;
+  const reviewsData = sampleReviews;
 
   // Fallbacks for backward compatibility
+  // Defensive: If product is undefined, show a fallback UI instead of crashing
+  if (!product && (!productsData || productsData.length === 0)) {
+    return <div className="text-red-600">Product not found.</div>;
+  }
   const productData = product ?? productsData[0];
   const reviewsList = reviews ?? reviewsData;
   const relatedProductsList = relatedProducts ?? productsData.slice(1, 5);
+  
+  // Defensive guards and fallbacks
+  const images = Array.isArray(productData.images) && productData.images.length > 0
+    ? productData.images
+    : ["/images/placeholder-product.png"];
+  const specifications = productData.specifications && Object.keys(productData.specifications).length > 0
+    ? productData.specifications
+    : { "Info": "No specifications available" };
+  const vendor = productData.vendor && productData.vendor.name
+    ? productData.vendor
+    : { id: "unknown", name: "Unknown Vendor", rating: 0, logo: undefined };
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -101,11 +116,11 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           {/* Main Image */}
           <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
             <img
-              src={productData.images[selectedImageIndex]}
+              src={images[selectedImageIndex] ?? "/images/placeholder-product.png"}
               alt={productData.name}
               className="w-full h-full object-cover"
             />
-            {productData.images.length > 1 && (
+            {images.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
@@ -129,9 +144,9 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           </div>
 
           {/* Thumbnail Images */}
-          {productData.images.length > 1 && (
+          {images.length > 1 && (
             <div className="flex space-x-2 overflow-x-auto">
-              {productData.images.map((image: string, index: number) => (
+              {images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
@@ -158,16 +173,20 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           <div className="flex items-center space-x-2 mb-4">
             <span className="text-sm text-gray-600">Sold by</span>
             <div className="flex items-center space-x-2">
-              {productData.vendor.logo && (
+              {vendor.logo ? (
                 <Avatar size="sm">
-                  <AvatarImage src={productData.vendor.logo} />
-                  <AvatarFallback>{productData.vendor.name[0]}</AvatarFallback>
+                  <AvatarImage src={vendor.logo} />
+                  <AvatarFallback>{vendor.name[0]}</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Avatar size="sm">
+                  <AvatarFallback>{vendor.name[0]}</AvatarFallback>
                 </Avatar>
               )}
-              <span className="font-medium text-primary-600">{productData.vendor.name}</span>
+              <span className="font-medium text-primary-600">{vendor.name}</span>
               <div className="flex items-center space-x-1">
                 <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-sm text-gray-600">{productData.vendor.rating}</span>
+                <span className="text-sm text-gray-600">{vendor.rating}</span>
               </div>
             </div>
           </div>
@@ -338,7 +357,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
               <CardContent className="p-8">
                 <h3 className="text-xl font-semibold mb-4">Technical Specifications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Object.entries(productData.specifications).map(([key, value]) => (
+                  {Object.entries(specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between py-2 border-b border-gray-100">
                       <span className="font-medium text-gray-900">{key}:</span>
                       <span className="text-gray-600">{String(value)}</span>
@@ -448,7 +467,9 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
             <Card key={relatedProduct.id} className="hover:shadow-lg transition-shadow">
               <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
                 <img
-                  src={relatedProduct.images[0]}
+                  src={Array.isArray(relatedProduct.images) && relatedProduct.images.length > 0
+                    ? relatedProduct.images[0]
+                    : "/images/placeholder-product.png"}
                   alt={relatedProduct.name}
                   className="w-full h-full object-cover"
                 />

@@ -32,7 +32,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   onProductClick,
   onAddToCart,
 }) => {
-  const productsData = products ?? require('./data/sampleData').sampleProducts;
+  const productsData = products ?? sampleProducts;
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
