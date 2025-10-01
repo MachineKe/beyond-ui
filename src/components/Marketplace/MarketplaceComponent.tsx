@@ -12,6 +12,7 @@ import { useMarketplaceState } from './hooks/useMarketplaceState';
 import { useCart } from './hooks/useCart';
 import { useProductNavigation } from './hooks/useProductNavigation';
 import { useSearch } from './hooks/useSearch';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 import type { Product, CartItem, FilterOptions } from './types';
 import { sanitizeProduct } from "./utils/sanitizeProduct";
 
@@ -45,6 +46,10 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
   onClearFilters,
   className = '',
 }) => {
+  // Responsive sidebar initial state (mobile = collapsed)
+  const { currentBreakpoint, isBelow } = useBreakpoint();
+  const [sidebarInitialized, setSidebarInitialized] = React.useState(false);
+
   // State management hook (fallbacks for backward compatibility)
   const {
     sidebarCollapsed,
@@ -65,6 +70,16 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
     clearCart,
     resetFilters,
   } = useMarketplaceState();
+
+  // On mount, collapse sidebar if mobile and not already initialized
+  React.useEffect(() => {
+    if (!sidebarInitialized && isBelow('md')) {
+      setSidebarCollapsed(true);
+      setSidebarInitialized(true);
+    } else if (!sidebarInitialized) {
+      setSidebarInitialized(true);
+    }
+  }, [sidebarInitialized, isBelow, setSidebarCollapsed]);
 
   // State for full checkout modal
   const [showFullCheckoutModal, setShowFullCheckoutModal] = React.useState(false);
