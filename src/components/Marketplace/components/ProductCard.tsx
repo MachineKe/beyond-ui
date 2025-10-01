@@ -50,7 +50,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer ${className}`}>
+    <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col max-h-[28rem] ${className}`}>
       <div className="relative aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
         <img
           src={product.images[0]}
@@ -100,15 +100,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
       </div>
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex-1 flex flex-col overflow-y-auto">
         <div className="mb-2">
-          <h3 
+          <h3
             className="font-medium text-gray-900 line-clamp-2 cursor-pointer hover:text-primary-600"
             onClick={handleProductClick}
           >
             {product.name}
           </h3>
-          <p className="text-sm text-gray-600">{product.brand}</p>
+          <p className="text-sm text-gray-600 line-clamp-1">{product.brand}</p>
         </div>
 
         {/* Rating */}
@@ -133,17 +133,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Add to Cart Button */}
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleAddToCart}
-          disabled={!product.inStock}
-          className="w-full"
-        >
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
-        </Button>
+        <div className="mt-auto">
+          {/* Add to Cart Button */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleAddToCart}
+            disabled={!product.inStock}
+            className="w-full"
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
