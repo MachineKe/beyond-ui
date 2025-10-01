@@ -31,12 +31,7 @@ export * from './components/NightModeSwitch'
 export * from './components/BlogLayout'
 export * from './components/BlogSidebar'
 export * from './components/BlogFeedView'
-export * from './components/MarketplaceLayout'
 export * from './components/SingleBlogView'
-export * from './components/CommerceSidebar'
-// export * from './components/Checkout'
-// export * from './components/AllProductsView'
-// export * from './components/SingleProductView'
 export * from './components/Marketplace';
 
 
