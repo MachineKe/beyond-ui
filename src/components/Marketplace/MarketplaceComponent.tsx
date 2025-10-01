@@ -6,6 +6,8 @@ import { MarketplaceSidebar } from './MarketplaceSidebar';
 import { AllProductsView } from './AllProductsView';
 import { SingleProductView } from './SingleProductView';
 import { CheckoutCompact } from './CheckoutCompact';
+import { CheckoutComponent } from './CheckoutComponent';
+import { Modal } from '../Modal/Modal';
 import { useMarketplaceState } from './hooks/useMarketplaceState';
 import { useCart } from './hooks/useCart';
 import { useProductNavigation } from './hooks/useProductNavigation';
@@ -63,6 +65,9 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
     clearCart,
     resetFilters,
   } = useMarketplaceState();
+
+  // State for full checkout modal
+  const [showFullCheckoutModal, setShowFullCheckoutModal] = React.useState(false);
 
   // Use props if provided, otherwise fallback to internal state/sample data
   
@@ -205,9 +210,28 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
               cartItems={cartItems}
               onClose={() => setShowCheckout(false)}
               onCheckout={handleCheckoutComplete}
+              onViewFullCheckout={() => {
+                setShowFullCheckoutModal(true);
+                setShowCheckout(false);
+              }}
             />
           </div>
         )}
+
+        {/* Full Checkout Modal */}
+        <Modal
+          open={showFullCheckoutModal}
+          onOpenChange={(open) => setShowFullCheckoutModal(open)}
+          size="xl"
+        >
+          <CheckoutComponent
+            cartItems={cartItems}
+            onOrderComplete={() => {
+              clearCart();
+              setShowFullCheckoutModal(false);
+            }}
+          />
+        </Modal>
       </div>
     </div>
   );

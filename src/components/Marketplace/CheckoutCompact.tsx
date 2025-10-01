@@ -21,6 +21,7 @@ interface CheckoutCompactProps {
   onClose?: () => void;
   onCheckout?: (items: CartItem[]) => void;
   className?: string;
+  onViewFullCheckout?: () => void;
 }
 
 const sampleCartItems: CartItem[] = [
@@ -38,6 +39,7 @@ export const CheckoutCompact: React.FC<CheckoutCompactProps> = ({
   cartItems = sampleCartItems,
   onClose,
   onCheckout,
+  onViewFullCheckout,
   className = '',
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -277,6 +279,20 @@ export const CheckoutCompact: React.FC<CheckoutCompactProps> = ({
             </div>
           )}
         </CardContent>
+        {/* View Full Checkout Button */}
+        {onViewFullCheckout && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant="primary"
+              size="md"
+              className="w-full"
+              onClick={onViewFullCheckout}
+              type="button"
+            >
+              View Full Checkout
+            </Button>
+          </div>
+        )}
       </Card>
     </div>
   );
