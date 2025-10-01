@@ -449,37 +449,36 @@ export const CheckoutComponent: React.FC<CheckoutComponentProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
         <div className="lg:col-span-2">
-          <Card>
-            <CardContent className="p-8">
+          <Card className="flex flex-col h-[80vh]">
+            <CardContent className="p-8 flex-1 overflow-y-auto">
               {currentStep === 1 && renderShippingStep()}
               {currentStep === 2 && renderPaymentStep()}
               {currentStep === 3 && renderReviewStep()}
-
-              {/* Navigation Buttons */}
-              <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
-                <Button
-                  variant="outline"
-                  onClick={handlePrevStep}
-                  disabled={currentStep === 1}
-                >
-                  Previous
-                </Button>
-                
-                {currentStep < 3 ? (
-                  <Button variant="primary" onClick={handleNextStep}>
-                    Next
-                  </Button>
-                ) : (
-                  <Button
-                    variant="primary"
-                    onClick={handlePlaceOrder}
-                    disabled={isProcessing}
-                  >
-                    {isProcessing ? 'Processing...' : 'Place Order'}
-                  </Button>
-                )}
-              </div>
             </CardContent>
+            {/* Navigation Buttons */}
+            <div className="flex justify-between p-8 pt-6 border-t border-gray-200 bg-white">
+              <Button
+                variant="outline"
+                onClick={handlePrevStep}
+                disabled={currentStep === 1}
+              >
+                Previous
+              </Button>
+              
+              {currentStep < 3 ? (
+                <Button variant="primary" onClick={handleNextStep}>
+                  Next
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={handlePlaceOrder}
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? 'Processing...' : 'Place Order'}
+                </Button>
+              )}
+            </div>
           </Card>
         </div>
 
