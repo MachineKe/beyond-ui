@@ -12,9 +12,11 @@ import { sampleProducts } from './data/sampleData';
 
 interface AllProductsViewProps {
   products?: Product[];
-  filters?: FilterOptions;
+  filters: FilterOptions;
   onProductClick?: (product: Product) => void;
   onAddToCart?: (product: Product) => void;
+  onFiltersChange: (filters: FilterOptions) => void;
+  onClearFilters: () => void;
 }
 
 const sortOptions: SortOption[] = [
@@ -31,6 +33,8 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   filters: filtersProp,
   onProductClick,
   onAddToCart,
+  onFiltersChange,
+  onClearFilters,
 }) => {
   const productsData = products ?? sampleProducts;
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,17 +45,8 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
 
-  // Use prop filters if provided, otherwise fallback to internal state
-  const [filters, setFilters] = useState<FilterOptions>(
-    filtersProp ?? {
-      categories: [],
-      brands: [],
-      priceRange: [0, 1000],
-      rating: 0,
-      inStock: false,
-      vendors: [],
-    }
-  );
+  // Use filters and handlers from props only
+  const filters = filtersProp;
 
   const itemsPerPage = 12;
 
@@ -141,22 +136,16 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const handleFilterChange = (filterType: keyof FilterOptions, value: any) => {
-    setFilters(prev => ({
-      ...prev,
+    const newFilters = {
+      ...filters,
       [filterType]: value,
-    }));
+    };
+    onFiltersChange(newFilters);
     setCurrentPage(1); // Reset to first page when filters change
   };
 
   const handleClearFilters = () => {
-    setFilters({
-      categories: [],
-      brands: [],
-      priceRange: [0, 1000],
-      rating: 0,
-      inStock: false,
-      vendors: [],
-    });
+    onClearFilters();
     setSearchQuery('');
     setCurrentPage(1);
   };
@@ -334,130 +323,6 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
       </div>
 
       <div className="flex gap-8">
-        {/* Filters Sidebar - Desktop */}
-        <div className="hidden lg:block w-64 flex-shrink-0">
-          <Card className="sticky top-4">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Filters</h3>
-                <Button variant="ghost" size="sm" onClick={handleClearFilters}>
-                  Clear All
-                </Button>
-              </div>
-
-              {/* Categories */}
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Categories</h4>
-                <div className="space-y-2">
-                  {(filterOptions.categories as string[]).map((category, idx) => (
-                    <label key={category} className="flex items-center space-x-2">
-                      <Checkbox
-                        checked={filters.categories.includes(category)}
-                        onChange={(e) => {
-                          const newCategories = e.target.checked
-                            ? [...filters.categories, category]
-                            : filters.categories.filter((c: string) => c !== category);
-                          handleFilterChange('categories', newCategories);
-                        }}
-                      />
-                      <span className="text-sm text-gray-700">{category}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Brands */}
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Brands</h4>
-                <div className="space-y-2">
-                  {(filterOptions.brands as string[]).map((brand, idx) => (
-                    <label key={brand} className="flex items-center space-x-2">
-                      <Checkbox
-                        checked={filters.brands.includes(brand)}
-                        onChange={(e) => {
-                          const newBrands = e.target.checked
-                            ? [...filters.brands, brand]
-                            : filters.brands.filter((b: string) => b !== brand);
-                          handleFilterChange('brands', newBrands);
-                        }}
-                      />
-                      <span className="text-sm text-gray-700">{brand}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Price Range */}
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Price Range</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="number"
-                      placeholder="Min"
-                      value={filters.priceRange[0]}
-                      onChange={(e) => handleFilterChange('priceRange', [
-                        parseInt(e.target.value) || 0,
-                        filters.priceRange[1]
-                      ])}
-                      className="w-20"
-                    />
-                    <span>-</span>
-                    <Input
-                      type="number"
-                      placeholder="Max"
-                      value={filters.priceRange[1]}
-                      onChange={(e) => handleFilterChange('priceRange', [
-                        filters.priceRange[0],
-                        parseInt(e.target.value) || 1000
-                      ])}
-                      className="w-20"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Rating */}
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Minimum Rating</h4>
-                <div className="space-y-2">
-                  {[4, 3, 2, 1].map(rating => (
-                    <label key={rating} className="flex items-center space-x-2">
-                      <Checkbox
-                        checked={filters.rating === rating}
-                        onChange={(e) => {
-                          handleFilterChange('rating', e.target.checked ? rating : 0);
-                        }}
-                      />
-                      <div className="flex items-center space-x-1">
-                        {[1, 2, 3, 4, 5].map(star => (
-                          <Star
-                            key={star}
-                            className={`h-4 w-4 ${
-                              star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                        <span className="text-sm text-gray-700">& up</span>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* In Stock */}
-              <div className="mb-6">
-                <label className="flex items-center space-x-2">
-                  <Checkbox
-                    checked={filters.inStock}
-                    onChange={(e) => handleFilterChange('inStock', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-700">In Stock Only</span>
-                </label>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Products Grid */}
         <div className="flex-1">
@@ -541,8 +406,11 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                     <Checkbox
                       checked={filters.categories.includes(category)}
                       onChange={(e) => {
+                        const alreadyChecked = filters.categories.includes(category);
                         const newCategories = e.target.checked
-                          ? [...filters.categories, category]
+                          ? alreadyChecked
+                            ? filters.categories
+                            : [...filters.categories, category]
                           : filters.categories.filter((c: string) => c !== category);
                         handleFilterChange('categories', newCategories);
                       }}
@@ -552,7 +420,52 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                 ))}
               </div>
             </div>
-            {/* Add other filter sections here */}
+            {/* Brands */}
+            <div>
+              <h4 className="font-medium text-gray-900 mb-3">Brands</h4>
+              <div className="space-y-2">
+                {(filterOptions.brands as string[]).map((brand, idx) => (
+                  <label key={brand} className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.brands.includes(brand)}
+                      onChange={(e) => {
+                        const alreadyChecked = filters.brands.includes(brand);
+                        const newBrands = e.target.checked
+                          ? alreadyChecked
+                            ? filters.brands
+                            : [...filters.brands, brand]
+                          : filters.brands.filter((b: string) => b !== brand);
+                        handleFilterChange('brands', newBrands);
+                      }}
+                    />
+                    <span className="text-sm text-gray-700">{brand}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            {/* Vendors */}
+            <div>
+              <h4 className="font-medium text-gray-900 mb-3">Vendors</h4>
+              <div className="space-y-2">
+                {(filterOptions.vendors as string[]).map((vendor, idx) => (
+                  <label key={vendor} className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.vendors.includes(vendor)}
+                      onChange={(e) => {
+                        const alreadyChecked = filters.vendors.includes(vendor);
+                        const newVendors = e.target.checked
+                          ? alreadyChecked
+                            ? filters.vendors
+                            : [...filters.vendors, vendor]
+                          : filters.vendors.filter((v: string) => v !== vendor);
+                        handleFilterChange('vendors', newVendors);
+                      }}
+                    />
+                    <span className="text-sm text-gray-700">{vendor}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
         </ModalContent>
         <ModalFooter>

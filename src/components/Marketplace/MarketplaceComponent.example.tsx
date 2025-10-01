@@ -164,21 +164,11 @@ const MarketplaceSection = () => {
     });
   };
 
-  // Example filter state (optional)
-  const myFilters: FilterOptions = {
-    categories: ["Electronics"],
-    brands: ["MyBrand"],
-    priceRange: [1000, 3000],
-    rating: 4,
-    inStock: true,
-    vendors: ["MyVendor"]
-  };
-
+  // Remove static myFilters, let MarketplaceComponent manage filters state
   return (
     <MarketplaceComponent
       products={myProducts}
       cartItems={cartItems}
-      filters={myFilters}
       onAddToCart={handleAddToCart}
       onProductClick={product => {
         // Your product click logic here

@@ -178,6 +178,8 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
               onAddToCart={onAddToCart ?? addToCart}
               products={productsData}
               filters={filters}
+              onFiltersChange={setFilters}
+              onClearFilters={resetFilters}
             />
           )}
           
