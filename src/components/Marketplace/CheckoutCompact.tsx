@@ -87,7 +87,7 @@ export const CheckoutCompact: React.FC<CheckoutCompactProps> = ({
 
   return (
     <div className={`w-full max-w-md ${className}`}>
-      <Card>
+      <Card className="flex flex-col h-[70vh]">
         {/* Header */}
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
@@ -103,7 +103,8 @@ export const CheckoutCompact: React.FC<CheckoutCompactProps> = ({
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-4">
+        {/* Scrollable Content */}
+        <CardContent className="space-y-4 flex-1 overflow-y-auto">
           {/* Order Summary Toggle */}
           <div>
             <button
@@ -279,9 +280,9 @@ export const CheckoutCompact: React.FC<CheckoutCompactProps> = ({
             </div>
           )}
         </CardContent>
-        {/* View Full Checkout Button */}
+        {/* Fixed Button Area */}
         {onViewFullCheckout && (
-          <div className="mt-4 flex justify-center">
+          <div className="p-4 pt-2 border-t border-gray-200 bg-white">
             <Button
               variant="primary"
               size="md"
