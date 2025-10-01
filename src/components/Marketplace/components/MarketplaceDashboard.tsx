@@ -45,50 +45,6 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
 
   return (
     <div className={`space-y-8 ${className}`}>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard
-          title="Total Products"
-          value="2,543"
-          trend={{
-            direction: "up",
-            value: "+12%",
-            label: "from last month"
-          }}
-          icon={<Package className="h-6 w-6 text-primary-600" />}
-        />
-        <StatsCard
-          title="Active Sellers"
-          value="156"
-          trend={{
-            direction: "up",
-            value: "+8%",
-            label: "from last month"
-          }}
-          icon={<Users className="h-6 w-6 text-success-600" />}
-        />
-        <StatsCard
-          title="Total Sales"
-          value="$45,231"
-          trend={{
-            direction: "up",
-            value: "+15%",
-            label: "from last month"
-          }}
-          icon={<DollarSign className="h-6 w-6 text-warning-600" />}
-        />
-        <StatsCard
-          title="Page Views"
-          value="89,432"
-          trend={{
-            direction: "up",
-            value: "+23%",
-            label: "from last month"
-          }}
-          icon={<Eye className="h-6 w-6 text-danger-600" />}
-        />
-      </div>
-
       {/* Featured Categories */}
       <div>
         <div className="flex items-center justify-between mb-6">
