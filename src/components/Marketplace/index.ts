@@ -5,3 +5,5 @@ export * from './CheckoutComponent';
 export * from './CheckoutCompact';
 export * from './MarketplaceSidebar';
 export * from './MarketplaceComponent';
+export * from './components';
+export * from './hooks';

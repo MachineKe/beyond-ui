@@ -199,7 +199,7 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
                 <Filter className="h-5 w-5" />
               </Button>
               {getActiveFiltersCount() > 0 && (
-                <Badge variant="default" className="text-xs">
+                <Badge variant="primary" className="text-xs">
                   {getActiveFiltersCount()}
                 </Badge>
               )}
@@ -219,7 +219,7 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
               <Filter className="h-5 w-5 mr-2" />
               Filters
               {getActiveFiltersCount() > 0 && (
-                <Badge variant="default" className="ml-2">
+                <Badge variant="primary" className="ml-2">
                   {getActiveFiltersCount()}
                 </Badge>
               )}
