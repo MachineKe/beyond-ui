@@ -186,20 +186,90 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
 
   if (collapsed) {
     return (
-      <div className={cn('w-16 flex-shrink-0', className)}>
+      <div className={cn('w-16 flex-shrink-0 bg-background border-r border-border rounded-xl', className)}>
         <Card className="sticky top-4">
-          <CardContent className="p-4">
-            <div className="flex flex-col items-center space-y-4">
+          <CardContent className="p-2">
+            <div className="flex flex-col items-center space-y-3">
+              {/* Main Filter Icon (Expand) */}
               <Button
                 variant="ghost"
                 size="sm"
+                aria-label="Expand filters"
+                title="Expand filters"
                 onClick={onToggleCollapse}
-                className="w-full"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
               >
                 <Filter className="h-5 w-5" />
               </Button>
+              {/* Categories */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Categories"
+                title="Categories"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Grid className="h-5 w-5" />
+              </Button>
+              {/* Price */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Price Range"
+                title="Price Range"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Tag className="h-5 w-5" />
+              </Button>
+              {/* Rating */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Customer Rating"
+                title="Customer Rating"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Star className="h-5 w-5" />
+              </Button>
+              {/* Brands */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Brands"
+                title="Brands"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Tag className="h-5 w-5" />
+              </Button>
+              {/* Vendors */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Sellers"
+                title="Sellers"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Store className="h-5 w-5" />
+              </Button>
+              {/* Availability */}
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Availability"
+                title="Availability"
+                className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:bg-accent focus:ring-2 focus:ring-primary rounded-lg"
+                tabIndex={0}
+              >
+                <Sliders className="h-5 w-5" />
+              </Button>
+              {/* Active Filter Count Badge */}
               {getActiveFiltersCount() > 0 && (
-                <Badge variant="default" className="text-xs">
+                <Badge variant="default" className="text-xs bg-primary text-primary-foreground mt-2">
                   {getActiveFiltersCount()}
                 </Badge>
               )}
