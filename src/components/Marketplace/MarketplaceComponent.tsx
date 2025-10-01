@@ -10,11 +10,18 @@ import { useMarketplaceState } from './hooks/useMarketplaceState';
 import { useCart } from './hooks/useCart';
 import { useProductNavigation } from './hooks/useProductNavigation';
 import { useSearch } from './hooks/useSearch';
-import type { Product } from './types';
+import type { Product, CartItem, FilterOptions } from './types';
 
 export interface MarketplaceComponentProps {
   userRole?: 'buyer' | 'seller' | 'admin';
+  products?: Product[];
+  cartItems?: CartItem[];
+  filters?: FilterOptions;
   onProductClick?: (product: Product) => void;
+  onAddToCart?: (product: Product, quantity?: number) => void;
+  onRemoveFromCart?: (productId: string) => void;
+  onFiltersChange?: (filters: FilterOptions) => void;
+  onClearFilters?: () => void;
   className?: string;
 }
 
@@ -24,18 +31,25 @@ export interface MarketplaceComponentProps {
  */
 export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
   userRole = 'buyer',
+  products,
+  cartItems: cartItemsProp,
+  filters: filtersProp,
   onProductClick,
+  onAddToCart,
+  onRemoveFromCart,
+  onFiltersChange,
+  onClearFilters,
   className = '',
 }) => {
-  // State management hook
+  // State management hook (fallbacks for backward compatibility)
   const {
     sidebarCollapsed,
     currentView,
     selectedProduct,
     searchQuery,
-    cartItems,
+    cartItems: cartItemsState,
     showCheckout,
-    filters,
+    filters: filtersState,
     setSidebarCollapsed,
     setCurrentView,
     setSelectedProduct,
@@ -47,6 +61,11 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
     clearCart,
     resetFilters,
   } = useMarketplaceState();
+
+  // Use props if provided, otherwise fallback to internal state/sample data
+  const productsData = products ?? require('./data/sampleData').sampleProducts;
+  const cartItems = cartItemsProp ?? cartItemsState;
+  const filters = filtersProp ?? filtersState;
 
   // Cart management hook
   const {
@@ -78,16 +97,16 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
     handleSearch,
     clearSearch,
   } = useSearch({
-    products: sampleProducts,
+    products: productsData,
     searchQuery,
     setSearchQuery,
     setCurrentView,
   });
 
   // Derived data
-  const featuredProducts = sampleProducts.slice(0, 4);
-  const trendingProducts = sampleProducts.slice(4, 8);
-  const recentlyViewed = sampleProducts.slice(8, 12);
+  const featuredProducts = productsData.slice(0, 4);
+  const trendingProducts = productsData.slice(4, 8);
+  const recentlyViewed = productsData.slice(8, 12);
   const cartItemCount = getCartItemCount();
 
   // Event handlers
@@ -101,7 +120,7 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
   };
 
   const handleBuyNow = (product: Product, quantity: number) => {
-    addToCart(product, quantity);
+    (onAddToCart ?? addToCart)(product, quantity);
     setShowCheckout(true);
   };
 
@@ -122,8 +141,8 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
         {(currentView === 'products' || currentView === 'dashboard') && (
           <MarketplaceSidebar
             filters={filters}
-            onFiltersChange={setFilters}
-            onClearFilters={resetFilters}
+            onFiltersChange={onFiltersChange ?? setFilters}
+            onClearFilters={onClearFilters ?? resetFilters}
             collapsed={sidebarCollapsed}
             onToggleCollapse={toggleSidebar}
           />
@@ -137,7 +156,7 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
               trendingProducts={trendingProducts}
               recentlyViewed={recentlyViewed}
               onProductClick={navigateToProduct}
-              onAddToCart={addToCart}
+              onAddToCart={onAddToCart ?? addToCart}
               onViewAllProducts={navigateToProducts}
             />
           )}
@@ -145,14 +164,16 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
           {currentView === 'products' && (
             <AllProductsView
               onProductClick={navigateToProduct}
-              onAddToCart={addToCart}
+              onAddToCart={onAddToCart ?? addToCart}
+              products={productsData}
+              filters={filters}
             />
           )}
           
           {currentView === 'product' && selectedProduct && (
             <SingleProductView
-              productId={selectedProduct.id}
-              onAddToCart={addToCart}
+              product={productsData.find((p: Product) => p.id === selectedProduct.id)}
+              onAddToCart={onAddToCart ?? addToCart}
               onBuyNow={handleBuyNow}
             />
           )}

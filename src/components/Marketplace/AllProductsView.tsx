@@ -11,6 +11,8 @@ import type { Product, FilterOptions, SortOption } from './types';
 import { sampleProducts } from './data/sampleData';
 
 interface AllProductsViewProps {
+  products?: Product[];
+  filters?: FilterOptions;
   onProductClick?: (product: Product) => void;
   onAddToCart?: (product: Product) => void;
 }
@@ -25,9 +27,12 @@ const sortOptions: SortOption[] = [
 ];
 
 export const AllProductsView: React.FC<AllProductsViewProps> = ({
+  products,
+  filters: filtersProp,
   onProductClick,
   onAddToCart,
 }) => {
+  const productsData = products ?? require('./data/sampleData').sampleProducts;
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -35,30 +40,33 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   const [showFilters, setShowFilters] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
-  
-  const [filters, setFilters] = useState<FilterOptions>({
-    categories: [],
-    brands: [],
-    priceRange: [0, 1000],
-    rating: 0,
-    inStock: false,
-    vendors: [],
-  });
+
+  // Use prop filters if provided, otherwise fallback to internal state
+  const [filters, setFilters] = useState<FilterOptions>(
+    filtersProp ?? {
+      categories: [],
+      brands: [],
+      priceRange: [0, 1000],
+      rating: 0,
+      inStock: false,
+      vendors: [],
+    }
+  );
 
   const itemsPerPage = 12;
 
   // Get unique filter options from products
   const filterOptions = useMemo(() => {
-    const categories = [...new Set(sampleProducts.map(p => p.category))];
-    const brands = [...new Set(sampleProducts.map(p => p.brand))];
-    const vendors = [...new Set(sampleProducts.map(p => p.vendor.name))];
-    
+    const categories = [...new Set(productsData.map((p: Product) => p.category))];
+    const brands = [...new Set(productsData.map((p: Product) => p.brand))];
+    const vendors = [...new Set(productsData.map((p: Product) => p.vendor.name))];
+
     return { categories, brands, vendors };
-  }, []);
+  }, [productsData]);
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    let filtered = sampleProducts.filter(product => {
+    let filtered = productsData.filter((product: Product) => {
       // Search query
       if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
           !product.description.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -101,20 +109,20 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
     // Sort products
     switch (sortBy) {
       case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a: Product, b: Product) => a.price - b.price);
         break;
       case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a: Product, b: Product) => b.price - a.price);
         break;
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a: Product, b: Product) => b.rating - a.rating);
         break;
       case 'newest':
         // Assuming newer products have higher IDs
-        filtered.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+        filtered.sort((a: Product, b: Product) => parseInt(b.id) - parseInt(a.id));
         break;
       case 'popular':
-        filtered.sort((a, b) => b.reviewCount - a.reviewCount);
+        filtered.sort((a: Product, b: Product) => b.reviewCount - a.reviewCount);
         break;
       default:
         // Keep original order for relevance
@@ -122,7 +130,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
     }
 
     return filtered;
-  }, [searchQuery, filters, sortBy]);
+  }, [productsData, searchQuery, filters, sortBy]);
 
   // Paginate products
   const paginatedProducts = useMemo(() => {
@@ -269,7 +277,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">All Products</h1>
           <p className="text-gray-600">
-            Showing {filteredProducts.length} of {sampleProducts.length} products
+            Showing {filteredProducts.length} of {productsData.length} products
           </p>
         </div>
         
@@ -341,14 +349,14 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
               <div className="mb-6">
                 <h4 className="font-medium text-gray-900 mb-3">Categories</h4>
                 <div className="space-y-2">
-                  {filterOptions.categories.map(category => (
+                  {(filterOptions.categories as string[]).map((category, idx) => (
                     <label key={category} className="flex items-center space-x-2">
                       <Checkbox
                         checked={filters.categories.includes(category)}
                         onChange={(e) => {
                           const newCategories = e.target.checked
                             ? [...filters.categories, category]
-                            : filters.categories.filter(c => c !== category);
+                            : filters.categories.filter((c: string) => c !== category);
                           handleFilterChange('categories', newCategories);
                         }}
                       />
@@ -362,14 +370,14 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
               <div className="mb-6">
                 <h4 className="font-medium text-gray-900 mb-3">Brands</h4>
                 <div className="space-y-2">
-                  {filterOptions.brands.map(brand => (
+                  {(filterOptions.brands as string[]).map((brand, idx) => (
                     <label key={brand} className="flex items-center space-x-2">
                       <Checkbox
                         checked={filters.brands.includes(brand)}
                         onChange={(e) => {
                           const newBrands = e.target.checked
                             ? [...filters.brands, brand]
-                            : filters.brands.filter(b => b !== brand);
+                            : filters.brands.filter((b: string) => b !== brand);
                           handleFilterChange('brands', newBrands);
                         }}
                       />
@@ -473,7 +481,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
                   : 'grid-cols-1'
               }`}>
-                {paginatedProducts.map(product => (
+                {paginatedProducts.map((product: Product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -528,14 +536,14 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
             <div>
               <h4 className="font-medium text-gray-900 mb-3">Categories</h4>
               <div className="space-y-2">
-                {filterOptions.categories.map(category => (
+                {(filterOptions.categories as string[]).map((category, idx) => (
                   <label key={category} className="flex items-center space-x-2">
                     <Checkbox
                       checked={filters.categories.includes(category)}
                       onChange={(e) => {
                         const newCategories = e.target.checked
                           ? [...filters.categories, category]
-                          : filters.categories.filter(c => c !== category);
+                          : filters.categories.filter((c: string) => c !== category);
                         handleFilterChange('categories', newCategories);
                       }}
                     />

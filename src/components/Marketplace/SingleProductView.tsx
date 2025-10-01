@@ -26,33 +26,40 @@ import type { Product, Review } from './types';
 import { sampleProducts, sampleReviews } from './data/sampleData';
 
 interface SingleProductViewProps {
-  productId?: string;
+  product?: Product;
+  reviews?: Review[];
+  relatedProducts?: Product[];
   onAddToCart?: (product: Product, quantity: number) => void;
   onBuyNow?: (product: Product, quantity: number) => void;
 }
 
 export const SingleProductView: React.FC<SingleProductViewProps> = ({
-  productId = '1',
+  product,
+  reviews,
+  relatedProducts,
   onAddToCart,
   onBuyNow,
 }) => {
+  const productsData = require('./data/sampleData').sampleProducts;
+  const reviewsData = require('./data/sampleData').sampleReviews;
+
+  // Fallbacks for backward compatibility
+  const productData = product ?? productsData[0];
+  const reviewsList = reviews ?? reviewsData;
+  const relatedProductsList = relatedProducts ?? productsData.slice(1, 5);
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedTab, setSelectedTab] = useState('description');
 
-  // Get product data (in real app, this would come from API)
-  const product = sampleProducts.find(p => p.id === productId) || sampleProducts[0];
-  const reviews = sampleReviews;
-  const relatedProducts = sampleProducts.slice(1, 5);
-
   const handleAddToCart = () => {
-    onAddToCart?.(product, quantity);
+    onAddToCart?.(productData, quantity);
     showToast.success(`Added ${quantity} item(s) to cart!`);
   };
 
   const handleBuyNow = () => {
-    onBuyNow?.(product, quantity);
+    onBuyNow?.(productData, quantity);
     showToast.info('Redirecting to checkout...');
   };
 
@@ -62,14 +69,14 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
   };
 
   const nextImage = () => {
-    setSelectedImageIndex((prev) => 
-      prev === product.images.length - 1 ? 0 : prev + 1
+    setSelectedImageIndex((prev) =>
+      prev === productData.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setSelectedImageIndex((prev) => 
-      prev === 0 ? product.images.length - 1 : prev - 1
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? productData.images.length - 1 : prev - 1
     );
   };
 
@@ -81,11 +88,11 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
         <span>/</span>
         <a href="/products" className="hover:text-primary-600">Products</a>
         <span>/</span>
-        <a href={`/category/${product.category.toLowerCase()}`} className="hover:text-primary-600">
-          {product.category}
+        <a href={`/category/${productData.category.toLowerCase()}`} className="hover:text-primary-600">
+          {productData.category}
         </a>
         <span>/</span>
-        <span className="text-gray-900">{product.name}</span>
+        <span className="text-gray-900">{productData.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -94,11 +101,11 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           {/* Main Image */}
           <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
             <img
-              src={product.images[selectedImageIndex]}
-              alt={product.name}
+              src={productData.images[selectedImageIndex]}
+              alt={productData.name}
               className="w-full h-full object-cover"
             />
-            {product.images.length > 1 && (
+            {productData.images.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
@@ -114,17 +121,17 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 </button>
               </>
             )}
-            {product.discount && (
+            {productData.discount && (
               <Badge variant="danger" className="absolute top-4 left-4">
-                -{product.discount}%
+                -{productData.discount}%
               </Badge>
             )}
           </div>
 
           {/* Thumbnail Images */}
-          {product.images.length > 1 && (
+          {productData.images.length > 1 && (
             <div className="flex space-x-2 overflow-x-auto">
-              {product.images.map((image, index) => (
+              {productData.images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
@@ -136,7 +143,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 >
                   <img
                     src={image}
-                    alt={`${product.name} ${index + 1}`}
+                    alt={`${productData.name} ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -151,22 +158,22 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           <div className="flex items-center space-x-2 mb-4">
             <span className="text-sm text-gray-600">Sold by</span>
             <div className="flex items-center space-x-2">
-              {product.vendor.logo && (
+              {productData.vendor.logo && (
                 <Avatar size="sm">
-                  <AvatarImage src={product.vendor.logo} />
-                  <AvatarFallback>{product.vendor.name[0]}</AvatarFallback>
+                  <AvatarImage src={productData.vendor.logo} />
+                  <AvatarFallback>{productData.vendor.name[0]}</AvatarFallback>
                 </Avatar>
               )}
-              <span className="font-medium text-primary-600">{product.vendor.name}</span>
+              <span className="font-medium text-primary-600">{productData.vendor.name}</span>
               <div className="flex items-center space-x-1">
                 <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-sm text-gray-600">{product.vendor.rating}</span>
+                <span className="text-sm text-gray-600">{productData.vendor.rating}</span>
               </div>
             </div>
           </div>
 
           {/* Product Title */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{productData.name}</h1>
 
           {/* Rating and Reviews */}
           <div className="flex items-center space-x-4 mb-6">
@@ -175,19 +182,19 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 <Star
                   key={star}
                   className={`h-5 w-5 ${
-                    star <= Math.floor(product.rating)
+                    star <= Math.floor(productData.rating)
                       ? 'text-yellow-400 fill-current'
                       : 'text-gray-300'
                   }`}
                 />
               ))}
               <span className="text-lg font-medium text-gray-900 ml-2">
-                {product.rating}
+                {productData.rating}
               </span>
             </div>
-            <span className="text-gray-600">({product.reviewCount} reviews)</span>
-            <Badge variant={product.inStock ? 'success' : 'danger'}>
-              {product.inStock ? 'In Stock' : 'Out of Stock'}
+            <span className="text-gray-600">({productData.reviewCount} reviews)</span>
+            <Badge variant={productData.inStock ? 'success' : 'danger'}>
+              {productData.inStock ? 'In Stock' : 'Out of Stock'}
             </Badge>
           </div>
 
@@ -195,21 +202,21 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           <div className="mb-6">
             <div className="flex items-center space-x-3">
               <span className="text-3xl font-bold text-gray-900">
-                ${product.price.toFixed(2)}
+                ${productData.price.toFixed(2)}
               </span>
-              {product.originalPrice && (
+              {productData.originalPrice && (
                 <span className="text-xl text-gray-500 line-through">
-                  ${product.originalPrice.toFixed(2)}
+                  ${productData.originalPrice.toFixed(2)}
                 </span>
               )}
-              {product.discount && (
-                <Badge variant="danger">Save {product.discount}%</Badge>
+              {productData.discount && (
+                <Badge variant="danger">Save {productData.discount}%</Badge>
               )}
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
+          <p className="text-gray-600 mb-6 leading-relaxed">{productData.description}</p>
 
           {/* Quantity and Actions */}
           <div className="space-y-4 mb-8">
@@ -244,7 +251,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 variant="primary"
                 size="lg"
                 onClick={handleAddToCart}
-                disabled={!product.inStock}
+                disabled={!productData.inStock}
                 className="flex-1"
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
@@ -254,7 +261,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 variant="secondary"
                 size="lg"
                 onClick={handleBuyNow}
-                disabled={!product.inStock}
+                disabled={!productData.inStock}
                 className="flex-1"
               >
                 <Zap className="mr-2 h-5 w-5" />
@@ -305,7 +312,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
           <TabsList>
             <TabsTrigger value="description">Description</TabsTrigger>
             <TabsTrigger value="specifications">Specifications</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews ({reviews.length})</TabsTrigger>
+            <TabsTrigger value="reviews">Reviews ({reviewsList.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="description" className="mt-8">
@@ -314,7 +321,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                 <h3 className="text-xl font-semibold mb-4">Product Description</h3>
                 <div className="prose max-w-none">
                   <p className="text-gray-600 leading-relaxed mb-4">
-                    {product.description}
+                    {productData.description}
                   </p>
                   <p className="text-gray-600 leading-relaxed">
                     This premium product offers exceptional quality and performance, 
@@ -331,10 +338,10 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
               <CardContent className="p-8">
                 <h3 className="text-xl font-semibold mb-4">Technical Specifications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Object.entries(product.specifications).map(([key, value]) => (
+                  {Object.entries(productData.specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between py-2 border-b border-gray-100">
                       <span className="font-medium text-gray-900">{key}:</span>
-                      <span className="text-gray-600">{value}</span>
+                      <span className="text-gray-600">{String(value)}</span>
                     </div>
                   ))}
                 </div>
@@ -352,7 +359,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                       <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
                       <div className="flex items-center space-x-4 mb-4">
                         <span className="text-4xl font-bold text-gray-900">
-                          {product.rating}
+                          {productData.rating}
                         </span>
                         <div>
                           <div className="flex items-center space-x-1 mb-1">
@@ -360,7 +367,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                               <Star
                                 key={star}
                                 className={`h-5 w-5 ${
-                                  star <= Math.floor(product.rating)
+                                  star <= Math.floor(productData.rating)
                                     ? 'text-yellow-400 fill-current'
                                     : 'text-gray-300'
                                 }`}
@@ -368,7 +375,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                             ))}
                           </div>
                           <span className="text-gray-600">
-                            Based on {product.reviewCount} reviews
+                            Based on {productData.reviewCount} reviews
                           </span>
                         </div>
                       </div>
@@ -383,7 +390,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
               </Card>
 
               {/* Individual Reviews */}
-              {reviews.map((review) => (
+              {reviewsList.map((review: Review) => (
                 <Card key={review.id}>
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
@@ -402,7 +409,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
                         </div>
                         <div className="flex items-center space-x-2 mb-2">
                           <div className="flex items-center space-x-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
+                            {[1, 2, 3, 4, 5].map((star: number) => (
                               <Star
                                 key={star}
                                 className={`h-4 w-4 ${
@@ -437,7 +444,7 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
       <div className="mt-16">
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {relatedProducts.map((relatedProduct) => (
+          {relatedProductsList.map((relatedProduct: Product) => (
             <Card key={relatedProduct.id} className="hover:shadow-lg transition-shadow">
               <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
                 <img
