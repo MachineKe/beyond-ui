@@ -186,10 +186,12 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
 
   if (collapsed) {
     return (
-      <div className={cn('w-16 flex-shrink-0 bg-background border-r border-border rounded-xl', className)}>
-        <Card className="sticky top-4">
-          <CardContent className="p-2">
-            <div className="flex flex-col items-center space-y-3">
+      <div className={cn('w-16 flex-shrink-0 bg-background border-r border-border rounded-xl hidden lg:block', className)}>
+        {/* Fixed minimized sidebar for desktop */}
+        <div className="fixed top-16 left-0 h-[calc(100vh-4rem)] w-16 z-40 bg-background border-r border-border rounded-xl">
+          <Card className="h-full shadow-none border-none bg-transparent">
+            <CardContent className="p-2">
+              <div className="flex flex-col items-center space-y-3">
               {/* Main Filter Icon (Expand) */}
               <Button
                 variant="ghost"
@@ -276,14 +278,18 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={cn('w-80 flex-shrink-0', className)}>
-      <Card className="sticky top-4">
-        <CardHeader className="pb-3">
+    <div className={cn('w-80 flex-shrink-0 hidden lg:block', className)}>
+      {/* Fixed sidebar for desktop */}
+      {/* Adjust top offset to match navbar height (e.g., 64px = 16 * 4) */}
+      <div className="fixed top-16 left-0 h-[calc(100vh-4rem)] w-80 z-30 bg-background border-r border-border pt-4">
+        <Card className="h-full shadow-none border-none bg-transparent">
+          <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center text-lg">
               <Filter className="h-5 w-5 mr-2" />
@@ -608,7 +614,8 @@ export const MarketplaceSidebar: React.FC<MarketplaceSidebarProps> = ({
             </div>
           )}
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };
