@@ -11,8 +11,7 @@ export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const DEFAULT_PLACEHOLDER =
-  "/images/placeholder-product.png"; // You may want to ensure this exists
-
+  "https://res.cloudinary.com/dmpposta9/image/upload/v1759505259/beyond/beyond%20ui/beyond-ui-logo-part-with-bg_1_wydfry.png";
 export const Image: React.FC<ImageProps> = ({
   src,
   alt,

@@ -15,7 +15,7 @@ const MarketplaceSection = () => {
       price: 30.00,
       originalPrice: 35.00,
       discount: 14,
-      images: ["https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg"],
+      images: ["https://images.pexels.com/photos/547264/pexels-photo-547264.jpeg"],
       category: "Cereals",
       brand: "GreenFields Cooperative",
       rating: 4.7,
@@ -23,7 +23,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Hybrid", Moisture: "13%", Weight: "90kg bag" },
       tags: ["maize", "corn", "cereal", "grain"],
-      vendor: { id: "v1", name: "GreenFields Cooperative", rating: 4.8, logo: "https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg" }
+      vendor: { id: "v1", name: "GreenFields Cooperative", rating: 4.8, logo: "https://images.pexels.com/photos/547264/pexels-photo-547264.jpeg" }
     },
     {
       id: "p2",
@@ -32,7 +32,7 @@ const MarketplaceSection = () => {
       price: 80.00,
       originalPrice: 90.00,
       discount: 11,
-      images: ["https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg"],
+      images: ["https://images.pexels.com/photos/176169/pexels-photo-176169.jpeg"],
       category: "Legumes",
       brand: "Harvesters Union",
       rating: 4.6,
@@ -40,7 +40,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Rosecoco", Weight: "50kg bag" },
       tags: ["beans", "legume", "protein"],
-      vendor: { id: "v2", name: "Harvesters Union", rating: 4.7, logo: "https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg" }
+      vendor: { id: "v2", name: "Harvesters Union", rating: 4.7, logo: "https://images.pexels.com/photos/176169/pexels-photo-176169.jpeg" }
     },
     {
       id: "p3",
@@ -49,7 +49,7 @@ const MarketplaceSection = () => {
       price: 400.00,
       originalPrice: 450.00,
       discount: 11,
-      images: ["https://images.pexels.com/photos/585750/pexels-photo-585750.jpeg"],
+      images: ["https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg"],
       category: "Beverages",
       brand: "Highland Coffee Growers",
       rating: 4.9,
@@ -57,7 +57,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Type: "Arabica", Grade: "AA", Weight: "60kg bag" },
       tags: ["coffee", "arabica", "beverage"],
-      vendor: { id: "v3", name: "Highland Coffee Growers", rating: 4.9, logo: "https://images.pexels.com/photos/585750/pexels-photo-585750.jpeg" }
+      vendor: { id: "v3", name: "Highland Coffee Growers", rating: 4.9, logo: "https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg" }
     },
     {
       id: "p4",
@@ -66,7 +66,7 @@ const MarketplaceSection = () => {
       price: 250.00,
       originalPrice: 280.00,
       discount: 11,
-      images: ["https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg"],
+      images: ["https://images.pexels.com/photos/39347/tea-farmhouse-hand-fresh-39347.jpeg"],
       category: "Beverages",
       brand: "Kericho Tea Estates",
       rating: 4.8,
@@ -74,7 +74,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Type: "Green Tea", Weight: "50kg sack" },
       tags: ["tea", "green tea", "beverage"],
-      vendor: { id: "v4", name: "Kericho Tea Estates", rating: 4.8, logo: "https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg" }
+      vendor: { id: "v4", name: "Kericho Tea Estates", rating: 4.8, logo: "https://images.pexels.com/photos/39347/tea-farmhouse-hand-fresh-39347.jpeg" }
     },
     {
       id: "p5",
@@ -83,7 +83,7 @@ const MarketplaceSection = () => {
       price: 120.00,
       originalPrice: 140.00,
       discount: 14,
-      images: ["https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg"],
+      images: ["https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg"],
       category: "Cereals",
       brand: "Mwea Rice Growers",
       rating: 4.7,
@@ -91,7 +91,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Pishori", Weight: "50kg bag" },
       tags: ["rice", "pishori", "cereal"],
-      vendor: { id: "v5", name: "Mwea Rice Growers", rating: 4.7, logo: "https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg" }
+      vendor: { id: "v5", name: "Mwea Rice Growers", rating: 4.7, logo: "https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg" }
     },
     {
       id: "p6",
@@ -100,7 +100,7 @@ const MarketplaceSection = () => {
       price: 50.00,
       originalPrice: 60.00,
       discount: 17,
-      images: ["https://images.pexels.com/photos/839725/pexels-photo-839725.jpeg"],
+      images: ["https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg"],
       category: "Vegetables",
       brand: "Sunrise Farms",
       rating: 4.5,
@@ -108,7 +108,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Roma", Weight: "20kg crate" },
       tags: ["tomato", "vegetable", "fresh"],
-      vendor: { id: "v6", name: "Sunrise Farms", rating: 4.6, logo: "https://images.pexels.com/photos/839725/pexels-photo-839725.jpeg" }
+      vendor: { id: "v6", name: "Sunrise Farms", rating: 4.6, logo: "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg" }
     },
     {
       id: "p7",
@@ -117,7 +117,7 @@ const MarketplaceSection = () => {
       price: 70.00,
       originalPrice: 80.00,
       discount: 13,
-      images: ["https://images.pexels.com/photos/162670/potatoes-vegetables-vegetable-basket-162670.jpeg"],
+      images: ["https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg"],
       category: "Vegetables",
       brand: "Mountain View Farms",
       rating: 4.6,
@@ -125,7 +125,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Shangi", Weight: "50kg bag" },
       tags: ["potato", "vegetable", "root"],
-      vendor: { id: "v7", name: "Mountain View Farms", rating: 4.7, logo: "https://images.pexels.com/photos/162670/potatoes-vegetables-vegetable-basket-162670.jpeg" }
+      vendor: { id: "v7", name: "Mountain View Farms", rating: 4.7, logo: "https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg" }
     },
     {
       id: "p8",
@@ -134,7 +134,7 @@ const MarketplaceSection = () => {
       price: 150.00,
       originalPrice: 170.00,
       discount: 12,
-      images: ["https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg"],
+      images: ["https://images.pexels.com/photos/3029520/pexels-photo-3029520.jpeg"],
       category: "Fruits",
       brand: "Avocado Exporters Ltd",
       rating: 4.8,
@@ -142,7 +142,7 @@ const MarketplaceSection = () => {
       inStock: true,
       specifications: { Variety: "Hass", Weight: "10kg carton" },
       tags: ["avocado", "fruit", "export"],
-      vendor: { id: "v8", name: "Avocado Exporters Ltd", rating: 4.8, logo: "https://images.pexels.com/photos/461382/pexels-photo-461382.jpeg" }
+      vendor: { id: "v8", name: "Avocado Exporters Ltd", rating: 4.8, logo: "https://images.pexels.com/photos/3029520/pexels-photo-3029520.jpeg" }
     },
   ];
 
