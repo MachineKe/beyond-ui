@@ -7,6 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '../../Avatar';
 import { StatsCard } from '../../StatsCard';
 import type { Product } from '../types';
 import { ProductCard } from './ProductCard';
+import { MarketplaceControls } from './MarketplaceControls';
 
 export interface MarketplaceDashboardProps {
   featuredProducts: Product[];
@@ -31,6 +32,20 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
   onViewAllProducts,
   className = '',
 }) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [sortBy, setSortBy] = React.useState('relevance');
+  const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
+  const [showFilters, setShowFilters] = React.useState(false);
+
+  const sortOptions = [
+    { value: 'relevance', label: 'Most Relevant' },
+    { value: 'price-low', label: 'Price: Low to High' },
+    { value: 'price-high', label: 'Price: High to Low' },
+    { value: 'rating', label: 'Highest Rated' },
+    { value: 'newest', label: 'Newest First' },
+    { value: 'popular', label: 'Most Popular' },
+  ];
+
   const categories = [
     { name: 'Electronics', count: 156, image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=400' },
     { name: 'Fashion', count: 234, image: 'https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400' },
@@ -46,6 +61,18 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
 
   return (
     <div className={`space-y-8 ${className}`}>
+      {/* Marketplace Controls */}
+      <MarketplaceControls
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        onShowFilters={() => setShowFilters(true)}
+        sortOptions={sortOptions}
+      />
+
       {/* Featured Categories */}
       <div>
         <div className="flex items-center justify-between mb-6">
