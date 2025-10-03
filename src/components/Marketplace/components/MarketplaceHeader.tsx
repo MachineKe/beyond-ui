@@ -46,18 +46,7 @@ export const MarketplaceHeader: React.FC<MarketplaceHeaderProps> = ({
             </div>
           </div>
 
-          {/* Center Section - Search */}
-          <div className="flex-1 max-w-2xl mx-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search products, brands, categories..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-10 bg-gray-50 border-gray-200 focus:bg-white"
-              />
-            </div>
-          </div>
+       
 
           {/* Right Section */}
           <div className="flex items-center space-x-3">
