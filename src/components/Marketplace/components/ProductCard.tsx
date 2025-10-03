@@ -4,6 +4,7 @@ import { Button } from '../../Button';
 import { Card, CardContent } from '../../Card';
 import { Badge } from '../../Badge';
 import type { Product } from '../types';
+import { useBreakpoint } from '../../../hooks/useBreakpoint';
 
 export interface ProductCardProps {
   product: Product;
@@ -15,6 +16,63 @@ export interface ProductCardProps {
   showQuickActions?: boolean;
   className?: string;
 }
+
+/** Quick Actions Subcomponent */
+const ProductQuickActions: React.FC<{
+  isWishlisted: boolean;
+  onToggleWishlist: (e: React.MouseEvent) => void;
+  onQuickView: (e: React.MouseEvent) => void;
+  isMobile: boolean;
+}> = ({ isWishlisted, onToggleWishlist, onQuickView, isMobile }) => (
+  <div
+    className={`flex ${isMobile ? 'flex-row gap-2 absolute bottom-2 left-2 z-10' : ''}`}
+    aria-label="Product quick actions"
+  >
+    <Button
+      variant="ghost"
+      size={isMobile ? 'md' : 'sm'}
+      onClick={onToggleWishlist}
+      className={`bg-white/80 hover:bg-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-primary transition ${
+        isMobile ? '' : 'opacity-0 group-hover:opacity-100 absolute top-2 right-2'
+      }`}
+      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+      tabIndex={0}
+    >
+      <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-current text-red-500' : ''}`} />
+    </Button>
+    <Button
+      variant="ghost"
+      size={isMobile ? 'md' : 'sm'}
+      onClick={onQuickView}
+      className={`bg-white/80 hover:bg-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-primary transition ${
+        isMobile ? '' : 'opacity-0 group-hover:opacity-100 absolute bottom-2 right-2'
+      }`}
+      aria-label="Quick view"
+      tabIndex={0}
+    >
+      <Eye className="h-5 w-5" />
+    </Button>
+  </div>
+);
+
+/** Overlay Subcomponent */
+const ProductOverlay: React.FC<{
+  discount?: number;
+  inStock: boolean;
+}> = ({ discount, inStock }) => (
+  <>
+    {discount && (
+      <Badge variant="danger" className="absolute top-2 left-2 text-xs px-2 py-1">
+        -{discount}%
+      </Badge>
+    )}
+    {!inStock && (
+      <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+        <Badge variant="secondary" className="text-xs px-2 py-1">Out of Stock</Badge>
+      </div>
+    )}
+  </>
+);
 
 /**
  * Reusable product card component for displaying product information
@@ -30,6 +88,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   showQuickActions = true,
   className = '',
 }) => {
+  const { isBelow } = useBreakpoint();
+  const isMobile = isBelow('md');
+
   const handleProductClick = () => {
     onProductClick?.(product);
   };
@@ -50,61 +111,42 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col max-h-[28rem] ${className}`}>
+    <Card
+      className={`group hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col max-h-[28rem] ${className}`}
+      tabIndex={0}
+      aria-label={`Product card for ${product.name}`}
+    >
       <div className="relative aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
         <img
           src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onClick={handleProductClick}
+          loading="lazy"
+          draggable={false}
         />
-        
-        {/* Discount Badge */}
-        {product.discount && (
-          <Badge variant="danger" className="absolute top-2 left-2">
-            -{product.discount}%
-          </Badge>
-        )}
+
+        {/* Overlays */}
+        <ProductOverlay discount={product.discount} inStock={product.inStock} />
 
         {/* Quick Actions */}
         {showQuickActions && (
-          <>
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleToggleWishlist}
-                className="bg-white/80 hover:bg-white"
-              >
-                <Heart className={`h-4 w-4 ${isWishlisted ? 'fill-current text-red-500' : ''}`} />
-              </Button>
-            </div>
-            <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleQuickView}
-                className="bg-white/80 hover:bg-white"
-              >
-                <Eye className="h-4 w-4" />
-              </Button>
-            </div>
-          </>
-        )}
-
-        {/* Out of Stock Overlay */}
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <Badge variant="secondary">Out of Stock</Badge>
-          </div>
+          <ProductQuickActions
+            isWishlisted={isWishlisted}
+            onToggleWishlist={handleToggleWishlist}
+            onQuickView={handleQuickView}
+            isMobile={isMobile}
+          />
         )}
       </div>
 
-      <CardContent className="p-4 flex-1 flex flex-col overflow-y-auto">
+      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col overflow-y-auto">
         <div className="mb-2">
           <h3
-            className="font-medium text-gray-900 line-clamp-2 cursor-pointer hover:text-primary-600"
+            className="font-medium text-gray-900 line-clamp-2 cursor-pointer hover:text-primary-600 text-base sm:text-lg"
             onClick={handleProductClick}
+            tabIndex={0}
+            aria-label={`View details for ${product.name}`}
           >
             {product.name}
           </h3>
@@ -137,10 +179,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Add to Cart Button */}
           <Button
             variant="primary"
-            size="sm"
+            size={isMobile ? 'md' : 'sm'}
             onClick={handleAddToCart}
             disabled={!product.inStock}
             className="w-full"
+            aria-label="Add to cart"
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart

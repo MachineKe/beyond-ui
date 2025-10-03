@@ -262,7 +262,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">All Products</h1>
           <p className="text-gray-600">
@@ -271,21 +271,21 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
         </div>
         
         {/* Search and Controls */}
-        <div className="flex items-center space-x-4 mt-4 lg:mt-0">
-          <div className="relative">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-4 mt-2 lg:mt-0 w-full sm:w-auto">
+          <div className="relative w-full sm:w-auto">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-64"
+              className="pl-10 w-full sm:w-64"
             />
           </div>
           
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 bg-white"
+            className="border border-gray-300 rounded-lg px-3 py-2 bg-white w-full sm:w-auto"
           >
             {sortOptions.map(option => (
               <option key={option.value} value={option.value}>
@@ -294,11 +294,12 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
             ))}
           </select>
 
-          <div className="flex items-center bg-gray-100 rounded-lg p-1">
+          <div className="flex items-center bg-gray-100 rounded-lg p-1 w-full sm:w-auto">
             <Button
               variant={viewMode === 'grid' ? 'primary' : 'ghost'}
               size="sm"
               onClick={() => setViewMode('grid')}
+              className="flex-1 sm:flex-none"
             >
               <Grid className="h-4 w-4" />
             </Button>
@@ -306,6 +307,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
               variant={viewMode === 'list' ? 'primary' : 'ghost'}
               size="sm"
               onClick={() => setViewMode('list')}
+              className="flex-1 sm:flex-none"
             >
               <List className="h-4 w-4" />
             </Button>
@@ -314,7 +316,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
           <Button
             variant="outline"
             onClick={() => setShowFilters(true)}
-            className="lg:hidden"
+            className="sm:w-auto w-full lg:hidden"
           >
             <Filter className="mr-2 h-4 w-4" />
             Filters
@@ -341,19 +343,21 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
             </div>
           ) : (
             <>
-              <div className={`grid gap-6 ${
-                viewMode === 'grid' 
-                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+              <div className={`grid gap-3 sm:gap-6 ${
+                viewMode === 'grid'
+                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                   : 'grid-cols-1'
               }`}>
                 {paginatedProducts.map((product: Product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <div className="w-full max-w-xs mx-auto sm:max-w-none">
+                    <ProductCard key={product.id} product={product} />
+                  </div>
                 ))}
               </div>
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center space-x-2 mt-12">
+                <div className="flex flex-wrap items-center justify-center gap-2 mt-8 sm:mt-12">
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
