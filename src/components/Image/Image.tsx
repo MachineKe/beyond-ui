@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Skeleton } from "../Skeleton";
+import { Spinner } from "../Spinner";
 
 export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -26,7 +27,10 @@ export const Image: React.FC<ImageProps> = ({
   return (
     <div className={`relative ${className}`}>
       {!loaded && !error && (
-        <Skeleton className={skeletonClassName} />
+        <div className={`absolute inset-0 flex items-center justify-center ${skeletonClassName}`}>
+          <Skeleton className="w-full h-full absolute inset-0" />
+          <Spinner className="relative z-10 w-8 h-8 text-primary-500" />
+        </div>
       )}
       <img
         src={error ? fallbackSrc : src}
