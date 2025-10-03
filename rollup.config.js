@@ -2,6 +2,7 @@ import path from "path";
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 
 const barrelInputs = [
   "src/components/Alert/index.ts",
@@ -57,7 +58,10 @@ const externals = [
   "react-router-dom",
   "js-cookie",
   "recharts",
-  "prismjs"
+  "prismjs",
+  "react-syntax-highlighter",
+  "remark-gfm",
+  "react-markdown"
 ];
 
 const externalFunc = (id) =>
@@ -77,6 +81,7 @@ export default {
   plugins: [
     nodeResolve(),
     commonjs(),
+    json(),
     typescript({
       tsconfig: "./tsconfig.build.json",
       declaration: false,

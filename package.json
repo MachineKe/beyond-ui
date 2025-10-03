@@ -1,6 +1,6 @@
 {
   "name": "@beyondcorp/beyond-ui",
-  "version": "1.2.55",
+  "version": "1.2.57",
   "description": "A comprehensive React UI component library built with TypeScript, TailwindCSS, and CVA",
   "type": "module",
   "main": "dist/index.js",
@@ -68,6 +68,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.4",
     "@storybook/addon-actions": "^7.6.6",
