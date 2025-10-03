@@ -31,6 +31,7 @@ export * from './components/NightModeSwitch'
 export * from './components/Marketplace';
 export * from './components/Blog'
 export * from './components/CodeHighlight';
+export * from "./components/Image"
 
 
 
