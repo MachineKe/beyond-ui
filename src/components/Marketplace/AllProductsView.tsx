@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, Grid2x2 as Grid, List, Star, Heart, ShoppingCart, Eye, ChevronDown, X } from 'lucide-react';
+import { Search, Filter, Grid2x2 as Grid, List, Star, ShoppingCart } from 'lucide-react';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Card, CardContent } from '../Card';
@@ -9,6 +9,7 @@ import { Checkbox } from '../Checkbox';
 import { showToast } from '../Toast';
 import type { Product, FilterOptions, SortOption } from './types';
 import { sampleProducts } from './data/sampleData';
+import { ProductCard } from './components/ProductCard';
 
 interface AllProductsViewProps {
   products?: Product[];
@@ -169,95 +170,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
     showToast.success(`${product.name} added to cart!`);
   };
 
-  const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
-    <Card className="group hover:shadow-lg transition-all duration-300">
-      <div className="relative aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        {product.discount && (
-          <Badge variant="danger" className="absolute top-2 left-2">
-            -{product.discount}%
-          </Badge>
-        )}
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleWishlist(product.id);
-            }}
-            className="bg-white/80 hover:bg-white"
-          >
-            <Heart className={`h-4 w-4 ${wishlist.has(product.id) ? 'fill-current text-red-500' : ''}`} />
-          </Button>
-        </div>
-        <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              setQuickViewProduct(product);
-            }}
-            className="bg-white/80 hover:bg-white"
-          >
-            <Eye className="h-4 w-4" />
-          </Button>
-        </div>
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <Badge variant="secondary">Out of Stock</Badge>
-          </div>
-        )}
-      </div>
-      <CardContent className="p-4">
-        <div className="mb-2">
-          <h3 
-            className="font-medium text-gray-900 line-clamp-2 cursor-pointer hover:text-primary-600"
-            onClick={() => onProductClick?.(product)}
-          >
-            {product.name}
-          </h3>
-          <p className="text-sm text-gray-600">{product.brand}</p>
-        </div>
-        <div className="flex items-center space-x-1 mb-2">
-          <Star className="h-4 w-4 text-yellow-400 fill-current" />
-          <span className="text-sm text-gray-600">
-            {product.rating} ({product.reviewCount})
-          </span>
-        </div>
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-2">
-            <span className="text-lg font-bold text-gray-900">
-              ${product.price.toFixed(2)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice.toFixed(2)}
-              </span>
-            )}
-          </div>
-        </div>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleAddToCart(product);
-          }}
-          disabled={!product.inStock}
-          className="w-full"
-        >
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
-        </Button>
-      </CardContent>
-    </Card>
-  );
+  // Remove local ProductCard in favor of reusable ProductCard
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -349,8 +262,16 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
                   : 'grid-cols-1'
               }`}>
                 {paginatedProducts.map((product: Product) => (
-                  <div className="w-full max-w-xs mx-auto sm:max-w-none">
-                    <ProductCard key={product.id} product={product} />
+                  <div className="w-full max-w-xs mx-auto sm:max-w-none" key={product.id}>
+                    <ProductCard
+                      product={product}
+                      onProductClick={onProductClick}
+                      onAddToCart={handleAddToCart}
+                      onQuickView={() => setQuickViewProduct(product)}
+                      onToggleWishlist={toggleWishlist}
+                      isWishlisted={wishlist.has(product.id)}
+                      showQuickActions={true}
+                    />
                   </div>
                 ))}
               </div>

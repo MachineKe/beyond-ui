@@ -6,6 +6,7 @@ import { Badge } from '../../Badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../../Avatar';
 import { StatsCard } from '../../StatsCard';
 import type { Product } from '../types';
+import { ProductCard } from './ProductCard';
 
 export interface MarketplaceDashboardProps {
   featuredProducts: Product[];
@@ -82,55 +83,14 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProducts.map((product) => (
-            <Card key={product.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-              <div 
-                className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden relative"
-                onClick={() => onProductClick(product)}
-              >
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-                {product.discount && (
-                  <Badge variant="danger" className="absolute top-2 left-2">
-                    -{product.discount}%
-                  </Badge>
-                )}
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">
-                  {product.name}
-                </h3>
-                <div className="flex items-center space-x-1 mb-2">
-                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                  <span className="text-sm text-gray-600">
-                    {product.rating} ({product.reviewCount})
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg font-bold text-gray-900">
-                      ${product.price.toFixed(2)}
-                    </span>
-                    {product.originalPrice && (
-                      <span className="text-sm text-gray-500 line-through">
-                        ${product.originalPrice.toFixed(2)}
-                      </span>
-                    )}
-                  </div>
-                  <Button
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onAddToCart(product);
-                    }}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <div key={product.id} className="w-full">
+              <ProductCard
+                product={product}
+                onProductClick={onProductClick}
+                onAddToCart={onAddToCart}
+                className="hover:shadow-lg transition-shadow cursor-pointer"
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -167,37 +127,14 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Recently Viewed</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {recentlyViewed.map((product) => (
-              <Card key={product.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-                <div 
-                  className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden"
-                  onClick={() => onProductClick(product)}
-                >
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">
-                      ${product.price.toFixed(2)}
-                    </span>
-                    <Button
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onAddToCart(product);
-                      }}
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <div key={product.id} className="w-full">
+                <ProductCard
+                  product={product}
+                  onProductClick={onProductClick}
+                  onAddToCart={onAddToCart}
+                  className="hover:shadow-lg transition-shadow cursor-pointer"
+                />
+              </div>
             ))}
           </div>
         </div>

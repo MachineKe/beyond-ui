@@ -140,7 +140,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
       </div>
 
-      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col overflow-y-auto">
+      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
         <div className="mb-2">
           <h3
             className="font-medium text-gray-900 line-clamp-2 cursor-pointer hover:text-primary-600 text-base sm:text-lg"

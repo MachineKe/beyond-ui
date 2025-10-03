@@ -79,7 +79,7 @@ export const AllBlogsView: React.FC<AllBlogsViewProps> = ({
         <CardContent className="p-4 sm:p-6">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <Badge 
-              variant="primary"
+              variant="default"
               className="text-xs"
               style={{ backgroundColor: post.category === 'Design' ? '#8b5cf6' : '#3b82f6' }}
             >
@@ -276,7 +276,7 @@ export const AllBlogsView: React.FC<AllBlogsViewProps> = ({
                     {['React', 'TypeScript', 'CSS', 'JavaScript', 'Design', 'Performance'].map(tag => (
                       <Badge
                         key={tag}
-                        variant={filters.tags.includes(tag) ? 'primary' : 'outline'}
+                        variant={filters.tags.includes(tag) ? 'default' : 'outline'}
                         className="cursor-pointer text-xs hover:bg-primary-50 transition-colors"
                         onClick={() => {
                           const newTags = filters.tags.includes(tag)
@@ -414,7 +414,7 @@ export const AllBlogsView: React.FC<AllBlogsViewProps> = ({
                 {['React', 'TypeScript', 'CSS', 'JavaScript', 'Design', 'Performance'].map(tag => (
                   <Badge
                     key={tag}
-                    variant={filters.tags.includes(tag) ? 'primary' : 'outline'}
+                    variant={filters.tags.includes(tag) ? 'default' : 'outline'}
                     className="cursor-pointer"
                     onClick={() => {
                       const newTags = filters.tags.includes(tag)
