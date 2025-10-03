@@ -151,7 +151,7 @@ export const BlogLayout: React.FC<BlogLayoutProps> = ({
         <div className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
             <div className="text-center">
-              <Badge variant="primary" className="mb-3 sm:mb-4 text-xs sm:text-sm">
+              <Badge variant="default" className="mb-3 sm:mb-4 text-xs sm:text-sm">
                 {currentPost.category}
               </Badge>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Star, 
-  Heart, 
-  Share2, 
-  ShoppingCart, 
-  Zap, 
-  Shield, 
-  Truck, 
+import {
+  Star,
+  Heart,
+  Share2,
+  ShoppingCart,
+  Zap,
+  Shield,
+  Truck,
   RotateCcw,
   ChevronLeft,
   ChevronRight,
@@ -16,7 +16,7 @@ import {
   ThumbsUp
 } from 'lucide-react';
 import { Button } from '../Button';
-import { Card, CardHeader, CardTitle, CardContent } from '../Card';
+import { Card, CardContent } from '../Card';
 import { Badge } from '../Badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../Avatar';
 import { Input } from '../Input';
@@ -24,6 +24,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Tabs';
 import { showToast } from '../Toast';
 import type { Product, Review } from './types';
 import { sampleProducts, sampleReviews } from './data/sampleData';
+import { useScrollToTop } from './hooks/useScrollToTop';
 
 interface SingleProductViewProps {
   product?: Product;
@@ -67,6 +68,9 @@ export const SingleProductView: React.FC<SingleProductViewProps> = ({
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedTab, setSelectedTab] = useState('description');
+
+  // Scroll to top on product change/mount
+  useScrollToTop([productData?.id]);
 
   const handleAddToCart = () => {
     onAddToCart?.(productData, quantity);
