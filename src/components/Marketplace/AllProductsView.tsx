@@ -15,6 +15,8 @@ import { ProductCard } from './components/ProductCard';
 interface AllProductsViewProps {
   products?: Product[];
   filters: FilterOptions;
+  searchQuery: string;
+  setSearchQuery?: (query: string) => void;
   onProductClick?: (product: Product) => void;
   onAddToCart?: (product: Product) => void;
   onFiltersChange: (filters: FilterOptions) => void;
@@ -33,13 +35,14 @@ const sortOptions: SortOption[] = [
 export const AllProductsView: React.FC<AllProductsViewProps> = ({
   products,
   filters: filtersProp,
+  searchQuery,
+  setSearchQuery,
   onProductClick,
   onAddToCart,
   onFiltersChange,
   onClearFilters,
 }) => {
   const productsData = products ?? sampleProducts;
-  const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [currentPage, setCurrentPage] = useState(1);
@@ -148,7 +151,6 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
 
   const handleClearFilters = () => {
     onClearFilters();
-    setSearchQuery('');
     setCurrentPage(1);
   };
 
@@ -187,7 +189,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
         {/* Search and Controls */}
         <MarketplaceControls
           searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
+          onSearchChange={setSearchQuery ? setSearchQuery : () => {}}
           sortBy={sortBy}
           onSortChange={setSortBy}
           viewMode={viewMode}

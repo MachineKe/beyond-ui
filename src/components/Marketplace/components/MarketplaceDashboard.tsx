@@ -8,6 +8,7 @@ import { StatsCard } from '../../StatsCard';
 import type { Product } from '../types';
 import { ProductCard } from './ProductCard';
 import { MarketplaceControls } from './MarketplaceControls';
+import { useSearch } from '../hooks/useSearch';
 
 export interface MarketplaceDashboardProps {
   featuredProducts: Product[];
@@ -16,6 +17,9 @@ export interface MarketplaceDashboardProps {
   onProductClick: (product: Product) => void;
   onAddToCart: (product: Product, quantity?: number) => void;
   onViewAllProducts: () => void;
+  searchQuery: string;
+  onSearch: (query: string) => void;
+  setCurrentView: (view: 'dashboard' | 'products' | 'product' | 'checkout') => void;
   className?: string;
 }
 
@@ -30,12 +34,18 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
   onProductClick,
   onAddToCart,
   onViewAllProducts,
+  searchQuery,
+  onSearch,
+  setCurrentView,
   className = '',
 }) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+  // Assume products and setCurrentView are available from parent/context
+  // For demo, featuredProducts used as products source
   const [sortBy, setSortBy] = React.useState('relevance');
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = React.useState(false);
+
+  // Use searchQuery and onSearch from props
 
   const sortOptions = [
     { value: 'relevance', label: 'Most Relevant' },
@@ -64,7 +74,7 @@ export const MarketplaceDashboard: React.FC<MarketplaceDashboardProps> = ({
       {/* Marketplace Controls */}
       <MarketplaceControls
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={onSearch}
         sortBy={sortBy}
         onSortChange={setSortBy}
         viewMode={viewMode}

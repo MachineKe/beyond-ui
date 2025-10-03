@@ -223,6 +223,9 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
               onProductClick={navigateToProduct}
               onAddToCart={onAddToCart ?? addToCart}
               onViewAllProducts={navigateToProducts}
+              searchQuery={searchQuery}
+              onSearch={handleSearch}
+              setCurrentView={setCurrentView}
             />
           )}
           
@@ -232,6 +235,8 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
               onAddToCart={onAddToCart ?? addToCart}
               products={productsData}
               filters={filters}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
               onFiltersChange={setFilters}
               onClearFilters={resetFilters}
             />
