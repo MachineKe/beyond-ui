@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search, Filter, Grid2x2 as Grid, List } from 'lucide-react';
 import { Button } from '../../Button';
 import { Input } from '../../Input';
@@ -6,6 +5,7 @@ import { Input } from '../../Input';
 export interface MarketplaceControlsProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
+  shouldFocusSearch?: boolean;
   sortBy: string;
   onSortChange: (value: string) => void;
   viewMode: 'grid' | 'list';
@@ -15,9 +15,12 @@ export interface MarketplaceControlsProps {
   className?: string;
 }
 
+import React, { useRef, useEffect } from 'react';
+
 export const MarketplaceControls: React.FC<MarketplaceControlsProps> = ({
   searchQuery,
   onSearchChange,
+  shouldFocusSearch,
   sortBy,
   onSortChange,
   viewMode,
@@ -26,11 +29,24 @@ export const MarketplaceControls: React.FC<MarketplaceControlsProps> = ({
   sortOptions,
   className = '',
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (shouldFocusSearch && inputRef.current) {
+      inputRef.current.focus();
+      // Move cursor to end
+      const val = inputRef.current.value;
+      inputRef.current.value = '';
+      inputRef.current.value = val;
+    }
+  }, [shouldFocusSearch]);
+
   return (
     <div className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-4 mt-2 lg:mt-0 w-full sm:w-auto ${className}`}>
       <div className="relative w-full sm:w-auto">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
         <Input
+          ref={inputRef}
           placeholder="Search products..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}

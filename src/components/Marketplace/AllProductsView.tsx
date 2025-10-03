@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Search, Filter, Grid2x2 as Grid, List, Star, ShoppingCart } from 'lucide-react';
 import { MarketplaceControls } from './components/MarketplaceControls';
 import { Button } from '../Button';
-import { Input } from '../Input';
-import { Card, CardContent } from '../Card';
 import { Badge } from '../Badge';
 import { Modal, ModalHeader, ModalTitle, ModalContent, ModalFooter } from '../Modal';
 import { Checkbox } from '../Checkbox';
@@ -17,6 +15,7 @@ interface AllProductsViewProps {
   filters: FilterOptions;
   searchQuery: string;
   setSearchQuery?: (query: string) => void;
+  shouldFocusSearch?: boolean;
   onProductClick?: (product: Product) => void;
   onAddToCart?: (product: Product) => void;
   onFiltersChange: (filters: FilterOptions) => void;
@@ -37,6 +36,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
   filters: filtersProp,
   searchQuery,
   setSearchQuery,
+  shouldFocusSearch,
   onProductClick,
   onAddToCart,
   onFiltersChange,
@@ -190,6 +190,7 @@ export const AllProductsView: React.FC<AllProductsViewProps> = ({
         <MarketplaceControls
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery ? setSearchQuery : () => {}}
+          shouldFocusSearch={shouldFocusSearch}
           sortBy={sortBy}
           onSortChange={setSortBy}
           viewMode={viewMode}
