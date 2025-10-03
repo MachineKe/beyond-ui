@@ -165,7 +165,7 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
         userRole={userRole}
       />
 
-      {/* Floating Filters Button for Mobile (moved inside main, see above) */}
+      {/* Floating Filters Button for Mobile (removed as per user feedback) */}
 
       {/* Mobile Sidebar Modal */}
       <Modal
