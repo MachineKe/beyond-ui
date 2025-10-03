@@ -150,6 +150,9 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
     setShowCheckout(true);
   };
 
+  // State for mobile sidebar modal
+  const [showMobileSidebar, setShowMobileSidebar] = React.useState(false);
+
   return (
     <div className={`min-h-screen bg-gray-50 ${className}`}>
       {/* Header */}
@@ -162,9 +165,45 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
         userRole={userRole}
       />
 
-      <div className="flex">
-        {/* Sidebar */}
-        {(currentView === 'products' || currentView === 'dashboard') && (
+      {/* Floating Filters Button for Mobile (moved inside main, see above) */}
+
+      {/* Mobile Sidebar Modal */}
+      <Modal
+        open={showMobileSidebar}
+        onOpenChange={setShowMobileSidebar}
+        size="full"
+      >
+        <div className="h-full w-full bg-background overflow-y-auto p-4">
+          <MarketplaceSidebar
+            filters={filters}
+            onFiltersChange={onFiltersChange ?? setFilters}
+            onClearFilters={onClearFilters ?? resetFilters}
+            collapsed={false}
+            onToggleCollapse={() => setShowMobileSidebar(false)}
+            className="w-full max-w-md mx-auto"
+          />
+          <div className="mt-6 flex justify-end gap-2">
+            <button
+              className="px-4 py-2 rounded bg-secondary text-secondary-foreground"
+              onClick={() => {
+                (onClearFilters ?? resetFilters)();
+              }}
+            >
+              Clear All
+            </button>
+            <button
+              className="px-4 py-2 rounded bg-primary text-primary-foreground"
+              onClick={() => setShowMobileSidebar(false)}
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <div className={`w-full ${!isBelow('lg') ? 'flex' : ''}`}>
+        {/* Sidebar: Only render on desktop/tablet */}
+        {(!isBelow('lg') && (currentView === 'products' || currentView === 'dashboard')) && (
           <MarketplaceSidebar
             filters={filters}
             onFiltersChange={onFiltersChange ?? setFilters}
@@ -174,8 +213,8 @@ export const MarketplaceComponent: React.FC<MarketplaceComponentProps> = ({
           />
         )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-6">
+        {/* Main Content: Always full width on mobile */}
+        <main className={`relative p-6 ${isBelow('lg') ? 'w-full' : 'flex-1'}`}>
           {currentView === 'dashboard' && (
             <MarketplaceDashboard
               featuredProducts={featuredProducts}

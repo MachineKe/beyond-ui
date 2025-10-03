@@ -34,14 +34,6 @@ export const MarketplaceHeader: React.FC<MarketplaceHeaderProps> = ({
         <div className="flex items-center justify-between">
           {/* Left Section */}
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onMenuToggle}
-              className="lg:hidden"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
             
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
