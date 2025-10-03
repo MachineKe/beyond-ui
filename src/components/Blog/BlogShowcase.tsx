@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { PenTool, BookOpen, MessageCircle, LayoutGrid as Layout, Code, Eye } from 'lucide-react';
+import { PenTool, LayoutGrid as Layout, Code, Eye } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../Card';
-import { Button } from '../Button';
 import { Badge } from '../Badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Tabs';
 import { BlogLayout } from './BlogLayout';

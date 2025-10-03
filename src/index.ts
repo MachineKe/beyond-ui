@@ -28,11 +28,10 @@ export * from './components/Checkbox'
 export * from './components/Select'
 export * from './components/Radio'
 export * from './components/NightModeSwitch'
-export * from './components/BlogLayout'
-export * from './components/BlogSidebar'
-export * from './components/BlogFeedView'
-export * from './components/SingleBlogView'
 export * from './components/Marketplace';
+export * from './components/Blog'
+export * from './components/CodeHighlight';
+
 
 
 
