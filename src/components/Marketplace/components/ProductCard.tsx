@@ -3,6 +3,7 @@ import { Star, Heart, ShoppingCart, Eye } from 'lucide-react';
 import { Button } from '../../Button';
 import { Card, CardContent } from '../../Card';
 import { Badge } from '../../Badge';
+import { Image } from '../../Image';
 import type { Product } from '../types';
 import { useBreakpoint } from '../../../hooks/useBreakpoint';
 
@@ -117,12 +118,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       aria-label={`Product card for ${product.name}`}
     >
       <div className="relative aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
-        <img
+        <Image
           src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onClick={handleProductClick}
-          loading="lazy"
           draggable={false}
         />
 
